@@ -3,7 +3,7 @@ package by.academy.rentApp.dto;
 import lombok.Data;
 
 @Data
-public class EngineDto {
+public class TypeDto {
     private Integer id;
     private String name;
 }

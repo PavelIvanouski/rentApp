@@ -13,7 +13,7 @@ public class Model {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String name;
     @Column(name = "seats_num", nullable = false)

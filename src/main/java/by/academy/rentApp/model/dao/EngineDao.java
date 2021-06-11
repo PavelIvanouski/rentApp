@@ -6,5 +6,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EngineDao  extends JpaRepository<Engine, Integer> {
+    Engine findEngineById(Integer id);
+
+    Engine findEngineByName(String name);
 
 }

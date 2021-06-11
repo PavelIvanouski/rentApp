@@ -13,7 +13,7 @@ public class Type {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String name;
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
