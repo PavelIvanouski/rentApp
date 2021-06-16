@@ -6,6 +6,7 @@
   <link href="css/engine_style.css" rel="stylesheet">
 </head>
 <body>
+<h2>Engines list</h2>
 <table>
   <tr>
     <th>Id</th>
@@ -18,5 +19,9 @@
     </tr>
   </th:block>
 </table>
+<form action="/createEngine" method="post" th:object="${engine}">
+  <input name="name" type="text" placeholder="Engine name">
+  <input type="submit" value="Create engine">
+</form>
 </body>
 </html>

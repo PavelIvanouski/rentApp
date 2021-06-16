@@ -1,20 +1,26 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.EngineDto;
+import by.academy.rentApp.exception.ValidationException;
 import by.academy.rentApp.model.dao.EngineDao;
 import by.academy.rentApp.model.entity.Engine;
+import by.academy.rentApp.service.EngineConverter;
 import by.academy.rentApp.service.EngineService;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class EngineServiceImpl implements EngineService {
     private final EngineDao dao;
+    private final EngineConverter engineConverter;
 
-    public EngineServiceImpl(EngineDao dao) {
+    public EngineServiceImpl(EngineDao dao, EngineConverter engineConverter) {
         this.dao = dao;
+        this.engineConverter = engineConverter;
     }
 
     @Override
@@ -23,13 +29,27 @@ public class EngineServiceImpl implements EngineService {
         List<EngineDto> engineDtos = new ArrayList<>();
 
         engins.forEach(engine -> {
-            EngineDto engineDto = new EngineDto();
-            engineDto.setId(engine.getId());
-            engineDto.setName(engine.getName());
-            engineDtos.add(engineDto);
+            engineDtos.add(engineConverter.fromEngineToEngineDto(engine));
         });
 
         return engineDtos;
+    }
+
+    @Override
+    public EngineDto saveEngine(EngineDto engineDto) throws ValidationException {
+        validateEngineDto(engineDto);
+        Engine savedEngine = dao.save(engineConverter.fromEngineDtoToEngine(engineDto));
+        return engineConverter.fromEngineToEngineDto(savedEngine);
+    }
+
+
+    private void validateEngineDto(EngineDto engineDto) throws ValidationException {
+        if (isNull(engineDto)) {
+            throw new ValidationException("Object engine is null");
+        }
+        if (isNull(engineDto.getName()) || engineDto.getName().isEmpty()) {
+            throw new ValidationException("Name is empty");
+        }
     }
 
 //    @Override

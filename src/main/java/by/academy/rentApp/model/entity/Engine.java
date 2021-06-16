@@ -20,5 +20,4 @@ public class Engine {
     @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL)
     private List<Model> models;
 
-
 }
