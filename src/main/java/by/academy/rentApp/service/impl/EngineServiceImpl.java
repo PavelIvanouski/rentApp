@@ -1,8 +1,6 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.EngineDto;
-import by.academy.rentApp.dto.EngineIdDto;
-import by.academy.rentApp.dto.EngineNameDto;
 import by.academy.rentApp.model.dao.EngineDao;
 import by.academy.rentApp.model.entity.Engine;
 import by.academy.rentApp.service.EngineService;
@@ -34,19 +32,19 @@ public class EngineServiceImpl implements EngineService {
         return engineDtos;
     }
 
-    @Override
-    public EngineIdDto getEngineById(Integer id) {
-        Engine engine = dao.findEngineById(id);
-        EngineIdDto engineIdDto = new EngineIdDto();
-        engineIdDto.setId(engine.getId());
-        return engineIdDto;
-    }
-
-    @Override
-    public EngineNameDto getEngineByName(String name) {
-        Engine engine = dao.findEngineByName(name);
-        EngineNameDto engineNameDto = new EngineNameDto();
-        engineNameDto.setName(engine.getName());
-        return engineNameDto;
-    }
+//    @Override
+//    public EngineIdDto getEngineById(Integer id) {
+//        Engine engine = dao.findEngineById(id);
+//        EngineIdDto engineIdDto = new EngineIdDto();
+//        engineIdDto.setId(engine.getId());
+//        return engineIdDto;
+//    }
+//
+//    @Override
+//    public EngineNameDto getEngineByName(String name) {
+//        Engine engine = dao.findEngineByName(name);
+//        EngineNameDto engineNameDto = new EngineNameDto();
+//        engineNameDto.setName(engine.getName());
+//        return engineNameDto;
+//    }
 }

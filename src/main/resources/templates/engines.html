@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Orders</title>
+  <link href="css/engine_style.css" rel="stylesheet">
+</head>
+<body>
+<table>
+  <tr>
+    <th>Id</th>
+    <th>Name</th>
+  </tr>
+  <th:block th:each="engine : ${engines}">
+    <tr>
+      <td th:text="${engine.id}"></td>
+      <td th:text="${engine.name}"></td>
+    </tr>
+  </th:block>
+</table>
+</body>
+</html>
