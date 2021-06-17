@@ -10,5 +10,5 @@ public interface EngineDao  extends JpaRepository<Engine, Integer> {
 
     Engine findEngineByName(String name);
 
-
+    boolean existsById(Integer id);
 }

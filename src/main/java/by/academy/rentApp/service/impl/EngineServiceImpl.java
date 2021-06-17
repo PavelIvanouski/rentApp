@@ -39,7 +39,24 @@ public class EngineServiceImpl implements EngineService {
     public EngineDto saveEngine(EngineDto engineDto) throws ValidationException {
         validateEngineDto(engineDto);
         Engine savedEngine = dao.save(engineConverter.fromEngineDtoToEngine(engineDto));
+
         return engineConverter.fromEngineToEngineDto(savedEngine);
+    }
+
+    @Override
+    public EngineDto findEngineById(Integer id) {
+        Engine engine = dao.findEngineById(id);
+        return engineConverter.fromEngineToEngineDto(engine);
+    }
+
+    @Override
+    public void deleteEngine(EngineDto engineDto) {
+        dao.delete(engineConverter.fromEngineDtoToEngine(engineDto));
+    }
+
+    @Override
+    public boolean existsById(Integer id) {
+        return dao.existsById(id);
     }
 
 
@@ -52,19 +69,5 @@ public class EngineServiceImpl implements EngineService {
         }
     }
 
-//    @Override
-//    public EngineIdDto getEngineById(Integer id) {
-//        Engine engine = dao.findEngineById(id);
-//        EngineIdDto engineIdDto = new EngineIdDto();
-//        engineIdDto.setId(engine.getId());
-//        return engineIdDto;
-//    }
-//
-//    @Override
-//    public EngineNameDto getEngineByName(String name) {
-//        Engine engine = dao.findEngineByName(name);
-//        EngineNameDto engineNameDto = new EngineNameDto();
-//        engineNameDto.setName(engine.getName());
-//        return engineNameDto;
-//    }
+
 }

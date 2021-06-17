@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit engine</title>
+    <link href="css/engine_style.css" rel="stylesheet">
+</head>
+<body>
+<h2>Edit engine </h2>
+<div th:each="el : ${engine}">
+    <form method="post">
+        <table>
+            <tr>
+                <td></td>
+                <td><input name="id" th:value="${el.id}" type="hidden"></td>
+            </tr>
+            <tr>
+                <td>Name :</td>
+                <td><input name="name" th:value="${el.name}" type="text"></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Update"></td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
