@@ -7,6 +7,11 @@
 </head>
 <body>
 <h2>Engine list</h2>
+<p>
+<form th:action="@{/engines/add}"  th:method="get">
+    <button type="submit">Add engine</button>
+</form>
+</p>
 <table>
     <tr>
         <th>Id</th>
@@ -20,9 +25,8 @@
             <td th:text="${engine.name}"></td>
             <td>
                 <form th:action="@{/engines/{id}/edit(id=${engine.id})}" method="get">
-                    <input type="submit" value="Edit">
+                    <button type="submit">Edit</button>
                 </form>
-                <!--                <a th:href="@{/engines/{id}/edit(id=${engine.id})}" class="bottomNav">Edit</a>-->
             </td>
             <td>
                 <form th:action="@{/engines/{id}/delete(id=${engine.id})}" method="post">
@@ -34,6 +38,5 @@
     </th:block>
 </table>
 <br/>
-<a href="engines/add">Add engine</a>
 </body>
 </html>

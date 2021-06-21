@@ -1,7 +1,7 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.ModelDto;
-import by.academy.rentApp.model.dao.ModelDao;
+import by.academy.rentApp.model.repository.ModelDao;
 import by.academy.rentApp.model.entity.Model;
 import by.academy.rentApp.service.ModelService;
 import org.springframework.stereotype.Service;

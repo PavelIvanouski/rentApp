@@ -25,20 +25,39 @@ public class EngineController {
     @GetMapping("")
     public String getEngines(Model model) {
         List<EngineDto> engines = engineService.getAll();
-//        model.addAttribute("engine", new EngineDto());
         model.addAttribute("engines", engines);
         return "engines";
     }
 
     @GetMapping("add")
-    public String engineAdd(Model model) {
+    public String engineAddOrUpdate(Model model) {
+        model.addAttribute("engine", new EngineDto());
         return "engine-add";
     }
 
-    @PostMapping("add")
-    public String engineAdd(@RequestParam String name, Model model) throws ValidationException {
-        EngineDto engineDto = new EngineDto();
-        engineDto.setName(name);
+//    @PostMapping("add")
+//    public String engineAdd(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
+//        engineService.saveEngine(engineDto);
+//        return "redirect:/engines";
+//    }
+
+//    @PostMapping("")
+//    public String engineAddOrUpdate(@RequestParam String name, Model model) throws ValidationException {
+//        EngineDto engineDto = new EngineDto();
+//        engineDto.setName(name);
+//        engineService.saveEngine(engineDto);
+//        return "redirect:/engines";
+//    }
+
+//
+//    @PostMapping("{id}/edit")
+//    public String engineUpdate(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
+//        engineService.saveEngine(engineDto);
+//        return "redirect:/engines";
+//    }
+
+    @PostMapping("")
+    public String engineAddOrUpdate(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
         engineService.saveEngine(engineDto);
         return "redirect:/engines";
     }
@@ -46,22 +65,16 @@ public class EngineController {
     @GetMapping("{id}/edit")
     public String engineEdit(@PathVariable Integer id, Model model) {
         if (!engineService.existsById(id)) {
-            return "redirect:/";
+            return "redirect:/engines";
         }
-        Optional<EngineDto> engineDto = Optional.ofNullable(engineService.findEngineById(id));
-        ArrayList<EngineDto> res = new ArrayList<>();
-        engineDto.ifPresent(res::add);
-        model.addAttribute("engine", res);
+        model.addAttribute("engine", engineService.findEngineById(id));
+//        Optional<EngineDto> engineDto = Optional.ofNullable(engineService.findEngineById(id));
+//        ArrayList<EngineDto> res = new ArrayList<>();
+//        engineDto.ifPresent(res::add);
+//        model.addAttribute("engine", res);
         return "engine-edit";
     }
 
-    @PostMapping("{id}/edit")
-    public String engineUpdate(@RequestParam Integer id, @RequestParam String name, Model model) throws ValidationException {
-        EngineDto engineDto = engineService.findEngineById(id);
-        engineDto.setName(name);
-        engineService.saveEngine(engineDto);
-        return "redirect:/engines";
-    }
 
     @PostMapping("{id}/delete")
     public String engineDelete(@RequestParam Integer id, Model model) throws ValidationException {
@@ -70,9 +83,4 @@ public class EngineController {
         return "redirect:/engines";
     }
 
-//
-//    @GetMapping("/name")
-//    public EngineNameDto getEngineByName(@RequestParam("name") String name) {
-//        return engineService.getEngineByName(name);
-//    }
 }

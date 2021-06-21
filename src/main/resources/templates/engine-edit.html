@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,23 +8,18 @@
 </head>
 <body>
 <h2>Edit engine </h2>
-<div th:each="el : ${engine}">
-    <form method="post">
-        <table>
-            <tr>
-                <td></td>
-                <td><input name="id" th:value="${el.id}" type="hidden"></td>
-            </tr>
-            <tr>
-                <td>Name :</td>
-                <td><input name="name" th:value="${el.name}" type="text"></td>
-            </tr>
-            <tr>
-                <td></td>
-                <td><input type="submit" value="Update"></td>
-            </tr>
-        </table>
-    </form>
-</div>
+<!--<form th:action="@{/engines/{id}/edit(id=${engine.id})}" th:object="${engine}" th:method="post">-->
+<form th:action="@{/engines}" th:object="${engine}" th:method="post">
+    <table>
+        <tr>
+            <td>Name :</td>
+            <td><input type="text" th:field="*{name}"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Update"></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

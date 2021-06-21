@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,11 +8,12 @@
 </head>
 <body>
 <h2>Add new engine </h2>
-<form action="/engines/add" method="post">
+<!--<form th:action="@{/engines/add}" th:object="${engine}" th:method="post">-->
+<form th:action="@{/engines}" th:object="${engine}" th:method="post">
     <table>
         <tr>
             <td>Name :</td>
-            <td><input name="name" type="text" placeholder="Please, enter name here"></td>
+            <td><input type="text" th:field="*{name}" placeholder="Please, enter name here"></td>
         </tr>
         <tr>
             <td></td>

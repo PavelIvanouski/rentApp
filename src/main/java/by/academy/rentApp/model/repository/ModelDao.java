@@ -1,4 +1,4 @@
-package by.academy.rentApp.model.dao;
+package by.academy.rentApp.model.repository;
 
 import by.academy.rentApp.model.entity.Model;
 import org.springframework.data.jpa.repository.JpaRepository;
