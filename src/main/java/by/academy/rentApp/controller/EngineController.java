@@ -26,6 +26,7 @@ public class EngineController {
     public String getEngines(Model model) {
         List<EngineDto> engines = engineService.getAll();
         model.addAttribute("engines", engines);
+        model.addAttribute("title", "Engines");
         return "engines";
     }
 
