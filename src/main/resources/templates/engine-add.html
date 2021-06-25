@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
 <head>
+    <!--    <title th:text="${title} + ' engine'"/>-->
     <title>Add engine</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,30 +13,22 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
-    <h2>Add new engine </h2>
-    <!--    <form th:action="@{/engines}" th:object="${engine}" th:method="post">-->
-    <!--        <table>-->
-    <!--            <tr>-->
-    <!--                <td>Name :</td>-->
-    <!--                <td><input type="text" th:field="*{name}" placeholder="Please, enter name here"></td>-->
-    <!--            </tr>-->
-    <!--            <tr>-->
-    <!--                <td></td>-->
-    <!--                <td><input type="submit" value="Create engine"></td>-->
-    <!--            </tr>-->
-    <!--        </table>-->
-    <!--    </form>-->
-    <!--    <p>123</p>-->
-    <form th:action="@{/engines}" th:object="${engine}" th:method="post">
+    <!--    <h2 th:text="${title} + ' engine'"></h2>-->
+    <h2>Add engine</h2>
+    <form th:action="@{/engines/add}" th:object="${engine}" th:method="post">
         <div class="form-group">
-            <label for="InputName">Name</label>
-            <input type="text" class="form-control" id="InputName" th:field="*{name}"
-                   placeholder="Please, enter name here">
+            <label for="InputName" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="InputName" th:field="*{name}"
+                       placeholder="Please, enter name here">
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
         </div>
         <button type="submit" class="btn btn-outline-primary">Add engine</button>
     </form>
 </div>
-
+<!--empty space for more representable view-->
+<div class="col-xs-12" style="height:250px;"></div>
 <div th:insert="blocks/footer :: footer"></div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

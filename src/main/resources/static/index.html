@@ -9,37 +9,7 @@
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-light navbar-light  fixed-top ">
-    <a class="navbar-brand" href="/">Car rent</a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="#">Cars</a>
-        </li>
-        <!-- Dropdown -->
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                Admin room
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="/engines">Engines</a>
-                <a class="dropdown-item" href="#">Types</a>
-                <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link 2</a>
-        </li>
-    </ul>
-
-    <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-            <a class="nav-link" href="#">Right</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-    </ul>
-</nav>
+<header th:insert="blocks/header :: header"></header>
 <main role="main">
 
     <section class="jumbotron text-center">
@@ -263,16 +233,7 @@
     </div>
 
 </main>
-<footer class="text-muted">
-    <div class="container">
-        <p class="float-right">
-            <a href="#">Back to top</a>
-        </p>
-        <p>Car rent in Hrogno © 2021</p>
-<!--        <p>New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a-->
-<!--                href="/docs/4.6/getting-started/introduction/">getting started guide</a>.</p>-->
-    </div>
-</footer>
+<div th:insert="blocks/footer :: footer"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"

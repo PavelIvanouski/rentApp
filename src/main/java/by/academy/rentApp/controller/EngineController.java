@@ -4,14 +4,14 @@ import by.academy.rentApp.dto.EngineDto;
 import by.academy.rentApp.exception.ValidationException;
 import by.academy.rentApp.model.entity.Engine;
 import by.academy.rentApp.service.EngineService;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/engines")
@@ -30,35 +30,30 @@ public class EngineController {
         return "engines";
     }
 
+    @PostMapping("")
+    public String engineAddOrUpdate(@Validated @ModelAttribute EngineDto engineDto, BindingResult bindingResult
+            , Model model) throws ValidationException {
+        if (bindingResult.hasErrors()) {
+//            model.addAttribute("engine",engineDto);
+//            model.addAttribute("title","Update");
+            return "engine-edit";
+        }
+        engineService.saveEngine(engineDto);
+        return "redirect:/engines";
+    }
+
     @GetMapping("add")
     public String engineAddOrUpdate(Model model) {
         model.addAttribute("engine", new EngineDto());
         return "engine-add";
     }
 
-//    @PostMapping("add")
-//    public String engineAdd(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
-//        engineService.saveEngine(engineDto);
-//        return "redirect:/engines";
-//    }
-
-//    @PostMapping("")
-//    public String engineAddOrUpdate(@RequestParam String name, Model model) throws ValidationException {
-//        EngineDto engineDto = new EngineDto();
-//        engineDto.setName(name);
-//        engineService.saveEngine(engineDto);
-//        return "redirect:/engines";
-//    }
-
-//
-//    @PostMapping("{id}/edit")
-//    public String engineUpdate(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
-//        engineService.saveEngine(engineDto);
-//        return "redirect:/engines";
-//    }
-
-    @PostMapping("")
-    public String engineAddOrUpdate(@ModelAttribute EngineDto engineDto, Model model) throws ValidationException {
+    @PostMapping("add")
+    public String engineAddPost(@Validated @ModelAttribute("engine") EngineDto engineDto, BindingResult bindingResult
+            , Model model) throws ValidationException {
+        if (bindingResult.hasErrors()) {
+            return "engine-add";
+        }
         engineService.saveEngine(engineDto);
         return "redirect:/engines";
     }
@@ -68,14 +63,10 @@ public class EngineController {
         if (!engineService.existsById(id)) {
             return "redirect:/engines";
         }
+        model.addAttribute("title", "Update");
         model.addAttribute("engine", engineService.findEngineById(id));
-//        Optional<EngineDto> engineDto = Optional.ofNullable(engineService.findEngineById(id));
-//        ArrayList<EngineDto> res = new ArrayList<>();
-//        engineDto.ifPresent(res::add);
-//        model.addAttribute("engine", res);
         return "engine-edit";
     }
-
 
     @PostMapping("{id}/delete")
     public String engineDelete(@RequestParam Integer id, Model model) throws ValidationException {
