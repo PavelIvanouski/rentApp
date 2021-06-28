@@ -6,4 +6,12 @@ import java.util.List;
 
 public interface TypeService {
     List<TypeDto> getAll();
+
+    TypeDto saveType(TypeDto typeDto);
+
+    TypeDto findTypeById(Integer id);
+
+    void deleteType(TypeDto typeDto);
+
+    boolean existsById(Integer id);
 }

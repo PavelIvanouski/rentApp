@@ -7,6 +7,7 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table
 public class Type {
@@ -18,6 +19,5 @@ public class Type {
     private String name;
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
     private List<Model> models;
-
 
 }
