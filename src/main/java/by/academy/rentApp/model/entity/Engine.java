@@ -18,10 +18,11 @@ public class Engine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
-    @Column(nullable = false)
 
+    @Column(nullable = false)
     private String name;
+
     @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL)
-    private List<Model> models;
+    private List<Car> cars;
 
 }

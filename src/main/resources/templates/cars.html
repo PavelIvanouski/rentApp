@@ -12,34 +12,40 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
-    <h2>Model list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/models/add}" role="button">Add model</a>
+    <h2>Car list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/cars/add}" role="button">Add car</a>
     </p>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
             <th scope="col">Model</th>
-            <th scope="col">Brand</th>
+            <th scope="col">Type</th>
+            <th scope="col">Engine</th>
+            <th scope="col">Volume</th>
+            <th scope="col">Year</th>
             <th scope="col">Edit</th>
             <th scope="col">Delete</th>
         </tr>
         </thead>
         <tbody>
-        <th:block th:each="model : ${models}">
+        <th:block th:each="car : ${cars}">
             <tr>
-                <td th:text="${model.id}"></td>
-                <td th:text="${model.name}"></td>
-                <td th:text="${model.brand.name}"></td>
+                <td th:text="${car.id}"></td>
+                <td th:text="${car.model.brand.name} + ' ' + ${car.model.name}"></td>
+                <td th:text="${car.type.name}"></td>
+                <td th:text="${car.engine.name}"></td>
+                <td th:text="${car.engineVolume}"></td>
+                <td th:text="${car.year}"></td>
                 <td>
-                    <a class="btn btn-outline-info" th:href="@{/models/{id}/edit(id=${model.id})}"
+                    <a class="btn btn-outline-info" th:href="@{/cars/{id}/edit(id=${car.id})}"
                        role="button">Edit</a>
                 </td>
                 <td>
-                    <form th:action="@{/models/{id}/delete(id=${model.id})}" method="post"
+                    <form th:action="@{/cars/{id}/delete(id=${car.id})}" method="post"
                           onSubmit="return confirm('Are you sure you wish to delete?');">
                         <input class="btn btn-outline-danger" type="submit" value="Delete">
-                        <input name="id" th:value="${model.id}" type="hidden">
+                        <input name="id" th:value="${car.id}" type="hidden">
                     </form>
                 </td>
             </tr>

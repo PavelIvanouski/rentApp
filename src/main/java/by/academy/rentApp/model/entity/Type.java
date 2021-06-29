@@ -15,9 +15,11 @@ public class Type {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
+
     @Column(nullable = false)
     private String name;
+
     @OneToMany(mappedBy = "type", cascade = CascadeType.ALL)
-    private List<Model> models;
+    private List<Car> cars;
 
 }

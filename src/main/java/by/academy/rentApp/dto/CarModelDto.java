@@ -10,7 +10,6 @@ import javax.validation.constraints.Size;
 
 
 @Data
-
 public class CarModelDto {
 
     private Integer id;

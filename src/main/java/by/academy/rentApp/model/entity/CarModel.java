@@ -26,6 +26,9 @@ public class CarModel {
     @EqualsAndHashCode.Exclude
     private Brand brand;
 
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    private List<Car> cars;
+
 
 
 
