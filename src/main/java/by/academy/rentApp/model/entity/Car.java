@@ -18,8 +18,6 @@ public class Car {
     @Column(name = "state_num", nullable = false)
     private String stateNum;
     @Column(nullable = false)
-    private String color;
-    @Column(nullable = false)
     private String year;
     @Column(name = "climate_control")
     private boolean climateControl;

@@ -1,0 +1,74 @@
+package by.academy.rentApp.controller;
+
+import by.academy.rentApp.dto.BrandDto;
+import by.academy.rentApp.dto.EngineDto;
+import by.academy.rentApp.service.BrandService;
+import by.academy.rentApp.service.EngineService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@Controller
+@RequestMapping("/brands")
+public class BrandController {
+    private final BrandService brandService;
+
+    public BrandController(BrandService brandService) {
+        this.brandService = brandService;
+    }
+
+    @GetMapping("")
+    public String getBrands(Model model) {
+        List<BrandDto> brands = brandService.getAll();
+        model.addAttribute("brands", brands);
+        model.addAttribute("title", "Brands");
+        return "brands";
+    }
+
+    @GetMapping("add")
+    public String getBrandAddForm(Model model) {
+        model.addAttribute("brand", new BrandDto());
+        return "brand-add";
+    }
+
+    @PostMapping("add")
+    public String addBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
+            , Model model) {
+        if (bindingResult.hasErrors()) {
+            return "brand-add";
+        }
+        brandService.saveBrand(brandDto);
+        return "redirect:/brands";
+    }
+
+    @GetMapping("{id}/edit")
+    public String getBrandEditForm(@PathVariable Integer id, Model model) {
+        if (!brandService.existsById(id)) {
+            return "redirect:/brands";
+        }
+        model.addAttribute("brand",brandService.findBrandById(id));
+        return "brand-edit";
+    }
+
+    @PostMapping("{id}/edit")
+    public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
+            , Model model) {
+        if (bindingResult.hasErrors()) {
+            return "brand-edit";
+        }
+        brandService.saveBrand(brandDto);
+        return "redirect:/brands";
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteBrand(@RequestParam Integer id, Model model) {
+        BrandDto brandDto = brandService.findBrandById(id);
+        brandService.deleteBrand(brandDto);
+        return "redirect:/brands";
+    }
+
+}
