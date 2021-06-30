@@ -5,9 +5,7 @@ import by.academy.rentApp.model.entity.Engine;
 import by.academy.rentApp.model.entity.Type;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 @Data
 public class CarDto {
@@ -28,7 +26,8 @@ public class CarDto {
 
     private int engineVolume;
 
-    @NotNull(message = "Seats num should not be empty")
+    @Min(value = 2, message = "Seats num should not be less than 2")
+    @Max(value = 9, message = "Seats num should not be greater than 9")
     private int seatsNum;
 
     private boolean autoTransmission;

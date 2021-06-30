@@ -32,14 +32,18 @@ public class BrandController {
     @GetMapping("add")
     public String getBrandAddForm(Model model) {
         model.addAttribute("brand", new BrandDto());
-        return "brand-add";
+        model.addAttribute("title", "Add");
+        model.addAttribute("postURL", "/brands/add");
+        return "brand-edit";
     }
 
     @PostMapping("add")
     public String addBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
         if (bindingResult.hasErrors()) {
-            return "brand-add";
+            model.addAttribute("title", "Add");
+            model.addAttribute("postURL", "/brands/add");
+            return "brand-edit";
         }
         brandService.saveBrand(brandDto);
         return "redirect:/brands";
@@ -50,7 +54,9 @@ public class BrandController {
         if (!brandService.existsById(id)) {
             return "redirect:/brands";
         }
-        model.addAttribute("brand",brandService.findBrandById(id));
+        model.addAttribute("brand", brandService.findBrandById(id));
+        model.addAttribute("postURL", "/brands/" + id + "/edit");
+        model.addAttribute("title", "Update");
         return "brand-edit";
     }
 
@@ -58,6 +64,8 @@ public class BrandController {
     public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("title", "Update");
+            model.addAttribute("postURL", "/brands/" + brandDto.getId() + "/edit");
             return "brand-edit";
         }
         brandService.saveBrand(brandDto);

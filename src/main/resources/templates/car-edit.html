@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <!--    <title th:text="${title} + ' engine'"/>-->
-    <title>Add car</title>
+    <title>Update car</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -13,8 +13,12 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container mt-5">
-    <h2>Add car</h2>
-    <form th:action="@{/cars/add}" th:object="${car}" th:method="post">
+    <h2>Update car</h2>
+    <form th:href="@{/cars/{id}/edit(id=${car.id})}" th:object="${car}" th:method="post">
+        <div class="form-group">
+            <label for="InputId">Id</label>
+            <input type="text" readonly class="form-control-plaintext" id="InputId" th:field="*{id}">
+        </div>
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="selectModel">Model</label>
@@ -100,7 +104,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Add car</button>
+        <button type="submit" class="btn btn-outline-primary">Update car</button>
 
     </form>
 </div>

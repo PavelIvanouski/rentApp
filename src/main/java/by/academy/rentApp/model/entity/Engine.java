@@ -23,6 +23,8 @@ public class Engine {
     private String name;
 
     @OneToMany(mappedBy = "engine", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Car> cars;
 
 }

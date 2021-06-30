@@ -25,6 +25,8 @@ public class Customer {
     private String lastName;
     @Column(nullable = false)
     private String passport;
+    @Column(nullable = false)
+    private String email;
     @Column
     private boolean active;
 
@@ -37,5 +39,7 @@ public class Customer {
     private Set<Role> roles =new HashSet<>(0);
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Rent> rentList;
 }
