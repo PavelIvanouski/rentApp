@@ -1,5 +1,6 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-light navbar-light  fixed-top ">
+<!--        <nav class="navbar navbar-expand-sm  navbar-light  fixed-top " style="background-color: #71d0d3">-->
         <a class="navbar-brand" href="/">Car rent</a>
         <ul class="navbar-nav mr-auto">
 
@@ -28,13 +29,21 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Cars</a>
+                <a class="nav-link" href="/cars/all">Cars</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="btn btn-outline-info mr-2" href="/customers/signup">Sign up</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="btn btn-outline-info mr-2" href="/customers/signin">Sign in</a>
             </li>
         </ul>
     </nav>

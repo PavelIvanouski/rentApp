@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <html lang="en">
 <head>
     <title>Car rent in Hrodno</title>
@@ -10,229 +10,204 @@
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
-<main role="main">
+<!--<main role="main">-->
 
-    <section class="jumbotron text-center">
+<!--    <section class="jumbotron text-center">-->
+<!--        <div class="container">-->
+<!--            <h1>Album example</h1>-->
+<!--            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,-->
+<!--                etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>-->
+<!--            <p>-->
+<!--                <a href="#" class="btn btn-primary my-2">Main call to action</a>-->
+<!--                <a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
+<!--            </p>-->
+<!--        </div>-->
+<!--    </section>-->
+
+<!--    -->
+<!--</main>-->
+
+<header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
+    <div class="text-center my-5">
+        <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="...">
+        <h1 class="text-white fs-3 fw-bolder">Welcome!</h1>
+<!--        <p class="text-white-50 mb-0">Landing Page Template</p>-->
+        <a class="btn btn-primary btn-xl text-uppercase" href="#filter">Go!</a>
+    </div>
+</header>
+
+<!--<div >-->
+<!--    <img th:src="@{/img/home.jpg}" alt=""/>-->
+<!--</div>-->
+
+
+<section class="page-section" id="filter">
+<!--    <div class="container mt-5">-->
+<!--        <div class="row justify-content-center align-items-center">-->
+<!--            <h2>Find your car</h2>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="container">
+
+<!--        <div class="row justify-content-center align-items-center">-->
+<!--            <form>-->
+<!--                <div class="form-row align-items-center">-->
+<!--                    <div class="form-group col">-->
+<!--                        <label for="Model">Model</label>-->
+<!--                        <select id="Model" class="form-control">-->
+<!--                            <option value=""> &#45;&#45;</option>-->
+<!--                            <option th:each="model : ${models}"-->
+<!--                                    th:value="${model.id}"-->
+<!--                                    th:utext="${model.brand.name} + ' ' + ${model.name}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group col">-->
+<!--                        <label for="Type">Type</label>-->
+<!--                        <select id="Type" class="form-control">-->
+<!--                            <option value=""> &#45;&#45;</option>-->
+<!--                            <option th:each="type : ${types}"-->
+<!--                                    th:value="${type.id}"-->
+<!--                                    th:utext="${type.name}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group col">-->
+<!--                        <label for="Engine">Engine</label>-->
+<!--                        <select id="Engine" class="form-control">-->
+<!--                            <option value=""> &#45;&#45;</option>-->
+<!--                            <option th:each="engine : ${engines}"-->
+<!--                                    th:value="${engine.id}"-->
+<!--                                    th:utext="${engine.name}"></option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="form-row align-items-center">-->
+<!--                    <div class="form-group col">-->
+<!--                        <label for="SeatsNum">Seats num.</label>-->
+<!--                        <select id="SeatsNum" class="form-control">-->
+<!--                            <option>2</option>-->
+<!--                            <option>3</option>-->
+<!--                            <option>4</option>-->
+<!--                            <option>5</option>-->
+<!--                        </select>-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group col">-->
+<!--                        <label for="RentBegin">Rent begin</label>-->
+<!--                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">-->
+<!--                    </div>-->
+
+<!--                    <div class="form-group col">-->
+<!--                        <label for="RentEnd">Rent end</label>-->
+<!--                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="form-row align-items-center">-->
+<!--                    <div class="form-group col my-auto">-->
+<!--                        <div class="form-check">-->
+<!--                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
+<!--                            <label class="form-check-label" for="Autotransmission">-->
+<!--                                Auto transmission-->
+<!--                            </label>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="text-center">-->
+<!--                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>-->
+<!--                </div>-->
+
+<!--            </form>-->
+<!--        </div>-->
+
         <div class="container">
-            <h1>Album example</h1>
-            <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,
-                etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-            <p>
-                <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-            </p>
-        </div>
-    </section>
-
-    <div class="album py-5 bg-light">
-        <div class="container">
-
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
+                <div class="col-lg-10 col-xl-9 mx-auto">
+                    <div class="card card-signin flex-row my-5">
+                        <div class="card-img-left d-none d-md-flex">
+                            <!-- Background image for card set in CSS! -->
                         </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
                         <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                            <h5 class="card-title text-center">Find your car</h5>
+                            <form>
+                                <div class="form-row align-items-center">
+                                    <div class="form-group col">
+                                        <label for="Model">Model</label>
+                                        <select id="Model" class="form-control">
+                                            <option value=""> --</option>
+                                            <option th:each="model : ${models}"
+                                                    th:value="${model.id}"
+                                                    th:utext="${model.brand.name} + ' ' + ${model.name}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col">
+                                        <label for="Type">Type</label>
+                                        <select id="Type" class="form-control">
+                                            <option value=""> --</option>
+                                            <option th:each="type : ${types}"
+                                                    th:value="${type.id}"
+                                                    th:utext="${type.name}"></option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col">
+                                        <label for="Engine">Engine</label>
+                                        <select id="Engine" class="form-control">
+                                            <option value=""> --</option>
+                                            <option th:each="engine : ${engines}"
+                                                    th:value="${engine.id}"
+                                                    th:utext="${engine.name}"></option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
 
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <div class="form-row align-items-center">
+                                    <div class="form-group col">
+                                        <label for="SeatsNum">Seats num.</label>
+                                        <select id="SeatsNum" class="form-control">
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group col">
+                                        <label for="RentBegin">Rent begin</label>
+                                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">
+                                    </div>
+
+                                    <div class="form-group col">
+                                        <label for="RentEnd">Rent end</label>
+                                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">
+                                    </div>
                                 </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <div class="form-row align-items-center">
+                                    <div class="form-group col my-auto">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">
+                                            <label class="form-check-label" for="Autotransmission">
+                                                Auto transmission
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>
                                 </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
 
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card mb-4 shadow-sm">
-                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                            <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                        </svg>
-
-                        <div class="card-body">
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-                                </div>
-                                <small class="text-muted">9 mins</small>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</main>
+
+    </div>
+</section>
 <div th:insert="blocks/footer :: footer"></div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"

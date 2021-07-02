@@ -29,6 +29,15 @@ public class CustomerController {
         return "customers";
     }
 
+    @GetMapping("signup")
+    public String getSignUpForm(Model model) {
+        return "signup";
+    }
+
+    @GetMapping("signin")
+    public String getSignInForm(Model model) {
+        return "signin";
+    }
 //    @GetMapping("add")
 //    public String getBrandAddForm(Model model) {
 //        model.addAttribute("brand", new BrandDto());

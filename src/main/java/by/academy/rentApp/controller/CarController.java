@@ -45,6 +45,11 @@ public class CarController {
         return "car-add";
     }
 
+    @GetMapping("all")
+    public String getAllCarsForm(Model model) {
+        return "cars-all";
+    }
+
     @PostMapping("add")
     public String addCar(@Validated @ModelAttribute("car") CarDto carDto, BindingResult bindingResult
             , Model model) {
