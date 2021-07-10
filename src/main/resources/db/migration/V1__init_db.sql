@@ -15,9 +15,7 @@ CREATE TABLE car_model
     CONSTRAINT brand_id_fk FOREIGN KEY (brand_id) REFERENCES brand (id) ON DELETE RESTRICT
 );
 
-INSERT INTO car_model VALUES (1, 'Polo',1);
-INSERT INTO car_model VALUES (2, 'Passat',1);
-INSERT INTO car_model VALUES (3, 'A4',2);
+
 
 CREATE TABLE engine
 (
@@ -109,5 +107,3 @@ CREATE TABLE rent
     CONSTRAINT status_id_fk FOREIGN KEY (status_id) REFERENCES status (id) ON DELETE RESTRICT
 );
 
-INSERT INTO car VALUES (1,1,1,5,2000,5,false,'45588888686','2190 ii-4','2015');
-INSERT INTO car VALUES (2,3,2,2,2300,5,false,'123456888686','1010 ip-4','2018');

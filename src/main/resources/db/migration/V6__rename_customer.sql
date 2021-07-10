@@ -1,0 +1,1 @@
+RENAME TABLE rent.customer TO user;

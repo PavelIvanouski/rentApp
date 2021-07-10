@@ -20,7 +20,7 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Customer> customers = new HashSet<Customer>();
+    private Set<User> users = new HashSet<User>();
 
 
 }

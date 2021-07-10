@@ -10,7 +10,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table
-public class Customer {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -31,14 +31,14 @@ public class Customer {
     private boolean active;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "customer_role", joinColumns = @JoinColumn(name = "customer_id"),
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Set<Role> roles =new HashSet<>(0);
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Order> orderList;
