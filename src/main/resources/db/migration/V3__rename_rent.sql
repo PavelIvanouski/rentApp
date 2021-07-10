@@ -1,0 +1,1 @@
+RENAME TABLE rent.rent TO ordr;

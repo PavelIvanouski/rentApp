@@ -1,16 +1,11 @@
 package by.academy.rentApp.dto;
 
-import by.academy.rentApp.model.entity.Rent;
 import by.academy.rentApp.model.entity.Role;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Data

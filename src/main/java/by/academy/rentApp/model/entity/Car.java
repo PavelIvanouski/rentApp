@@ -58,6 +58,6 @@ public class Car {
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Rent> rentList;
+    private List<Order> orderList;
 
 }

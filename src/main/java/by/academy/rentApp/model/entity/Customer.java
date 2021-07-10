@@ -41,5 +41,5 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Rent> rentList;
+    private List<Order> orderList;
 }
