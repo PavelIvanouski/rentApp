@@ -29,7 +29,7 @@
             <label for="InputName">Name</label>
             <input type="text" class="form-control" id="InputName" th:field="*{name}"
                    placeholder="Please, enter name here">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <button type="submit" class="btn btn-outline-primary" th:text="${title}"></button>
     </form>

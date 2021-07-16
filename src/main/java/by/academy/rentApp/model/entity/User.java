@@ -14,7 +14,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String login;
     @Column(nullable = false)
@@ -36,7 +36,7 @@ public class User {
     )
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private Set<Role> roles =new HashSet<>(0);
+    private Set<Role> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @ToString.Exclude

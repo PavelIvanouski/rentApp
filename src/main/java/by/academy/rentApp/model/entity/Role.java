@@ -13,14 +13,14 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
     @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<User> users = new HashSet<User>();
+//    @ManyToMany(mappedBy = "roles")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private Set<User> users = new HashSet<User>();
 
 
 }

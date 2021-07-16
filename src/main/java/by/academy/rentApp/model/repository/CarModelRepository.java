@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CarModelRepository extends JpaRepository<CarModel, Integer> {
+
     CarModel findCarModelById(Integer id);
 
     boolean existsById(Integer id);
