@@ -41,7 +41,7 @@
                 <a class="nav-link" href="#">About</a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="btn btn-outline-info mr-2" href="/login">Login</a>
+                <a class="btn btn-outline-primary mr-2" href="/login">Login</a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
                 <a class="btn btn-primary mr-2" href="/registration">Sign-up</a>
@@ -51,7 +51,7 @@ and ((#strings.contains(#authentication.principal.authorities,'ADMIN'))
 or(#strings.contains(#authentication.principal.authorities,'USER')))}"
                 class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardropProfile" data-toggle="dropdown">
-                    My profile
+                    My account
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">User info</a>
