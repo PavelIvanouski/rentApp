@@ -47,7 +47,8 @@ public class CarController {
 
     @GetMapping("all")
     public String getAllCarsForm(Model model) {
-        return "cars-all";
+//        return "cars-all";
+        return "test";
     }
 
     @PostMapping("add")

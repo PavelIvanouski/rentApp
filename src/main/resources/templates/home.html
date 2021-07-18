@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <html lang="en">
 <head>
     <title>Car rent in Hrodno</title>
@@ -36,10 +38,10 @@
     </div>
 </header>
 
-<div class="container">
+<!--<div class="container">-->
 
-    <img th:src="@{/images/login.jpg}" class="img-responsive center-block"  alt="Logo"/>
-</div>
+<!--    <img th:src="@{/images/home.jpg}" class="img-responsive center-block"  alt="Logo"/>-->
+<!--</div>-->
 
 
 <section class="page-section" id="filter">
@@ -48,7 +50,7 @@
 <!--            <h2>Find your car</h2>-->
 <!--        </div>-->
 <!--    </div>-->
-    <div class="container">
+<!--    <div class="container">-->
 
 <!--        <div class="row justify-content-center align-items-center">-->
 <!--            <form>-->
@@ -123,12 +125,12 @@
 <!--        </div>-->
 
         <div class="container">
-            <div class="row">
+<!--            <div class="row">-->
                 <div class="col-lg-10 col-xl-9 mx-auto">
                     <div class="card card-signin flex-row my-5">
-                        <div class="card-img-left d-none d-md-flex">
-                            <!-- Background image for card set in CSS! -->
-                        </div>
+<!--                        <div class="card-img-left d-none d-md-flex">-->
+<!--                            &lt;!&ndash; Background image for card set in CSS! &ndash;&gt;-->
+<!--                        </div>-->
                         <div class="card-body">
                             <h5 class="card-title text-center">Find your car</h5>
                             <form>
@@ -203,11 +205,11 @@
                         </div>
                     </div>
                 </div>
-            </div>
+<!--            </div>-->
         </div>
 
 
-    </div>
+<!--    </div>-->
 </section>
 <div th:insert="blocks/footer :: footer"></div>
 

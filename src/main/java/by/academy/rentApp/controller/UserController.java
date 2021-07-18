@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users",userService.getAll());
+//        model.addAttribute("users",userService.getAll());
         return "users";
     }
 }

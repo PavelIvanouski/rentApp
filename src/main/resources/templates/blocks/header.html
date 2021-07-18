@@ -1,17 +1,20 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-light navbar-light  fixed-top ">
-<!--        <nav class="navbar navbar-expand-sm  navbar-light  fixed-top " style="background-color: #71d0d3">-->
+        <!--        <nav class="navbar navbar-expand-sm  navbar-light  fixed-top " style="background-color: #71d0d3">-->
         <a class="navbar-brand" href="/">Car rent</a>
-        <ul class="navbar-nav mr-auto">
-
-            <!--            <li class="nav-item">-->
-            <!--                <a class="nav-link" href="#">Link 2</a>-->
-            <!--            </li>-->
-        </ul>
+        <!--        <ul class="navbar-nav mr-auto">-->
+        <!--           -->
+        <!--        </ul>-->
 
         <ul class="navbar-nav ml-auto">
+            <li th:if="${#request.userPrincipal  != null}">
+                <a class="nav-link disabled">Hello, <span th:text="${#authentication.name}"></span></a>
+            </li>
+            <li th:if="${#request.userPrincipal  == null}" class="nav-item">
+                <a class="nav-link disabled"> Hello, guest!</a>
+            </li>
             <!-- Dropdown -->
-            <li class="nav-item dropdown">
+            <li sec:authorize="hasAuthority('ADMIN')" class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
                     Admin room
                 </a>
@@ -22,7 +25,7 @@
                     <a class="dropdown-item" href="/types">Types</a>
                     <a class="dropdown-item" href="/cars">Cars</a>
                     <div class="dropdown-divider"></div>
-<!--                    <a class="dropdown-item" href="/roles">Roles</a>-->
+                    <!--                    <a class="dropdown-item" href="/roles">Roles</a>-->
                     <a class="dropdown-item" href="/users">Users</a>
                     <a class="dropdown-item" href="#">Orders</a>
                     <a class="dropdown-item" href="#">Bills</a>
@@ -37,15 +40,16 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">About</a>
             </li>
-
-            <li class="nav-item">
-                <a class="btn btn-outline-info mr-2" href="/customers/signup">Sign up</a>
+            <li th:if="${#request.userPrincipal  == null}" class="nav-item">
+                <a class="btn btn-outline-info mr-2" href="/login">Login</a>
             </li>
-
-            <li class="nav-item">
-                <a class="btn btn-outline-info mr-2" href="/customers/signin">Sign in</a>
+            <li th:if="${#request.userPrincipal  == null}" class="nav-item">
+                <a class="btn btn-primary mr-2" href="/registration">Sign-up</a>
             </li>
-            <li class="nav-item dropdown">
+            <li th:if="${ #authorization.expression('isAuthenticated()')
+and ((#strings.contains(#authentication.principal.authorities,'ADMIN'))
+or(#strings.contains(#authentication.principal.authorities,'USER')))}"
+                class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardropProfile" data-toggle="dropdown">
                     My profile
                 </a>
@@ -53,19 +57,10 @@
                     <a class="dropdown-item" href="#">User info</a>
                     <a class="dropdown-item" href="#">Orders</a>
                     <a class="dropdown-item" href="#">Bills</a>
-                    <a class="dropdown-item" href="#">Logout</a>
+                    <a class="dropdown-item" th:href="@{/logout}">Logout</a>
                 </div>
             </li>
         </ul>
     </nav>
-    <!--        <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm fixed-top">-->
-    <!--            <h5 class="my-0 mr-md-auto font-weight-normal">Company name</h5>-->
-    <!--            <nav class="my-2 my-md-0 mr-md-3">-->
-    <!--                <a class="p-2 text-dark" href="#">Features</a>-->
-    <!--                <a class="p-2 text-dark" href="#">Enterprise</a>-->
-    <!--                <a class="p-2 text-dark" href="#">Support</a>-->
-    <!--                <a class="p-2 text-dark" href="#">Pricing</a>-->
-    <!--            </nav>-->
-    <!--            <a class="btn btn-outline-primary" href="#">Sign up</a>-->
-    <!--        </div>-->
+
 </div>

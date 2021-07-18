@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table
 public class Role {
@@ -15,7 +18,7 @@ public class Role {
     @Column
     private Integer id;
     @Column(nullable = false)
-    private String name;
+    private String role;
 
 //    @ManyToMany(mappedBy = "roles")
 //    @ToString.Exclude

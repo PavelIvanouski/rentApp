@@ -1,0 +1,1 @@
+ALTER TABLE rent.user MODIFY password VARCHAR (255) NOT NULL;
