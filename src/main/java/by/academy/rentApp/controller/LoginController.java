@@ -20,15 +20,15 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping(value={ "/login"})
-    public String login(Model model){
+    @GetMapping(value = {"/login"})
+    public String login(Model model) {
         return "login";
     }
 
 
-    @GetMapping(value="/registration")
-    public String registration(Model model){
-        model.addAttribute("user",new User());
+    @GetMapping(value = "/registration")
+    public String registration(Model model) {
+        model.addAttribute("user", new User());
         return "registration";
     }
 
@@ -39,6 +39,12 @@ public class LoginController {
             bindingResult
                     .rejectValue("userName", "error.user",
                             "There is already a user registered with the user name provided");
+            return "registration";
+        }
+        if (!user.getPassword().equals(user.getPasswordConfirm())) {
+            bindingResult
+                    .rejectValue("passwordConfirm", "error.user",
+                            "Password mismatch");
             return "registration";
         }
         if (bindingResult.hasErrors()) {
