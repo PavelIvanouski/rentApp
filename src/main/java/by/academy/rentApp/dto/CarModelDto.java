@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 
 
 @Data
@@ -21,5 +22,8 @@ public class CarModelDto {
     @NotNull(message = "Brand should not be empty")
     private Brand brand;
 
+    private Timestamp creatingDate;
+
+    private Timestamp updatingDate;
 
 }

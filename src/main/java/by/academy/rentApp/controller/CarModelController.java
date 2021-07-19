@@ -1,14 +1,17 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.CarModelDto;
+import by.academy.rentApp.model.entity.CarModel;
 import by.academy.rentApp.service.BrandService;
 import by.academy.rentApp.service.CarModelService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Controller
@@ -28,22 +31,29 @@ public class CarModelController {
         List<CarModelDto> models = carModelService.getAll();
         model.addAttribute("models", models);
         model.addAttribute("title", "Models");
-        return "models";
+        return "model/models";
     }
 
     @GetMapping("add")
     public String getCarModelAddForm(Model model) {
         model.addAttribute("model", new CarModelDto());
         model.addAttribute("brands", brandService.getAll());
-        return "model-add";
+        return "model/model-add";
     }
 
     @PostMapping("add")
     public String addModel(@Validated @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult
             , Model model) {
+        if (carModelService.findModelByName(carModelDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.carModelDto",
+                            "There is already a model with the model name provided");
+            model.addAttribute("brands", brandService.getAll());
+            return "model/model-add";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAll());
-            return "model-add";
+            return "model/model-add";
         }
         carModelService.saveModel(carModelDto);
         return "redirect:/models";
@@ -56,15 +66,22 @@ public class CarModelController {
         }
         model.addAttribute("model", carModelService.findModelById(id));
         model.addAttribute("brands", brandService.getAll());
-        return "model-edit";
+        return "model/model-edit";
     }
 
     @PostMapping("{id}/edit")
-    public String updateModel(@Validated @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult
+    public String updateModel(@NotNull @Validated @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult
             , Model model) {
+        if (carModelService.findModelByName(carModelDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.carModelDto",
+                            "There is already a model with the model name provided");
+            model.addAttribute("brands", brandService.getAll());
+            return "model/model-edit";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAll());
-            return "model-edit";
+            return "model/model-edit";
         }
         carModelService.saveModel(carModelDto);
         return "redirect:/models";

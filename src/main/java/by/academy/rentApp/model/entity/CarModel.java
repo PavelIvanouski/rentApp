@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 
@@ -20,11 +21,17 @@ public class CarModel {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "brand_id", nullable = false)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Brand brand;
+
+    @Column(name = "creating_date")
+    private Timestamp creatingDate;
+
+    @Column(name = "updating_date")
+    private Timestamp updatingDate;
 
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     @ToString.Exclude

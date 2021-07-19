@@ -3,6 +3,7 @@ package by.academy.rentApp.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Data
@@ -31,6 +32,12 @@ public class Car {
 
     @Column(name = "auto_transmission")
     private boolean autoTransmission;
+
+    @Column(name = "creating_date")
+    private Timestamp creatingDate;
+
+    @Column(name = "updating_date")
+    private Timestamp updatingDate;
 
 //    @Column(name = "climate_control")
 //    private boolean climateControl;

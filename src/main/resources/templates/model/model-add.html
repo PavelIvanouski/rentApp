@@ -14,28 +14,28 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 
-<div class="container mt-5">
-    <!--    <h2 th:text="${title} + ' engine'"></h2>-->
-    <h2>Add model</h2>
-    <form th:action="@{/models/add}" th:object="${model}" th:method="post">
-        <div class="form-group">
-            <label for="InputName">Name</label>
-            <input type="text" class="form-control" id="InputName" th:field="*{name}"
-                   placeholder="Please, enter name here">
-            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
-        </div>
-        <div class="form-group">
-            <label for="selectBrand">Brand</label>
-            <select th:field="*{brand}" id="selectBrand" class="form-control">
-                <option value=""> --</option>
-                <option th:each="brand : ${brands}"
-                        th:value="${brand.id}"
-                        th:utext="${brand.name}"/>
-            </select>
-            <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
-        </div>
-        <button type="submit" class="btn btn-outline-primary">Add model</button>
-    </form>
+<div class="container pt-5 mt-5">
+        <!--    <h2 th:text="${title} + ' engine'"></h2>-->
+        <h2>Add model</h2>
+        <form th:action="@{/models/add}" th:object="${model}" th:method="post">
+            <div class="form-group">
+                <label for="InputName">Name</label>
+                <input type="text" class="form-control" id="InputName" th:field="*{name}"
+                       placeholder="Please, enter name here">
+                <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            </div>
+            <div class="form-group">
+                <label for="selectBrand">Brand</label>
+                <select th:field="*{brand}" id="selectBrand" class="form-control">
+                    <option value=""> --</option>
+                    <option th:each="brand : ${brands}"
+                            th:value="${brand.id}"
+                            th:utext="${brand.name}"/>
+                </select>
+                <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
+            </div>
+            <button type="submit" class="btn btn-outline-primary">Add model</button>
+        </form>
 </div>
 <!--empty space for more representable view-->
 <div class="col-xs-12" style="height:250px;"></div>

@@ -18,6 +18,12 @@ public class Order {
     @Column(name = "rent_end")
     private Timestamp rentEnd;
 
+    @Column(name = "creating_date")
+    private Timestamp creatingDate;
+
+    @Column(name = "updating_date")
+    private Timestamp updatingDate;
+
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;

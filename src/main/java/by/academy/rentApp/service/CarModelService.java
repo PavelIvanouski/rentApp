@@ -12,6 +12,8 @@ public interface CarModelService {
 
     CarModelDto findModelById(Integer id);
 
+    CarModelDto findModelByName(String name);
+
     void deleteModel(CarModelDto carModelDto);
 
     boolean existsById(Integer id);

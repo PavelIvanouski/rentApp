@@ -8,6 +8,7 @@ import by.academy.rentApp.service.CarModelService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,14 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     @Transactional
     public CarModelDto saveModel(CarModelDto carModelDto) {
+        long now = System.currentTimeMillis();
+        Timestamp sqlTimestamp = new Timestamp(now);
+        if (carModelDto.getId() == null) {
+            carModelDto.setCreatingDate(sqlTimestamp);
+        } else {
+            carModelDto.setUpdatingDate(sqlTimestamp);
+        }
+
         CarModel savedCarModel = carModelRepository.save(CarModelMapper.INSTANCE.carModelDtoToCarModel(carModelDto));
         return CarModelMapper.INSTANCE.carModelToCarModelDto(savedCarModel);
     }
@@ -39,6 +48,12 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     public CarModelDto findModelById(Integer id) {
         CarModel carModel = carModelRepository.findCarModelById(id);
+        return CarModelMapper.INSTANCE.carModelToCarModelDto(carModel);
+    }
+
+    @Override
+    public CarModelDto findModelByName(String name) {
+        CarModel carModel = carModelRepository.findCarModelByName(name);
         return CarModelMapper.INSTANCE.carModelToCarModelDto(carModel);
     }
 

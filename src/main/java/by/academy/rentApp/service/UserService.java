@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -36,10 +37,17 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        long now = System.currentTimeMillis();
+        Timestamp sqlTimestamp = new Timestamp(now);
+        if (user.getId() == null) {
+            user.setCreatingDate(sqlTimestamp);
+        } else {
+            user.setUpdatingDate(sqlTimestamp);
+        }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);
-//        Role userRole = roleRepository.findByRole("ADMIN");
-        Role userRole = roleRepository.findByRole("USER");
+        Role userRole = roleRepository.findByRole("ADMIN");
+//        Role userRole = roleRepository.findByRole("USER");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         return userRepository.save(user);
     }

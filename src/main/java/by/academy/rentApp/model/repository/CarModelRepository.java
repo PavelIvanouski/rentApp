@@ -10,5 +10,7 @@ public interface CarModelRepository extends JpaRepository<CarModel, Integer> {
 
     CarModel findCarModelById(Integer id);
 
+    CarModel findCarModelByName(String name);
+
     boolean existsById(Integer id);
 }
