@@ -11,6 +11,8 @@ public interface TypeService {
 
     TypeDto findTypeById(Integer id);
 
+    TypeDto findTypeByName(String name);
+
     void deleteType(TypeDto typeDto);
 
     boolean existsById(Integer id);

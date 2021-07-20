@@ -12,6 +12,8 @@ public interface BrandService {
 
     BrandDto findBrandById(Integer id);
 
+    BrandDto findBrandByName(String name);
+
     void deleteBrand(BrandDto brandDto);
 
     boolean existsById(Integer id);

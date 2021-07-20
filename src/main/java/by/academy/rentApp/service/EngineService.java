@@ -11,6 +11,8 @@ public interface EngineService {
 
     EngineDto findEngineById(Integer id);
 
+    EngineDto findEngineByName(String name);
+
     void deleteEngine(EngineDto engineDto);
 
     boolean existsById(Integer id);

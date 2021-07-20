@@ -5,8 +5,7 @@
 <html lang="en">
 <head>
 
-    <!--    <title>Update brand</title>-->
-    <title th:text="${title} + ' brand'"/>
+    <title>Update type</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -15,25 +14,25 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 
-<div class="container mt-5">
-    <h2 th:text="${title} + ' brand'"></h2>
+<div class="container pt-5 mt-5">
+    <h2>Update type</h2>
+    <form th:href="@{/types/{id}/edit(id=${type.id})}" th:object="${type}" th:method="post">
 
-    <!--    <form  th:object="${brand}" th:method="post" th:href="@{/brands/{id}/edit(id=${brand.id})}">-->
-    <form th:object="${brand}" th:method="post" th:href="@{postURL}">
-       <span th:switch="${title}">
-        <div th:case="Update" class="form-group">
-            <label for="InputId">Id</label>
-            <input type="text" readonly class="form-control-plaintext" id="InputId" th:field="*{id}">
+        <div class="form-group">
+            <input type="text" hidden class="form-control-plaintext"  th:field="*{id}">
         </div>
-       </span>
+
+        <div class="form-group">
+            <td th:text="'Id: ' + ${type.id}"></td>
+        </div>
 
         <div class="form-group">
             <label for="InputName">Name</label>
             <input type="text" class="form-control" id="InputName" th:field="*{name}"
                    placeholder="Please, enter name here">
-            <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+            <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
-        <button type="submit" class="btn btn-outline-primary" th:text="${title}"></button>
+        <button type="submit" class="btn btn-outline-primary">Update type</button>
     </form>
 </div>
 <!--empty space for more representable view-->

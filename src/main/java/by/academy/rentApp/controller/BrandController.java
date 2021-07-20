@@ -26,7 +26,7 @@ public class BrandController {
         List<BrandDto> brands = brandService.getAll();
         model.addAttribute("brands", brands);
         model.addAttribute("title", "Brands");
-        return "brands";
+        return "brand/brands";
     }
 
     @GetMapping("add")
@@ -34,16 +34,24 @@ public class BrandController {
         model.addAttribute("brand", new BrandDto());
         model.addAttribute("title", "Add");
         model.addAttribute("postURL", "/brands/add");
-        return "brand-edit";
+        return "brand/brand-edit";
     }
 
     @PostMapping("add")
     public String addBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
+        if (brandService.findBrandByName(brandDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.BrandDto",
+                            "There is already a brand with the brand name provided");
+            model.addAttribute("title", "Add");
+            model.addAttribute("postURL", "/brands/add");
+            return "brand/brand-edit";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", "Add");
             model.addAttribute("postURL", "/brands/add");
-            return "brand-edit";
+            return "brand/brand-edit";
         }
         brandService.saveBrand(brandDto);
         return "redirect:/brands";
@@ -57,16 +65,24 @@ public class BrandController {
         model.addAttribute("brand", brandService.findBrandById(id));
         model.addAttribute("postURL", "/brands/" + id + "/edit");
         model.addAttribute("title", "Update");
-        return "brand-edit";
+        return "brand/brand-edit";
     }
 
     @PostMapping("{id}/edit")
     public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
+        if (brandService.findBrandByName(brandDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.BrandDto",
+                            "There is already a brand with the brand name provided");
+            model.addAttribute("title", "Update");
+            model.addAttribute("postURL", "/brands/" + brandDto.getId() + "/edit");
+            return "brand/brand-edit";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", "Update");
             model.addAttribute("postURL", "/brands/" + brandDto.getId() + "/edit");
-            return "brand-edit";
+            return "brand/brand-edit";
         }
         brandService.saveBrand(brandDto);
         return "redirect:/brands";

@@ -24,20 +24,26 @@ public class EngineController {
         List<EngineDto> engines = engineService.getAll();
         model.addAttribute("engines", engines);
         model.addAttribute("title", "Engines");
-        return "engines";
+        return "engine/engines";
     }
 
     @GetMapping("add")
     public String getEngineAddForm(Model model) {
         model.addAttribute("engine", new EngineDto());
-        return "engine-add";
+        return "engine/engine-add";
     }
 
     @PostMapping("add")
     public String addEngine(@Validated @ModelAttribute("engine") EngineDto engineDto, BindingResult bindingResult
             , Model model) {
+        if (engineService.findEngineByName(engineDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.EngineDto",
+                            "There is already a engine with the engine name provided");
+            return "engine/engine-add";
+        }
         if (bindingResult.hasErrors()) {
-            return "engine-add";
+            return "engine/engine-add";
         }
         engineService.saveEngine(engineDto);
         return "redirect:/engines";
@@ -49,14 +55,20 @@ public class EngineController {
             return "redirect:/engines";
         }
         model.addAttribute("engine", engineService.findEngineById(id));
-        return "engine-edit";
+        return "engine/engine-edit";
     }
 
     @PostMapping("{id}/edit")
     public String updateEngine(@Validated @ModelAttribute("engine") EngineDto engineDto, BindingResult bindingResult
             , Model model) {
+        if (engineService.findEngineByName(engineDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.EngineDto",
+                            "There is already a engine with the engine name provided");
+            return "engine/engine-edit";
+        }
         if (bindingResult.hasErrors()) {
-            return "engine-edit";
+            return "engine/engine-edit";
         }
         engineService.saveEngine(engineDto);
         return "redirect:/engines";

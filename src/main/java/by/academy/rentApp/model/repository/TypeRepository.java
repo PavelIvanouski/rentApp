@@ -10,5 +10,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 public interface TypeRepository extends JpaRepository<Type, Integer> {
     Type findTypeById(Integer id);
 
+    Type findTypeByName(String name);
+
     boolean existsById(Integer id);
 }

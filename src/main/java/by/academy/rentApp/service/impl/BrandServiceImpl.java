@@ -43,6 +43,12 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
+    public BrandDto findBrandByName(String name) {
+        Brand brand = brandRepository.findBrandByName(name);
+        return BrandMapper.INSTANCE.brandToBrandDto(brand);
+    }
+
+    @Override
     public void deleteBrand(BrandDto brandDto) {
         brandRepository.delete(BrandMapper.INSTANCE.brandDtoToBrand(brandDto));
     }

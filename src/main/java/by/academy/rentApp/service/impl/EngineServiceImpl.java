@@ -43,6 +43,12 @@ public class EngineServiceImpl implements EngineService {
     }
 
     @Override
+    public EngineDto findEngineByName(String name) {
+        Engine engine = engineRepository.findEngineByName(name);
+        return EngineMapper.INSTANCE.engineToEngineDto(engine);
+    }
+
+    @Override
     public void deleteEngine(EngineDto engineDto) {
         engineRepository.delete(EngineMapper.INSTANCE.engineDtoToEngine(engineDto));
     }

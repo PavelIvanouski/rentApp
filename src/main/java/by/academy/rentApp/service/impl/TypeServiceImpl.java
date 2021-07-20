@@ -43,6 +43,12 @@ public class TypeServiceImpl implements TypeService {
     }
 
     @Override
+    public TypeDto findTypeByName(String name) {
+        Type type = typeRepository.findTypeByName(name);
+        return TypeMapper.INSTANCE.typeToTypeDto(type);
+    }
+
+    @Override
     public void deleteType(TypeDto typeDto) {
         typeRepository.delete(TypeMapper.INSTANCE.typeDtoToType(typeDto));
     }

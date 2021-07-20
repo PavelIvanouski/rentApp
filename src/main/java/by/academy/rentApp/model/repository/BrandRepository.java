@@ -9,5 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface BrandRepository extends JpaRepository<Brand, Integer> {
     Brand findBrandById(Integer id);
 
+    Brand findBrandByName(String name);
+
     boolean existsById(Integer id);
 }

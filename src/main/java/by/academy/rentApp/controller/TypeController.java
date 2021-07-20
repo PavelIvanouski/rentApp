@@ -26,20 +26,26 @@ public class TypeController {
         List<TypeDto> types = typeService.getAll();
         model.addAttribute("types", types);
         model.addAttribute("title", "Types");
-        return "types";
+        return "type/types";
     }
 
     @GetMapping("add")
     public String getTypeAddForm(Model model) {
         model.addAttribute("type", new TypeDto());
-        return "type-add";
+        return "type/type-add";
     }
 
     @PostMapping("add")
     public String addType(@Validated @ModelAttribute("type") TypeDto typeDto, BindingResult bindingResult
             , Model model) {
+        if (typeService.findTypeByName(typeDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.TypeDto",
+                            "There is already a type with the type name provided");
+            return "type/type-add";
+        }
         if (bindingResult.hasErrors()) {
-            return "type-add";
+            return "type/type-add";
         }
         typeService.saveType(typeDto);
         return "redirect:/types";
@@ -51,14 +57,20 @@ public class TypeController {
             return "redirect:/types";
         }
         model.addAttribute("type", typeService.findTypeById(id));
-        return "type-edit";
+        return "type/type-edit";
     }
 
     @PostMapping("{id}/edit")
     public String updateType(@Validated @ModelAttribute("type") TypeDto typeDto, BindingResult bindingResult
             , Model model) {
+        if (typeService.findTypeByName(typeDto.getName()) != null) {
+            bindingResult
+                    .rejectValue("name", "error.TypeDto",
+                            "There is already a type with the type name provided");
+            return "type/type-edit";
+        }
         if (bindingResult.hasErrors()) {
-            return "type-edit";
+            return "type/type-edit";
         }
         typeService.saveType(typeDto);
         return "redirect:/types";

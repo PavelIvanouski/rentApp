@@ -7,7 +7,8 @@ import by.academy.rentApp.model.entity.CarModel;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(uses = {BrandMapper.class})
+//@Mapper
 public interface CarModelMapper {
 
     CarModelMapper INSTANCE = Mappers.getMapper(CarModelMapper.class);
@@ -16,4 +17,7 @@ public interface CarModelMapper {
 
     CarModel carModelDtoToCarModel(CarModelDto carModelDto);
 
+//    Brand BrandDtoToBrand(BrandDto brand);
+//
+//    BrandDto BrandToBrandDto(Brand brand);
 }
