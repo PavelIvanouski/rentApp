@@ -5,6 +5,7 @@ import by.academy.rentApp.model.entity.Engine;
 import by.academy.rentApp.model.entity.Type;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.sql.Timestamp;
 
@@ -43,5 +44,10 @@ public class CarDto {
     private Timestamp creatingDate;
 
     private Timestamp updatingDate;
+
+    private String color;
+
+    @Min(value = 1, message = "Price should be greater than 0")
+    private Integer price;
 
 }

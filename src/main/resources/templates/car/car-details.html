@@ -15,8 +15,8 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-<!--    <h2 th:text="${car.model.brand.name} + ' ' + ${car.model.name}"></h2>-->
-<!--    <img class="img-fluid" th:src="@{/images/car.jpg}" alt="car" width="460" height="345">-->
+    <!--    <h2 th:text="${car.model.brand.name} + ' ' + ${car.model.name}"></h2>-->
+    <!--    <img class="img-fluid" th:src="@{/images/car.jpg}" alt="car" width="460" height="345">-->
     <div class="fluid-container">
         <div class="row no-gutters">
             <div class="col-md">
@@ -28,7 +28,7 @@
             <div class="col-md">
                 <div class="menu-text flex-grow-1 py-4 px-5">
                     <h2 class="main-title text-left" th:text="${car.model.brand.name} + ' ' + ${car.model.name}"></h2>
-                    <hr class="hr-style-left" />
+                    <hr class="hr-style-left"/>
                     <div class="menu-content d-flex justify-content-between">
                         <p class="menu-name text-uppercase font-weight-bold">Year</p>
                         <p class="menu-price" th:text="${car.year}"></p>
@@ -54,27 +54,51 @@
                         <p class="menu-price" th:text="${car.seatsNum}"></p>
                     </div>
 
-                    <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">State number</p>
-                        <p class="menu-price" th:text="${car.stateNum}"></p>
+                    <div th:if="${car.stateNum}">
+                        <div th:if="${#strings.length(car.stateNum)} != 0">
+                            <div class="menu-content d-flex justify-content-between">
+                                <p class="menu-name text-uppercase font-weight-bold">State number</p>
+                                <p class="menu-price" th:text="${car.stateNum}"></p>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
                         <p class="menu-name text-uppercase font-weight-bold">Transmission</p>
-                        <!-- IF CUSTOMER IS ANONYMOUS -->
                         <div th:if="${car.autoTransmission}">
                             <p class="menu-price">Auto</p>
                         </div>
-                        <!-- ELSE -->
                         <div th:unless="${car.autoTransmission}">
-                            <p class="menu-price" >Mechanical</p>
+                            <p class="menu-price">Mechanical</p>
                         </div>
                     </div>
+
+                    <div th:if="${car.color}">
+                        <div th:if="${#strings.length(car.color)} != 0">
+                            <div class="menu-content d-flex justify-content-between">
+                                <p class="menu-name text-uppercase font-weight-bold">Color</p>
+                                <p class="menu-price" th:text="${car.color}"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="menu-content d-flex justify-content-between">
+                        <p class="menu-name text-uppercase font-weight-bold">Price per day</p>
+                        <p class="menu-price" th:text="${car.price}"></p>
+                    </div>
+
+                    <div class="menu-content d-flex justify-content-between">
+<!--                        <a class="btn btn-outline-primary mr-2" href="#">Order</a>-->
+                        <form action="/orders/send" method="POST">
+                            <input type="hidden" name="carId" th:value="${car.id}"/>
+                            <button type="submit" class="btn btn-outline-primary mr-2">Order</button>
+                        </form >
+                    </div>
+
                 </div>
             </div>
         </div>
     </div>
-
 
 
 </div>

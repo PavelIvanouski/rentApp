@@ -39,6 +39,12 @@ public class Car {
     @Column(name = "updating_date")
     private Timestamp updatingDate;
 
+    @Column
+    private String color;
+
+    @Column(nullable = false)
+    private Integer price;
+
 //    @Column(name = "climate_control")
 //    private boolean climateControl;
 //    @Column(name = "cruise_control")

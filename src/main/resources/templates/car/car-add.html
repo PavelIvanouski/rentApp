@@ -26,7 +26,8 @@
                             th:value="${model.id}"
                             th:utext="${model.brand.name} + ' ' + ${model.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('model')}"
+                      th:errors="*{model}"></span>
             </div>
 
             <div class="form-group col-md-4">
@@ -37,7 +38,8 @@
                             th:value="${type.id}"
                             th:utext="${type.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('type')}"
+                      th:errors="*{type}"></span>
             </div>
         </div>
 
@@ -50,14 +52,16 @@
                             th:value="${engine.id}"
                             th:utext="${engine.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engine')}"
+                      th:errors="*{engine}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVolume">Volume</label>
                 <input type="text" class="form-control" id="inputVolume" th:field="*{engineVolume}"
                        placeholder="Please, enter volume here">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}" th:errors="*{engineVolume}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}"
+                      th:errors="*{engineVolume}"></span>
             </div>
         </div>
 
@@ -66,14 +70,16 @@
                 <label for="inputYear">Year</label>
                 <input type="text" class="form-control" id="inputYear" placeholder="Please, enter year here"
                        th:field="*{year}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}"
+                      th:errors="*{year}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVIN">VIN</label>
                 <input type="text" class="form-control" id="inputVIN" placeholder="Please, enter VIN here"
                        th:field="*{vin}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('vin')}"
+                      th:errors="*{vin}"></span>
             </div>
         </div>
 
@@ -82,16 +88,35 @@
                 <label for="inputStateNum">State number</label>
                 <input type="text" class="form-control" id="inputStateNum" placeholder="Please, enter state number here"
                        th:field="*{stateNum}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}" th:errors="*{stateNum}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}"
+                      th:errors="*{stateNum}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputSeatsNum">Seats number</label>
                 <input type="text" class="form-control" id="inputSeatsNum" placeholder="Please, enter seats number here"
                        th:field="*{seatsNum}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('seatsNum')}" th:errors="*{seatsNum}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('seatsNum')}"
+                      th:errors="*{seatsNum}"></span>
             </div>
         </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputColor">Color</label>
+                <input type="text" class="form-control" id="inputColor" placeholder="Please, enter color here"
+                       th:field="*{color}">
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputPrice">Price per day</label>
+                <input type="text" class="form-control" id="inputPrice" placeholder="Please, enter price here"
+                       th:field="*{price}">
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('price')}"
+                      th:errors="*{price}"></span>
+            </div>
+        </div>
+
         <div class="form-group">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="inputAutoTransmission"

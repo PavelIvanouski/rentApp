@@ -12,7 +12,7 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private int id;
+    private Integer id;
     @Column(name = "rent_begin")
     private Timestamp rentBegin;
     @Column(name = "rent_end")
@@ -23,6 +23,12 @@ public class Order {
 
     @Column(name = "updating_date")
     private Timestamp updatingDate;
+
+    @Column
+    private Integer price;
+
+    @Column
+    private Integer total;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)
