@@ -33,7 +33,7 @@ public class CarController {
         List<CarDto> cars = carService.getAll();
         model.addAttribute("cars", cars);
         model.addAttribute("title", "Cars");
-        return "cars";
+        return "car/cars";
     }
 
     @GetMapping("add")
@@ -41,14 +41,15 @@ public class CarController {
         model.addAttribute("car", new CarDto());
         model.addAttribute("models", carModelService.getAll());
         model.addAttribute("types", typeService.getAll());
-        model.addAttribute("engines",engineService.getAll());
-        return "car-add";
+        model.addAttribute("engines", engineService.getAll());
+        return "car/car-add";
     }
 
     @GetMapping("all")
     public String getAllCarsForm(Model model) {
-//        return "cars-all";
-        return "test";
+        List<CarDto> cars = carService.getAll();
+        model.addAttribute("cars", cars);
+        return "car/cars-all";
     }
 
     @PostMapping("add")
@@ -57,8 +58,8 @@ public class CarController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
             model.addAttribute("types", typeService.getAll());
-            model.addAttribute("engines",engineService.getAll());
-            return "car-add";
+            model.addAttribute("engines", engineService.getAll());
+            return "car/car-add";
         }
         carService.saveCar(carDto);
         return "redirect:/cars";
@@ -69,11 +70,11 @@ public class CarController {
         if (!carService.existsById(id)) {
             return "redirect:/cars";
         }
-        model.addAttribute("car",carService.findCarById(id));
+        model.addAttribute("car", carService.findCarById(id));
         model.addAttribute("models", carModelService.getAll());
         model.addAttribute("types", typeService.getAll());
-        model.addAttribute("engines",engineService.getAll());
-        return "car-edit";
+        model.addAttribute("engines", engineService.getAll());
+        return "car/car-edit";
     }
 
     @PostMapping("{id}/edit")
@@ -82,18 +83,31 @@ public class CarController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
             model.addAttribute("types", typeService.getAll());
-            model.addAttribute("engines",engineService.getAll());
-            return "car-edit";
+            model.addAttribute("engines", engineService.getAll());
+            return "car/car-edit";
         }
         carService.saveCar(carDto);
         return "redirect:/cars";
     }
-//
-//    @PostMapping("{id}/delete")
-//    public String deleteModel(@RequestParam Integer id, Model model) {
-//        CarModelDto carModelDto = carModelService.findModelById(id);
-//        carModelService.deleteModel(carModelDto);
-//        return "redirect:/models";
-//    }
+
+
+    @GetMapping("{id}/details")
+    public String getCarDetailsForm(@PathVariable Integer id, Model model) {
+        if (!carService.existsById(id)) {
+            return "redirect:/cars/all";
+        }
+        model.addAttribute("car", carService.findCarById(id));
+//        model.addAttribute("models", carModelService.getAll());
+//        model.addAttribute("types", typeService.getAll());
+//        model.addAttribute("engines", engineService.getAll());
+        return "car/car-details";
+    }
+
+    @PostMapping("{id}/delete")
+    public String deleteCar(@RequestParam Integer id, Model model) {
+        CarDto carDto = carService.findCarById(id);
+        carService.deleteCar(carDto);
+        return "redirect:/cars";
+    }
 
 }

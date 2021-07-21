@@ -8,6 +8,7 @@ import by.academy.rentApp.service.CarService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,13 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public CarDto saveCar(CarDto carDto) {
+        long now = System.currentTimeMillis();
+        Timestamp sqlTimestamp = new Timestamp(now);
+        if (carDto.getId() == null) {
+            carDto.setCreatingDate(sqlTimestamp);
+        } else {
+            carDto.setUpdatingDate(sqlTimestamp);
+        }
         Car savedCar = carRepository.save(CarMapper.INSTANCE.carDtoToCar(carDto));
         return CarMapper.INSTANCE.carToCarDto(savedCar);
     }

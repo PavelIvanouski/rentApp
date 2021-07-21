@@ -51,7 +51,10 @@
                         th:value="${brand.id}"
                         th:utext="${brand.name}"/>
             </select>
-            <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>
+            <div th:if="${brandError}">
+                <p style="font-size: 20; color: #FF1C19;" th:text="${brandError}"></p>
+            </div>
+<!--            <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"></span>-->
         </div>
 
         <button type="submit" class="btn btn-outline-primary">Update model</button>

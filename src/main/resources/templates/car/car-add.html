@@ -14,50 +14,50 @@
 <body>
 <header th:insert="blocks/header :: header"></header>
 
-<div class="container mt-5">
+<div class="container pt-5 mt-5">
     <h2>Add car</h2>
     <form th:action="@{/cars/add}" th:object="${car}" th:method="post">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="selectModel">Model</label>
-                <select th:field="*{model}" id="selectModel" class="form-control">
+                <select th:field="*{model.id}" id="selectModel" class="form-control">
                     <option value=""> --</option>
                     <option th:each="model : ${models}"
                             th:value="${model.id}"
                             th:utext="${model.brand.name} + ' ' + ${model.name}"></option>
                 </select>
-                <span th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="selectType">Type</label>
-                <select th:field="*{type}" id="selectType" class="form-control">
+                <select th:field="*{type.id}" id="selectType" class="form-control">
                     <option value=""> --</option>
                     <option th:each="type : ${types}"
                             th:value="${type.id}"
                             th:utext="${type.name}"></option>
                 </select>
-                <span th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
             </div>
         </div>
 
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="selectEngine">Engine</label>
-                <select th:field="*{engine}" id="selectEngine" class="form-control">
+                <select th:field="*{engine.id}" id="selectEngine" class="form-control">
                     <option value=""> --</option>
                     <option th:each="engine : ${engines}"
                             th:value="${engine.id}"
                             th:utext="${engine.name}"></option>
                 </select>
-                <span th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVolume">Volume</label>
                 <input type="text" class="form-control" id="inputVolume" th:field="*{engineVolume}"
                        placeholder="Please, enter volume here">
-                <span th:if="${#fields.hasErrors('engineVolume')}" th:errors="*{engineVolume}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}" th:errors="*{engineVolume}"></span>
             </div>
         </div>
 
@@ -66,14 +66,14 @@
                 <label for="inputYear">Year</label>
                 <input type="text" class="form-control" id="inputYear" placeholder="Please, enter year here"
                        th:field="*{year}">
-                <span th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVIN">VIN</label>
                 <input type="text" class="form-control" id="inputVIN" placeholder="Please, enter VIN here"
                        th:field="*{vin}">
-                <span th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"></span>
             </div>
         </div>
 
@@ -82,14 +82,14 @@
                 <label for="inputStateNum">State number</label>
                 <input type="text" class="form-control" id="inputStateNum" placeholder="Please, enter state number here"
                        th:field="*{stateNum}">
-                <span th:if="${#fields.hasErrors('stateNum')}" th:errors="*{stateNum}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}" th:errors="*{stateNum}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputSeatsNum">Seats number</label>
                 <input type="text" class="form-control" id="inputSeatsNum" placeholder="Please, enter seats number here"
                        th:field="*{seatsNum}">
-                <span th:if="${#fields.hasErrors('seatsNum')}" th:errors="*{seatsNum}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('seatsNum')}" th:errors="*{seatsNum}"></span>
             </div>
         </div>
         <div class="form-group">

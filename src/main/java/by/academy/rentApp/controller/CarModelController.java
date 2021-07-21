@@ -51,6 +51,11 @@ public class CarModelController {
             model.addAttribute("brands", brandService.getAll());
             return "model/model-add";
         }
+        if (carModelDto.getBrand().getId() == null) {
+            model.addAttribute("brandError", "Please, provide not empty brand");
+            model.addAttribute("brands", brandService.getAll());
+            return "model/model-add";
+        }
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAll());
             return "model/model-add";
@@ -76,6 +81,11 @@ public class CarModelController {
             bindingResult
                     .rejectValue("name", "error.carModelDto",
                             "There is already a model with the model name provided");
+            model.addAttribute("brands", brandService.getAll());
+            return "model/model-edit";
+        }
+        if (carModelDto.getBrand().getId() == null) {
+            model.addAttribute("brandError", "Please, provide not empty brand");
             model.addAttribute("brands", brandService.getAll());
             return "model/model-edit";
         }

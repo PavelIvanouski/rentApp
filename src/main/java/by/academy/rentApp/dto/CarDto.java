@@ -6,18 +6,17 @@ import by.academy.rentApp.model.entity.Type;
 import lombok.Data;
 
 import javax.validation.constraints.*;
+import java.sql.Timestamp;
 
 @Data
 public class CarDto {
 
-    private int id;
+    private Integer id;
 
     @NotBlank(message = "VIN should not be empty")
     @Size(min = 17, max = 17, message = "VIN size must be 17")
     private String vin;
 
-    @NotBlank(message = "State num should not be empty")
-    @Size(min = 2, max = 10, message = "State num size must be between 2 and 10")
     private String stateNum;
 
     @NotBlank(message = "Year should not be empty")
@@ -33,12 +32,16 @@ public class CarDto {
     private boolean autoTransmission;
 
     @NotNull(message = "Model should not be empty")
-    private CarModel model;
+    private CarModelDto model;
 
     @NotNull(message = "Engine should not be empty")
-    private Engine engine;
+    private EngineDto engine;
 
     @NotNull(message = "Type should not be empty")
-    private Type type;
+    private TypeDto type;
+
+    private Timestamp creatingDate;
+
+    private Timestamp updatingDate;
 
 }
