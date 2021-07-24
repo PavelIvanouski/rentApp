@@ -49,7 +49,7 @@
                 <option value=""> --</option>
                 <option th:each="brand : ${brands}"
                         th:value="${brand.id}"
-                        th:utext="${brand.name}"/>
+                        th:utext="${brand.name}"/>1
             </select>
             <div th:if="${brandError}">
                 <p style="font-size: 20; color: #FF1C19;" th:text="${brandError}"></p>

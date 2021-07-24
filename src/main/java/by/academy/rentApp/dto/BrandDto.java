@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 @Data
 public class BrandDto {
 
-    @NotNull(message = "Brand should not be empty")
+
     private Integer id;
 
     @NotBlank(message = "Name should not be empty")

@@ -6,8 +6,12 @@ import by.academy.rentApp.model.entity.Brand;
 import by.academy.rentApp.model.entity.Engine;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+
+//@Mapper
+@Mapper(componentModel = "spring", config = CommonMapperConfig.class)
+//@Component
 public interface BrandMapper {
 
     BrandMapper INSTANCE = Mappers.getMapper(BrandMapper.class);

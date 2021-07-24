@@ -34,7 +34,7 @@ public class BrandController {
         model.addAttribute("brand", new BrandDto());
         model.addAttribute("title", "Add");
         model.addAttribute("postURL", "/brands/add");
-        return "brand/brand-edit";
+        return "brand/brand-add";
     }
 
     @PostMapping("add")
@@ -46,12 +46,12 @@ public class BrandController {
                             "There is already a brand with the brand name provided");
             model.addAttribute("title", "Add");
             model.addAttribute("postURL", "/brands/add");
-            return "brand/brand-edit";
+            return "brand/brand-add";
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", "Add");
             model.addAttribute("postURL", "/brands/add");
-            return "brand/brand-edit";
+            return "brand/brand-add";
         }
         brandService.saveBrand(brandDto);
         return "redirect:/brands";

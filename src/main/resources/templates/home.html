@@ -5,10 +5,12 @@
 <html lang="en">
 <head>
     <title>Car rent in Hrodno</title>
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<!--    <link rel="stylesheet" href="home.css">-->
 </head>
 <body>
 <header th:insert="blocks/header :: header"></header>
@@ -29,100 +31,111 @@
 <!--    -->
 <!--</main>-->
 
-<header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
-    <div class="text-center my-5">
-        <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="...">
-        <h1 class="text-white fs-3 fw-bolder">Welcome!</h1>
-<!--        <p class="text-white-50 mb-0">Landing Page Template</p>-->
-        <a class="btn btn-primary btn-xl text-uppercase" href="#filter">Go!</a>
-    </div>
-</header>
+<!--<header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">-->
+<!--    <div class="text-center my-5">-->
+<!--        <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="...">-->
+<!--        <h1 class="text-white fs-3 fw-bolder">Welcome!</h1>-->
+<!--&lt;!&ndash;        <p class="text-white-50 mb-0">Landing Page Template</p>&ndash;&gt;-->
+<!--        <a class="btn btn-primary btn-xl text-uppercase" href="#filter">Go!</a>-->
+<!--    </div>-->
+<!--</header>-->
 
 <!--<div class="container">-->
 
 <!--    <img th:src="@{/images/home.jpg}" class="img-responsive center-block"  alt="Logo"/>-->
 <!--</div>-->
+<img th:src="@{/images/home.jpg}" class="img-fluid" alt="home">
 
-
-<section class="page-section" id="filter">
-<!--    <div class="container mt-5">-->
-<!--        <div class="row justify-content-center align-items-center">-->
-<!--            <h2>Find your car</h2>-->
+<!--<header class="masthead">-->
+<!--    <div class="container h-100">-->
+<!--        <div class="row h-100 align-items-center">-->
+<!--            <div class="col-12 text-center">-->
+<!--                <h1 class="font-weight-light">Vertically Centered Masthead Content</h1>-->
+<!--                <p class="lead">A great starter layout for a landing page</p>-->
+<!--            </div>-->
 <!--        </div>-->
 <!--    </div>-->
-<!--    <div class="container">-->
+<!--</header>-->
 
-<!--        <div class="row justify-content-center align-items-center">-->
-<!--            <form>-->
-<!--                <div class="form-row align-items-center">-->
-<!--                    <div class="form-group col">-->
-<!--                        <label for="Model">Model</label>-->
-<!--                        <select id="Model" class="form-control">-->
-<!--                            <option value=""> &#45;&#45;</option>-->
-<!--                            <option th:each="model : ${models}"-->
-<!--                                    th:value="${model.id}"-->
-<!--                                    th:utext="${model.brand.name} + ' ' + ${model.name}"></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
+<section class="page-section" id="filter">
+    <div class="container mt-5">
+        <div class="row justify-content-center align-items-center">
+            <h2>Find your car</h2>
+        </div>
+    </div>
+    <div class="container">
 
-<!--                    <div class="form-group col">-->
-<!--                        <label for="Type">Type</label>-->
-<!--                        <select id="Type" class="form-control">-->
-<!--                            <option value=""> &#45;&#45;</option>-->
-<!--                            <option th:each="type : ${types}"-->
-<!--                                    th:value="${type.id}"-->
-<!--                                    th:utext="${type.name}"></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
+        <div class="row justify-content-center align-items-center">
+            <form>
+                <div class="form-row align-items-center">
+                    <div class="form-group col">
+                        <label for="Model">Model</label>
+                        <select id="Model" class="form-control">
+                            <option value=""> --</option>
+                            <option th:each="model : ${models}"
+                                    th:value="${model.id}"
+                                    th:utext="${model.brand.name} + ' ' + ${model.name}"></option>
+                        </select>
+                    </div>
 
-<!--                    <div class="form-group col">-->
-<!--                        <label for="Engine">Engine</label>-->
-<!--                        <select id="Engine" class="form-control">-->
-<!--                            <option value=""> &#45;&#45;</option>-->
-<!--                            <option th:each="engine : ${engines}"-->
-<!--                                    th:value="${engine.id}"-->
-<!--                                    th:utext="${engine.name}"></option>-->
-<!--                        </select>-->
-<!--                    </div>-->
-<!--                </div>-->
+                    <div class="form-group col">
+                        <label for="Type">Type</label>
+                        <select id="Type" class="form-control">
+                            <option value=""> --</option>
+                            <option th:each="type : ${types}"
+                                    th:value="${type.id}"
+                                    th:utext="${type.name}"></option>
+                        </select>
+                    </div>
 
-<!--                <div class="form-row align-items-center">-->
-<!--                    <div class="form-group col">-->
-<!--                        <label for="SeatsNum">Seats num.</label>-->
-<!--                        <select id="SeatsNum" class="form-control">-->
-<!--                            <option>2</option>-->
-<!--                            <option>3</option>-->
-<!--                            <option>4</option>-->
-<!--                            <option>5</option>-->
-<!--                        </select>-->
-<!--                    </div>-->
+                    <div class="form-group col">
+                        <label for="Engine">Engine</label>
+                        <select id="Engine" class="form-control">
+                            <option value=""> --</option>
+                            <option th:each="engine : ${engines}"
+                                    th:value="${engine.id}"
+                                    th:utext="${engine.name}"></option>
+                        </select>
+                    </div>
+                </div>
 
-<!--                    <div class="form-group col">-->
-<!--                        <label for="RentBegin">Rent begin</label>-->
-<!--                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">-->
-<!--                    </div>-->
+                <div class="form-row align-items-center">
+                    <div class="form-group col">
+                        <label for="SeatsNum">Seats num.</label>
+                        <select id="SeatsNum" class="form-control">
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
 
-<!--                    <div class="form-group col">-->
-<!--                        <label for="RentEnd">Rent end</label>-->
-<!--                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="form-row align-items-center">-->
-<!--                    <div class="form-group col my-auto">-->
-<!--                        <div class="form-check">-->
-<!--                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
-<!--                            <label class="form-check-label" for="Autotransmission">-->
-<!--                                Auto transmission-->
-<!--                            </label>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="text-center">-->
-<!--                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>-->
-<!--                </div>-->
+                    <div class="form-group col">
+                        <label for="RentBegin">Rent begin</label>
+                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">
+                    </div>
 
-<!--            </form>-->
-<!--        </div>-->
+                    <div class="form-group col">
+                        <label for="RentEnd">Rent end</label>
+                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">
+                    </div>
+                </div>
+                <div class="form-row align-items-center">
+                    <div class="form-group col my-auto">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">
+                            <label class="form-check-label" for="Autotransmission">
+                                Auto transmission
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>
+                </div>
+
+            </form>
+        </div>
 
 <!--        <div class="container">-->
 <!--&lt;!&ndash;            <div class="row">&ndash;&gt;-->
@@ -209,7 +222,7 @@
 <!--        </div>-->
 
 
-<!--    </div>-->
+    </div>
 </section>
 <div th:insert="blocks/footer :: footer"></div>
 

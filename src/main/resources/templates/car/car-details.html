@@ -88,11 +88,10 @@
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-<!--                        <a class="btn btn-outline-primary mr-2" href="#">Order</a>-->
-                        <form action="/orders/send" method="POST">
+                        <form th:action="@{/orders/send}" th:method="post">
                             <input type="hidden" name="carId" th:value="${car.id}"/>
                             <button type="submit" class="btn btn-outline-primary mr-2">Order</button>
-                        </form >
+                        </form>
                     </div>
 
                 </div>

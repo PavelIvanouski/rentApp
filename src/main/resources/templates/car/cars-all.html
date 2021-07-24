@@ -33,7 +33,11 @@
                             <div class=" d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-outline-primary mr-2" th:href="@{/cars/{id}/details(id=${car.id})}">Details</a>
-                                    <a class="btn btn-outline-primary mr-2" th:href="@{/orders/add}">Order</a>
+<!--                                    <a class="btn btn-outline-primary mr-2" th:href="@{/orders/add}">Order</a>-->
+                                    <form th:action="@{/orders/send}" th:method="post">
+                                        <input type="hidden" name="carId" th:value="${car.id}"/>
+                                        <button type="submit" class="btn btn-outline-primary mr-2">Order</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

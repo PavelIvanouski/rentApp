@@ -15,8 +15,11 @@ import java.util.List;
 public class BrandServiceImpl implements BrandService {
     private final BrandRepository brandRepository;
 
-    public BrandServiceImpl(BrandRepository brandRepository) {
+    private final BrandMapper brandMapper;
+
+    public BrandServiceImpl(BrandRepository brandRepository, BrandMapper brandMapper) {
         this.brandRepository = brandRepository;
+        this.brandMapper = brandMapper;
     }
 
     @Override
@@ -32,8 +35,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     @Transactional
     public BrandDto saveBrand(BrandDto brandDto) {
-        Brand savedBrand = brandRepository.save(BrandMapper.INSTANCE.brandDtoToBrand(brandDto));
-        return BrandMapper.INSTANCE.brandToBrandDto(savedBrand);
+//        Brand savedBrand = brandRepository.save(BrandMapper.INSTANCE.brandDtoToBrand(brandDto));
+        Brand savedBrand = brandRepository.save(brandMapper.brandDtoToBrand(brandDto));
+//        return BrandMapper.INSTANCE.brandToBrandDto(savedBrand);
+        return brandMapper.brandToBrandDto(savedBrand);
     }
 
     @Override
