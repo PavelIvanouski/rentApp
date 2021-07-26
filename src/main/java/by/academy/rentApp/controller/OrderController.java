@@ -6,6 +6,7 @@ import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.CarService;
 import by.academy.rentApp.service.OrderService;
 import by.academy.rentApp.service.UserService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+
 
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
 
-    private  final OrderService orderService;
+    private final OrderService orderService;
     private final CarService carService;
     private final UserService userService;
 
@@ -40,8 +43,37 @@ public class OrderController {
         return "order/order-add";
     }
 
+//    @PostMapping("add")
+//    public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
+//            , @RequestParam("rentBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentBegin
+//            , @RequestParam("rentEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentEnd
+//            , BindingResult bindingResult
+//            , Model model) {
+//
+////        if (carModelService.findModelByName(carModelDto.getName()) != null) {
+////            bindingResult
+////                    .rejectValue("name", "error.carModelDto",
+////                            "There is already a model with the model name provided");
+////            model.addAttribute("brands", brandService.getAll());
+////            return "model/model-add";
+////        }
+////        if (carModelDto.getBrand().getId() == null) {
+////            model.addAttribute("brandError", "Please, provide not empty brand");
+////            model.addAttribute("brands", brandService.getAll());
+////            return "model/model-add";
+////        }
+////        if (bindingResult.hasErrors()) {
+////            model.addAttribute("brands", brandService.getAll());
+////            return "model/model-add";
+////        }
+////        carModelService.saveModel(carModelDto);
+//        return "redirect:/models";
+//    }
+
     @PostMapping("add")
-    public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto, BindingResult bindingResult
+    public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
+            , @RequestParam("begin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime begin
+            , BindingResult bindingResult
             , Model model) {
 
 //        if (carModelService.findModelByName(carModelDto.getName()) != null) {

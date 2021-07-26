@@ -27,7 +27,7 @@ public class BrandServiceImpl implements BrandService {
         List<Brand> brands = brandRepository.findAll();
         List<BrandDto> brandDtos = new ArrayList<>();
         brands.forEach(brand -> {
-            brandDtos.add(BrandMapper.INSTANCE.brandToBrandDto(brand));
+            brandDtos.add(brandMapper.brandToBrandDto(brand));
         });
         return brandDtos;
     }
@@ -35,27 +35,25 @@ public class BrandServiceImpl implements BrandService {
     @Override
     @Transactional
     public BrandDto saveBrand(BrandDto brandDto) {
-//        Brand savedBrand = brandRepository.save(BrandMapper.INSTANCE.brandDtoToBrand(brandDto));
         Brand savedBrand = brandRepository.save(brandMapper.brandDtoToBrand(brandDto));
-//        return BrandMapper.INSTANCE.brandToBrandDto(savedBrand);
         return brandMapper.brandToBrandDto(savedBrand);
     }
 
     @Override
     public BrandDto findBrandById(Integer id) {
         Brand brand = brandRepository.findBrandById(id);
-        return BrandMapper.INSTANCE.brandToBrandDto(brand);
+        return brandMapper.brandToBrandDto(brand);
     }
 
     @Override
     public BrandDto findBrandByName(String name) {
         Brand brand = brandRepository.findBrandByName(name);
-        return BrandMapper.INSTANCE.brandToBrandDto(brand);
+        return brandMapper.brandToBrandDto(brand);
     }
 
     @Override
     public void deleteBrand(BrandDto brandDto) {
-        brandRepository.delete(BrandMapper.INSTANCE.brandDtoToBrand(brandDto));
+        brandRepository.delete(brandMapper.brandDtoToBrand(brandDto));
     }
 
     @Override

@@ -16,7 +16,7 @@
 
 <div class="container pt-5 mt-5">
     <h2>Add car</h2>
-    <form th:action="@{/cars/add}" th:object="${car}" th:method="post">
+    <form th:action="@{/cars/add}" th:object="${car}" th:method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="selectModel">Model</label>
@@ -124,6 +124,13 @@
                 <label class="form-check-label" for="inputAutoTransmission">
                     Auto transmission
                 </label>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputFile">Photos: </label>
+                <input type="file" name="image" id="inputFile" accept="image/png, image/jpeg"/>
             </div>
         </div>
 

@@ -15,7 +15,7 @@ public class Car {
     @Column
     private Integer id;
 
-    @Column(nullable = false,length = 17)
+    @Column(nullable = false, length = 17)
     private String vin;
 
     @Column(name = "state_num", nullable = false)
@@ -45,6 +45,9 @@ public class Car {
     @Column(nullable = false)
     private Integer price;
 
+    @Column(nullable = true, length = 64)
+    private String photos;
+
 //    @Column(name = "climate_control")
 //    private boolean climateControl;
 //    @Column(name = "cruise_control")
@@ -72,5 +75,12 @@ public class Car {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Order> orderList;
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+
+        return "/car-photos/" + id + "/" + photos;
+    }
 
 }

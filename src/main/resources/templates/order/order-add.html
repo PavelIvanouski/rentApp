@@ -53,14 +53,15 @@
         <div class="form-group row">
 
             <div class="form-group col-sm-4">
-                <label for="RentBegin">Rent begin</label>
-<!--                <input class="form-control" id="RentBegin" type="datetime-local" th:field="*{rentBegin}">-->
-                <input class="form-control" id="RentBegin" type="datetime-local" th:name="rentBegin">
+                <label for="Begin">Rent begin</label>
+<!--                <input hidden class="form-control"  id="RentBegin" type="datetime-local" th:field="*{rentBegin}">-->
+                <input class="form-control"  id="Begin" type="datetime-local" name="begin">
             </div>
 
             <div class="form-group col-sm-4">
-                <label for="RentEnd">Rent end</label>
-                <input class="form-control" id="RentEnd" type="datetime-local" th:field="*{rentEnd}">
+<!--                <label for="RentEnd">Rent end</label>-->
+<!--                <input hidden class="form-control" id="RentEnd" type="datetime-local" th:field="*{rentEnd}">-->
+<!--                <input class="form-control" id="RentEnd" type="datetime-local" name="rentEnd">-->
             </div>
         </div>
 

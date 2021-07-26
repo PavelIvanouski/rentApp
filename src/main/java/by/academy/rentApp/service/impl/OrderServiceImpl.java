@@ -44,6 +44,9 @@ public class OrderServiceImpl implements OrderService {
         Timestamp sqlTimestamp = new Timestamp(now);
         if (orderDto.getId() == null) {
             orderDto.setCreatingDate(sqlTimestamp);
+
+
+
         } else {
             orderDto.setUpdatingDate(sqlTimestamp);
         }

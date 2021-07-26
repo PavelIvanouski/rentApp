@@ -47,7 +47,15 @@ public class CarDto {
 
     private String color;
 
+    private String photos;
+
     @Min(value = 1, message = "Price should be greater than 0")
     private Integer price;
+
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+
+        return "/car-photos/" + id + "/" + photos;
+    }
 
 }

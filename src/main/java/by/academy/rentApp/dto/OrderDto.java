@@ -14,10 +14,10 @@ public class OrderDto {
 
     private Integer id;
 
-    @NotNull(message = "Rent begin should not be empty")
+//    @NotNull(message = "Rent begin should not be empty")
     private Timestamp rentBegin;
 
-    @NotNull(message = "Rent end should not be empty")
+//    @NotNull(message = "Rent end should not be empty")
     private Timestamp rentEnd;
 
     private Timestamp creatingDate;

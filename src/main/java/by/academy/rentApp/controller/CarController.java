@@ -3,12 +3,16 @@ package by.academy.rentApp.controller;
 import by.academy.rentApp.dto.CarDto;
 import by.academy.rentApp.dto.CarModelDto;
 import by.academy.rentApp.service.*;
+import by.academy.rentApp.util.FileUploadUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -53,15 +57,24 @@ public class CarController {
     }
 
     @PostMapping("add")
-    public String addCar(@Validated @ModelAttribute("car") CarDto carDto, BindingResult bindingResult
-            , Model model) {
+    public String addCar(@Validated @ModelAttribute("car") CarDto carDto
+            , @RequestParam("image") MultipartFile multipartFile, BindingResult bindingResult
+            , Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
             model.addAttribute("types", typeService.getAll());
             model.addAttribute("engines", engineService.getAll());
             return "car/car-add";
         }
-        carService.saveCar(carDto);
+        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+        carDto.setPhotos(fileName);
+
+        CarDto savedCar = carService.saveCar(carDto);
+
+        String uploadDir = "car-photos/" + savedCar.getId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+
         return "redirect:/cars";
     }
 
