@@ -71,7 +71,7 @@ public class CarController {
 
         CarDto savedCar = carService.saveCar(carDto);
 
-        String uploadDir = "car-photos/" + savedCar.getId();
+        String uploadDir = "./car-photos/" + savedCar.getId();
 
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
@@ -91,14 +91,25 @@ public class CarController {
     }
 
     @PostMapping("{id}/edit")
-    public String updateCar(@Validated @ModelAttribute("car") CarDto carDto, BindingResult bindingResult
-            , Model model) {
+    public String updateCar(@Validated @ModelAttribute("car") CarDto carDto
+            , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
+            , Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
             model.addAttribute("types", typeService.getAll());
             model.addAttribute("engines", engineService.getAll());
             return "car/car-edit";
         }
+
+        if (multipartFile != null) {
+            String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+            carDto.setPhotos(fileName);
+
+            String uploadDir = "./car-photos/" + carDto.getId();
+
+            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+        }
+
         carService.saveCar(carDto);
         return "redirect:/cars";
     }

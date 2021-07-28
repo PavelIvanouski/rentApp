@@ -16,9 +16,9 @@
 
 <div class="container pt-5 mt-5">
     <h2>Update car</h2>
-    <form th:href="@{/cars/{id}/edit(id=${car.id})}" th:object="${car}" th:method="post">
+    <form th:href="@{/cars/{id}/edit(id=${car.id})}" th:object="${car}" th:method="post" enctype="multipart/form-data">
         <div class="form-group">
-            <input type="text" hidden class="form-control-plaintext"  th:field="*{id}">
+            <input type="text" hidden class="form-control-plaintext" th:field="*{id}">
         </div>
 
         <div class="form-group">
@@ -43,7 +43,8 @@
                             th:value="${model.id}"
                             th:utext="${model.brand.name} + ' ' + ${model.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('model')}" th:errors="*{model}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('model')}"
+                      th:errors="*{model}"></span>
             </div>
 
             <div class="form-group col-md-4">
@@ -54,7 +55,8 @@
                             th:value="${type.id}"
                             th:utext="${type.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('type')}"
+                      th:errors="*{type}"></span>
             </div>
         </div>
 
@@ -67,14 +69,16 @@
                             th:value="${engine.id}"
                             th:utext="${engine.name}"></option>
                 </select>
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engine')}"
+                      th:errors="*{engine}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVolume">Volume</label>
                 <input type="text" class="form-control" id="inputVolume" th:field="*{engineVolume}"
                        placeholder="Please, enter volume here">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}" th:errors="*{engineVolume}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}"
+                      th:errors="*{engineVolume}"></span>
             </div>
         </div>
 
@@ -83,14 +87,16 @@
                 <label for="inputYear">Year</label>
                 <input type="text" class="form-control" id="inputYear" placeholder="Please, enter year here"
                        th:field="*{year}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}" th:errors="*{year}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}"
+                      th:errors="*{year}"></span>
             </div>
 
             <div class="form-group col-md-4">
                 <label for="inputVIN">VIN</label>
                 <input type="text" class="form-control" id="inputVIN" placeholder="Please, enter VIN here"
                        th:field="*{vin}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('vin')}"
+                      th:errors="*{vin}"></span>
             </div>
         </div>
 
@@ -99,7 +105,8 @@
                 <label for="inputStateNum">State number</label>
                 <input type="text" class="form-control" id="inputStateNum" placeholder="Please, enter state number here"
                        th:field="*{stateNum}">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}" th:errors="*{stateNum}"></span>
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}"
+                      th:errors="*{stateNum}"></span>
             </div>
 
             <div class="form-group col-md-4">
@@ -136,8 +143,23 @@
             </div>
         </div>
 
-        <img th:src="@{${car.getPhotosImagePath()}}">
+        <div class="form-group">
+            <input type="text" hidden class="form-control-plaintext" th:field="*{photos}">
+        </div>
 
+        <div class="form-row">
+            <div class="col d-flex justify-content-start">
+                <img th:src="@{${car.photosImagePath}}" alt="car photo" width="500" height="300">
+            </div>
+        </div>
+        </br>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                <label for="inputFile">Photos: </label>
+                <input type="file" name="image" id="inputFile" accept="image/png, image/jpeg"/>
+            </div>
+        </div>
+        </br>
         <button type="submit" class="btn btn-outline-primary">Update car</button>
 
     </form>

@@ -25,7 +25,8 @@
 <!--                            <rect width="100%" height="100%" fill="#55595c"></rect>-->
 <!--                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
 <!--                        </svg>-->
-                        <img th:src="@{/images/car.jpg}" class="img-responsive center-block" width="100%" height="300"
+<!--                        <img th:src="@{/images/car.jpg}" class="img-responsive center-block" width="100%" height="300"-->
+                        <img th:src="@{${car.photosImagePath}}" class="img-responsive center-block" width="100%" height="225"
                              alt="Logo"/>
                         <div class="card-body">
                             <p class="card-text" th:text="${car.model.brand.name} + ' '

@@ -16,7 +16,6 @@ CREATE TABLE car_model
 );
 
 
-
 CREATE TABLE engine
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
@@ -31,11 +30,11 @@ CREATE TABLE type
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(20) NOT NULL
 );
-INSERT INTO  type VALUES(1, 'Saloon');
-INSERT INTO  type VALUES(2, 'Hatchback');
-INSERT INTO  type VALUES(3, 'Estate');
-INSERT INTO  type VALUES(4, 'Coupe');
-INSERT INTO  type VALUES(5, 'Sedan');
+INSERT INTO  type VALUES(1, 'Sedan');
+INSERT INTO  type VALUES(2, 'Coupe');
+INSERT INTO  type VALUES(3, 'Station wagon');
+INSERT INTO  type VALUES(4, 'Hatchback');
+INSERT INTO  type VALUES(5, 'Minivan');
 
 CREATE TABLE car
 (
