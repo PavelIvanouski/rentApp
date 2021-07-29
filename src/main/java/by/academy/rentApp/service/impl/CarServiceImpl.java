@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +39,11 @@ public class CarServiceImpl implements CarService {
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         if (carDto.getId() == null) {
-            carDto.setCreatingDate(sqlTimestamp);
+//            carDto.setCreatingDate(sqlTimestamp);
+            carDto.setCreatingDate(OffsetDateTime.now());
         } else {
-            carDto.setUpdatingDate(sqlTimestamp);
+//            carDto.setUpdatingDate(sqlTimestamp);
+            carDto.setUpdatingDate(OffsetDateTime.now());
         }
         Car savedCar = carRepository.save(CarMapper.INSTANCE.carDtoToCar(carDto));
         return CarMapper.INSTANCE.carToCarDto(savedCar);

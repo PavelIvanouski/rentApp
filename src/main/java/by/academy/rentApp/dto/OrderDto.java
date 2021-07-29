@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Data
 public class OrderDto {
@@ -15,14 +16,14 @@ public class OrderDto {
     private Integer id;
 
 //    @NotNull(message = "Rent begin should not be empty")
-    private Timestamp rentBegin;
+    private OffsetDateTime rentBegin;
 
 //    @NotNull(message = "Rent end should not be empty")
-    private Timestamp rentEnd;
+    private OffsetDateTime rentEnd;
 
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
 
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
     private CarDto car;
 

@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
@@ -34,10 +35,10 @@ public class Car {
     private boolean autoTransmission;
 
     @Column(name = "creating_date")
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
 
     @Column(name = "updating_date")
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
     @Column
     private String color;

@@ -8,6 +8,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.validation.constraints.*;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Data
 public class CarDto {
@@ -41,9 +42,9 @@ public class CarDto {
     @NotNull(message = "Type should not be empty")
     private TypeDto type;
 
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
 
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
     private String color;
 

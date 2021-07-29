@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -49,9 +50,9 @@ public class User {
     @Column
     private Boolean active;
     @Column(name = "creating_date")
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
     @Column(name = "updating_date")
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"),

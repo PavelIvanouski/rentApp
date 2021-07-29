@@ -5,6 +5,7 @@ import by.academy.rentApp.model.entity.CarModel;
 import by.academy.rentApp.service.BrandService;
 import by.academy.rentApp.service.CarModelService;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Controller
@@ -75,8 +77,13 @@ public class CarModelController {
     }
 
     @PostMapping("{id}/edit")
-    public String updateModel(@NotNull @Validated @ModelAttribute("model") CarModelDto carModelDto, BindingResult bindingResult
+    public String updateModel(@NotNull @Validated @ModelAttribute("model") CarModelDto carModelDto
+//            ,@RequestParam(name = "creatingD") String creatingD
+            , BindingResult bindingResult
             , Model model) {
+        CarModelDto updatingCar = carModelService.findModelById(carModelDto.getId());
+        carModelDto.setCreatingDate(updatingCar.getCreatingDate());
+        carModelDto.setUpdatingDate(updatingCar.getUpdatingDate());
         if (carModelService.findModelByName(carModelDto.getName()) != null) {
             bindingResult
                     .rejectValue("name", "error.carModelDto",

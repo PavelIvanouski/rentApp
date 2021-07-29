@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 
 @Data
@@ -22,8 +23,8 @@ public class CarModelDto {
     @NotNull(message = "Brand should not be empty")
     private BrandDto brand;
 
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
 
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
 }

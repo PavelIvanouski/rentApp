@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -40,9 +41,11 @@ public class UserService {
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         if (user.getId() == null) {
-            user.setCreatingDate(sqlTimestamp);
+//            user.setCreatingDate(sqlTimestamp);
+            user.setCreatingDate(OffsetDateTime.now());
         } else {
-            user.setUpdatingDate(sqlTimestamp);
+//            user.setUpdatingDate(sqlTimestamp);
+            user.setUpdatingDate(OffsetDateTime.now());
         }
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(true);

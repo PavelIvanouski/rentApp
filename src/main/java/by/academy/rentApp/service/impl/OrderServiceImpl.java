@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,12 +44,14 @@ public class OrderServiceImpl implements OrderService {
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         if (orderDto.getId() == null) {
-            orderDto.setCreatingDate(sqlTimestamp);
+//            orderDto.setCreatingDate(sqlTimestamp);
+            orderDto.setCreatingDate(OffsetDateTime.now());
 
 
 
         } else {
-            orderDto.setUpdatingDate(sqlTimestamp);
+//            orderDto.setUpdatingDate(sqlTimestamp);
+            orderDto.setUpdatingDate(OffsetDateTime.now());
         }
         Order savedOrder = orderRepository.save(OrderMapper.INSTANCE.orderDtoToOrder(orderDto));
         return OrderMapper.INSTANCE.orderToOrderDto(savedOrder);

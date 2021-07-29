@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 
 @Data
 @Entity
@@ -14,15 +15,15 @@ public class Order {
     @Column
     private Integer id;
     @Column(name = "rent_begin")
-    private Timestamp rentBegin;
+    private OffsetDateTime rentBegin;
     @Column(name = "rent_end")
-    private Timestamp rentEnd;
+    private OffsetDateTime rentEnd;
 
     @Column(name = "creating_date")
-    private Timestamp creatingDate;
+    private OffsetDateTime creatingDate;
 
     @Column(name = "updating_date")
-    private Timestamp updatingDate;
+    private OffsetDateTime updatingDate;
 
     @Column
     private Integer price;

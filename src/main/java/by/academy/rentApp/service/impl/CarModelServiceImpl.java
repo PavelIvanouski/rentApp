@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,14 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     @Transactional
     public CarModelDto saveModel(CarModelDto carModelDto) {
-        long now = System.currentTimeMillis();
-        Timestamp sqlTimestamp = new Timestamp(now);
+//        long now = System.currentTimeMillis();
+//        Timestamp sqlTimestamp = new Timestamp(now);
         if (carModelDto.getId() == null) {
-            carModelDto.setCreatingDate(sqlTimestamp);
+//            carModelDto.setCreatingDate(sqlTimestamp);
+            carModelDto.setCreatingDate(OffsetDateTime.now());
         } else {
-            carModelDto.setUpdatingDate(sqlTimestamp);
+//            carModelDto.setUpdatingDate(sqlTimestamp);
+            carModelDto.setUpdatingDate(OffsetDateTime.now());
         }
 
         CarModel savedCarModel = carModelRepository.save(CarModelMapper.INSTANCE.carModelDtoToCarModel(carModelDto));
