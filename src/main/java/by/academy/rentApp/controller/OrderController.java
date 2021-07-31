@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 
 @Controller
@@ -72,9 +75,15 @@ public class OrderController {
 
     @PostMapping("add")
     public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
-            , @RequestParam("begin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime begin
+            , @RequestParam("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin
+            , @RequestParam("rEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rEnd
             , BindingResult bindingResult
             , Model model) {
+        ZoneId zoneId = ZoneId.systemDefault();
+        OffsetDateTime rentBegin = rBegin.atZone(zoneId).toOffsetDateTime();
+        orderDto.setRentBegin(rentBegin);
+        OffsetDateTime rentEnd = rEnd.atZone(zoneId).toOffsetDateTime();
+        orderDto.setRentEnd(rentEnd);
 
 //        if (carModelService.findModelByName(carModelDto.getName()) != null) {
 //            bindingResult

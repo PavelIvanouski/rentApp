@@ -41,10 +41,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public OrderDto saveOrder(OrderDto orderDto) {
-        long now = System.currentTimeMillis();
-        Timestamp sqlTimestamp = new Timestamp(now);
         if (orderDto.getId() == null) {
-//            orderDto.setCreatingDate(sqlTimestamp);
             orderDto.setCreatingDate(OffsetDateTime.now());
 
 

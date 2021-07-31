@@ -54,12 +54,12 @@
 
             <div class="form-group col-sm-4">
                 <label for="rentBegin">Rent begin</label>
-                <input class="form-control" id="rentBegin" type="datetime-local" name="rentBegin" onchange="getTotal()">
+                <input class="form-control" id="rentBegin" type="datetime-local" name="rBegin" onchange="getTotal()">
             </div>
 
             <div class="form-group col-sm-4">
                 <label for="rentEnd">Rent end</label>
-                <input class="form-control" id="rentEnd" type="datetime-local" name="rentEnd" onchange="getTotal()">
+                <input class="form-control" id="rentEnd" type="datetime-local" name="rEnd" onchange="getTotal()">
             </div>
 
         </div>
@@ -96,25 +96,32 @@
         var start_date = new Date(document.getElementById('rentBegin').value);
         var end_date = new Date(document.getElementById('rentEnd').value);
         document.getElementById('errorMessage').hidden = true;
-        var time_difference = end_date.getTime() - start_date.getTime();
-        var hours_difference = (time_difference / (1000 * 3600));
-        if (hours_difference < 0) {
+        var today = new Date();
+        if (start_date < today) {
             document.getElementById('errorMessage').hidden = false;
-            document.getElementById('errorMessage').value = "Invalid dates!";
+            document.getElementById('errorMessage').value = "Invalid rent begin date!";
             document.getElementById('total').value = 0;
         } else {
-            if (!hours_difference) {
+            var time_difference = end_date.getTime() - start_date.getTime();
+            var hours_difference = (time_difference / (1000 * 3600));
+            if (hours_difference < 0) {
+                document.getElementById('errorMessage').hidden = false;
+                document.getElementById('errorMessage').value = "Invalid dates!";
                 document.getElementById('total').value = 0;
             } else {
-                var roundHours = hours_difference.toFixed(2);
-                if (roundHours > 168) {
-                    document.getElementById('errorMessage').hidden = false;
-                    document.getElementById('errorMessage').value = "The maximum rental period is 7 days!";
+                if (!hours_difference) {
                     document.getElementById('total').value = 0;
                 } else {
-                    var perHour = (document.getElementById('inputPrice').value / 24).toFixed(2);
-                    // document.getElementById('total').value = hours_difference.toFixed(2);
-                    document.getElementById('total').value = (roundHours * perHour).toFixed(2);
+                    var roundHours = hours_difference.toFixed(2);
+                    if (roundHours > 168) {
+                        document.getElementById('errorMessage').hidden = false;
+                        document.getElementById('errorMessage').value = "The maximum rental period is 7 days!";
+                        document.getElementById('total').value = 0;
+                    } else {
+                        var perHour = (document.getElementById('inputPrice').value / 24).toFixed(2);
+                        // document.getElementById('total').value = hours_difference.toFixed(2);
+                        document.getElementById('total').value = (roundHours * perHour).toFixed(2);
+                    }
                 }
             }
         }
