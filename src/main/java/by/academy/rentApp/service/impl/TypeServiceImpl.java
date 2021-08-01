@@ -15,8 +15,11 @@ import java.util.List;
 public class TypeServiceImpl implements TypeService {
     private final TypeRepository typeRepository;
 
-    public TypeServiceImpl(TypeRepository typeRepository) {
+    private final TypeMapper typeMapper;
+
+    public TypeServiceImpl(TypeRepository typeRepository, TypeMapper typeMapper) {
         this.typeRepository = typeRepository;
+        this.typeMapper = typeMapper;
     }
 
     @Override
@@ -24,7 +27,8 @@ public class TypeServiceImpl implements TypeService {
         List<Type> types = typeRepository.findAll();
         List<TypeDto> typeDtos = new ArrayList<>();
         types.forEach(type -> {
-            typeDtos.add(TypeMapper.INSTANCE.typeToTypeDto(type));
+            typeDtos.add(typeMapper.typeToTypeDto(type));
+
         });
         return typeDtos;
     }
@@ -32,25 +36,25 @@ public class TypeServiceImpl implements TypeService {
     @Override
     @Transactional
     public TypeDto saveType(TypeDto typeDto) {
-        Type savedType = typeRepository.save(TypeMapper.INSTANCE.typeDtoToType(typeDto));
-        return TypeMapper.INSTANCE.typeToTypeDto(savedType);
+        Type savedType = typeRepository.save(typeMapper.typeDtoToType(typeDto));
+        return typeMapper.typeToTypeDto(savedType);
     }
 
     @Override
     public TypeDto findTypeById(Integer id) {
         Type type = typeRepository.findTypeById(id);
-        return TypeMapper.INSTANCE.typeToTypeDto(type);
+        return typeMapper.typeToTypeDto(type);
     }
 
     @Override
     public TypeDto findTypeByName(String name) {
         Type type = typeRepository.findTypeByName(name);
-        return TypeMapper.INSTANCE.typeToTypeDto(type);
+        return typeMapper.typeToTypeDto(type);
     }
 
     @Override
     public void deleteType(TypeDto typeDto) {
-        typeRepository.delete(TypeMapper.INSTANCE.typeDtoToType(typeDto));
+        typeRepository.delete(typeMapper.typeDtoToType(typeDto));
     }
 
     @Override

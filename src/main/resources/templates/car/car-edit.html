@@ -27,12 +27,12 @@
 
         <div class="form-group">
             <input type="text" hidden class="form-control-plaintext" th:field="*{creatingDate}">
-            <td th:text="'Creating date: ' + ${#dates.format(car.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="'Creating date: ' + ${#temporals.format(car.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
 
         <div th:if="${car.updatingDate  != null}" class="form-group">
             <input type="text" hidden class="form-control-plaintext" th:field="*{updatingDate}">
-            <td th:text="'Updating date: ' + ${#dates.format(car.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <td th:text="'Updating date: ' + ${#temporals.format(car.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">

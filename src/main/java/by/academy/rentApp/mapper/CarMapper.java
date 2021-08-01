@@ -7,7 +7,8 @@ import by.academy.rentApp.model.entity.Car;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {CarModelMapper.class, EngineMapper.class, TypeMapper.class})
+@Mapper(componentModel = "spring", config = CommonMapperConfig.class
+        ,uses = {CarModelMapper.class, EngineMapper.class, TypeMapper.class})
 public interface CarMapper {
 
     CarMapper INSTANCE = Mappers.getMapper(CarMapper.class);

@@ -2,6 +2,7 @@ package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.CarDto;
 import by.academy.rentApp.dto.CarModelDto;
+import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.FileUploadUtil;
 import org.springframework.stereotype.Controller;
@@ -109,7 +110,6 @@ public class CarController {
 
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }
-
         carService.saveCar(carDto);
         return "redirect:/cars";
     }
@@ -120,10 +120,11 @@ public class CarController {
         if (!carService.existsById(id)) {
             return "redirect:/cars/all";
         }
+//        CarDto car = carService.findCarById(id);
+//        OrderDto order = new OrderDto();
+//        order.setCar(car);
+//        model.addAttribute("order", order);
         model.addAttribute("car", carService.findCarById(id));
-//        model.addAttribute("models", carModelService.getAll());
-//        model.addAttribute("types", typeService.getAll());
-//        model.addAttribute("engines", engineService.getAll());
         return "car/car-details";
     }
 

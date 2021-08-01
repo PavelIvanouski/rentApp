@@ -21,31 +21,37 @@
         <div class="form-group">
             <div class="col">
                 <input type="text" hidden class="form-control-plaintext" th:name="user"
-                       th:value="${user.id}">
+                       th:value="${order.user.id}">
             </div>
         </div>
 
-        <div class="form-group">
-            <td th:text="'User: ' + ${user.firstName} + ' ' +  ${user.lastName}
-            + ' ' + ${user.email}"></td>
-        </div>
 
         <div class="form-group">
             <div class="col">
+                <!--                <input type="text" hidden class="form-control-plaintext" th:name="car.id"-->
+                <!--                       th:value="${car.id}">-->
                 <input type="text" hidden class="form-control-plaintext" th:name="car.id"
-                       th:value="${car.id}">
+                       th:value="${order.car.id}">
             </div>
         </div>
 
         <div class="form-group">
-            <td th:text="'Car: ' + ${car.model.brand.name} + ' ' + ${car.model.name}
-         + ' ' + ${car.year}"></td>
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"
+                   th:value="${order.car.model.brand.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"
+                   th:value="${order.car.model.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.year"
+                   th:value="${order.car.year}">
+            <td th:text="'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
+         + ' ' + ${order.car.year}"></td>
         </div>
 
         <div class="form-group row">
             <label for="inputPrice" class="col-sm-2 col-form-label">Price per day</label>
             <div class="col-sm-2">
-                <input type="text" class="form-control" th:name="price" th:value="${car.price}" id="inputPrice"
+                <input type="text" hidden class="form-control-plaintext" th:name="car.price"
+                       th:value="${order.car.price}">
+                <input type="text" class="form-control" th:name="price" th:value="${order.car.price}" id="inputPrice"
                        readonly>
             </div>
         </div>
@@ -64,18 +70,18 @@
 
         </div>
 
-        <div class="form-group row">
-            <div class="form-group col-sm-4">
-                <input hidden class="form-control" type="text" id="errorMessage" style="font-size: 20; color: #FF1C19;">
-            </div>
-        </div>
+                <div class="form-group row">
+                    <div class="form-group col-sm-4">
+                        <input hidden class="form-control" type="text" id="errorMessage" style="font-size: 20; color: #FF1C19;">
+                    </div>
+                </div>
 
-        <div class="form-group row">
-            <div class="form-group col-sm-4">
-                <label for="total">Total</label>
-                <input type="text" class="form-control" id="total" readonly>
-            </div>
-        </div>
+                <div class="form-group row">
+                    <div class="form-group col-sm-4">
+                        <label for="total">Total</label>
+                        <input type="text" class="form-control" id="total" readonly>
+                    </div>
+                </div>
 
         <button type="submit" class="btn btn-outline-primary">Add order</button>
     </form>

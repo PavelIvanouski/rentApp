@@ -15,8 +15,11 @@ import java.util.List;
 public class EngineServiceImpl implements EngineService {
     private final EngineRepository engineRepository;
 
-    public EngineServiceImpl(EngineRepository engineRepository) {
+    private final EngineMapper engineMapper;
+
+    public EngineServiceImpl(EngineRepository engineRepository, EngineMapper engineMapper) {
         this.engineRepository = engineRepository;
+        this.engineMapper = engineMapper;
     }
 
     @Override
@@ -24,7 +27,7 @@ public class EngineServiceImpl implements EngineService {
         List<Engine> engins = engineRepository.findAll();
         List<EngineDto> engineDtos = new ArrayList<>();
         engins.forEach(engine -> {
-            engineDtos.add(EngineMapper.INSTANCE.engineToEngineDto(engine));
+            engineDtos.add(engineMapper.engineToEngineDto(engine));
         });
         return engineDtos;
     }
@@ -32,25 +35,25 @@ public class EngineServiceImpl implements EngineService {
     @Override
     @Transactional
     public EngineDto saveEngine(EngineDto engineDto) {
-        Engine savedEngine = engineRepository.save(EngineMapper.INSTANCE.engineDtoToEngine(engineDto));
-        return EngineMapper.INSTANCE.engineToEngineDto(savedEngine);
+        Engine savedEngine = engineRepository.save(engineMapper.engineDtoToEngine(engineDto));
+        return engineMapper.engineToEngineDto(savedEngine);
     }
 
     @Override
     public EngineDto findEngineById(Integer id) {
         Engine engine = engineRepository.findEngineById(id);
-        return EngineMapper.INSTANCE.engineToEngineDto(engine);
+        return engineMapper.engineToEngineDto(engine);
     }
 
     @Override
     public EngineDto findEngineByName(String name) {
         Engine engine = engineRepository.findEngineByName(name);
-        return EngineMapper.INSTANCE.engineToEngineDto(engine);
+        return engineMapper.engineToEngineDto(engine);
     }
 
     @Override
     public void deleteEngine(EngineDto engineDto) {
-        engineRepository.delete(EngineMapper.INSTANCE.engineDtoToEngine(engineDto));
+        engineRepository.delete(engineMapper.engineDtoToEngine(engineDto));
     }
 
     @Override

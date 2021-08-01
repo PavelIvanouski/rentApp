@@ -32,14 +32,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
+        String[] staticResources  =  {
+                "/car-photos/**"
+        };
+
         http.
                 authorizeRequests()
+                .antMatchers(staticResources).permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/contact").permitAll()
 //                .antMatchers("/cars/all").permitAll()
-                .antMatchers("/cars/**").permitAll()
+                .antMatchers("/cars/all").permitAll()
                 .antMatchers("/about").permitAll()
                 .antMatchers("/order/add").hasAuthority("USER")
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()

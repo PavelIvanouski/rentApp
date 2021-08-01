@@ -8,7 +8,6 @@ import by.academy.rentApp.service.CarModelService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,11 @@ import java.util.List;
 public class CarModelServiceImpl implements CarModelService {
     private final CarModelRepository carModelRepository;
 
-    public CarModelServiceImpl(CarModelRepository carModelRepository) {
+    private  final CarModelMapper carModelMapper;
+
+    public CarModelServiceImpl(CarModelRepository carModelRepository, CarModelMapper carModelMapper) {
         this.carModelRepository = carModelRepository;
+        this.carModelMapper = carModelMapper;
     }
 
     @Override
@@ -26,7 +28,7 @@ public class CarModelServiceImpl implements CarModelService {
         List<CarModel> carModels = carModelRepository.findAll();
         List<CarModelDto> carModelDtos = new ArrayList<>();
         carModels.forEach(carModel -> {
-            carModelDtos.add(CarModelMapper.INSTANCE.carModelToCarModelDto(carModel));
+            carModelDtos.add(carModelMapper.carModelToCarModelDto(carModel));
         });
         return carModelDtos;
     }
@@ -34,35 +36,32 @@ public class CarModelServiceImpl implements CarModelService {
     @Override
     @Transactional
     public CarModelDto saveModel(CarModelDto carModelDto) {
-//        long now = System.currentTimeMillis();
-//        Timestamp sqlTimestamp = new Timestamp(now);
+
         if (carModelDto.getId() == null) {
-//            carModelDto.setCreatingDate(sqlTimestamp);
             carModelDto.setCreatingDate(OffsetDateTime.now());
         } else {
-//            carModelDto.setUpdatingDate(sqlTimestamp);
             carModelDto.setUpdatingDate(OffsetDateTime.now());
         }
 
-        CarModel savedCarModel = carModelRepository.save(CarModelMapper.INSTANCE.carModelDtoToCarModel(carModelDto));
-        return CarModelMapper.INSTANCE.carModelToCarModelDto(savedCarModel);
+        CarModel savedCarModel = carModelRepository.save(carModelMapper.carModelDtoToCarModel(carModelDto));
+        return carModelMapper.carModelToCarModelDto(savedCarModel);
     }
 
     @Override
     public CarModelDto findModelById(Integer id) {
         CarModel carModel = carModelRepository.findCarModelById(id);
-        return CarModelMapper.INSTANCE.carModelToCarModelDto(carModel);
+        return carModelMapper.carModelToCarModelDto(carModel);
     }
 
     @Override
     public CarModelDto findModelByName(String name) {
         CarModel carModel = carModelRepository.findCarModelByName(name);
-        return CarModelMapper.INSTANCE.carModelToCarModelDto(carModel);
+        return carModelMapper.carModelToCarModelDto(carModel);
     }
 
     @Override
     public void deleteModel(CarModelDto carModelDto) {
-        carModelRepository.delete(CarModelMapper.INSTANCE.carModelDtoToCarModel(carModelDto));
+        carModelRepository.delete(carModelMapper.carModelDtoToCarModel(carModelDto));
     }
 
     @Override

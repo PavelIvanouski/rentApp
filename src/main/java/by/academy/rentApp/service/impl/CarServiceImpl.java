@@ -18,8 +18,11 @@ public class CarServiceImpl implements CarService {
 
     private final CarRepository carRepository;
 
-    public CarServiceImpl(CarRepository carRepository) {
+    private final CarMapper carMapper;
+
+    public CarServiceImpl(CarRepository carRepository, CarMapper carMapper) {
         this.carRepository = carRepository;
+        this.carMapper = carMapper;
     }
 
 
@@ -28,7 +31,7 @@ public class CarServiceImpl implements CarService {
         List<Car> cars = carRepository.findAll();
         List<CarDto> carDtos = new ArrayList<>();
         cars.forEach(car -> {
-            carDtos.add(CarMapper.INSTANCE.carToCarDto(car));
+            carDtos.add(carMapper.carToCarDto(car));
         });
         return carDtos;
     }
@@ -39,25 +42,23 @@ public class CarServiceImpl implements CarService {
         long now = System.currentTimeMillis();
         Timestamp sqlTimestamp = new Timestamp(now);
         if (carDto.getId() == null) {
-//            carDto.setCreatingDate(sqlTimestamp);
             carDto.setCreatingDate(OffsetDateTime.now());
         } else {
-//            carDto.setUpdatingDate(sqlTimestamp);
             carDto.setUpdatingDate(OffsetDateTime.now());
         }
-        Car savedCar = carRepository.save(CarMapper.INSTANCE.carDtoToCar(carDto));
-        return CarMapper.INSTANCE.carToCarDto(savedCar);
+        Car savedCar = carRepository.save(carMapper.carDtoToCar(carDto));
+        return carMapper.carToCarDto(savedCar);
     }
 
     @Override
     public CarDto findCarById(Integer id) {
         Car car = carRepository.findCarById(id);
-        return CarMapper.INSTANCE.carToCarDto(car);
+        return carMapper.carToCarDto(car);
     }
 
     @Override
     public void deleteCar(CarDto carDto) {
-        carRepository.delete(CarMapper.INSTANCE.carDtoToCar(carDto));
+        carRepository.delete(carMapper.carDtoToCar(carDto));
     }
 
     @Override

@@ -7,7 +7,7 @@ import by.academy.rentApp.model.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper(uses = {CarMapper.class})
+@Mapper(componentModel = "spring", config = CommonMapperConfig.class,uses = {CarMapper.class,StatusMapper.class})
 public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);

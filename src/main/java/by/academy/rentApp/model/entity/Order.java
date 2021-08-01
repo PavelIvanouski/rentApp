@@ -29,7 +29,7 @@ public class Order {
     private Integer price;
 
     @Column
-    private Integer total;
+    private double total;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "car_id", nullable = false)

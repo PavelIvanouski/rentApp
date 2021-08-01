@@ -6,6 +6,7 @@ import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.CarService;
 import by.academy.rentApp.service.OrderService;
 import by.academy.rentApp.service.UserService;
+import by.academy.rentApp.util.DatesUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -13,10 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
@@ -43,6 +41,20 @@ public class OrderController {
         model.addAttribute("car", carService.findCarById(id));
         model.addAttribute("user", userService.findUserByUserName(userSec.getUsername()));
         model.addAttribute("order", new OrderDto());
+        return "order/order-add";
+    }
+
+    @GetMapping("/add")
+    public String addOrder(@RequestParam("carId") Integer id, @AuthenticationPrincipal User userSec, Model model) {
+        if (!carService.existsById(id)) {
+            return "redirect:/cars/all";
+        }
+        CarDto car = carService.findCarById(id);
+//        model.addAttribute("user", userService.findUserByUserName(userSec.getUsername()));
+        OrderDto order = new OrderDto();
+        order.setCar(car);
+        order.setUser(userService.findUserByUserName(userSec.getUsername()));
+        model.addAttribute("order", order);
         return "order/order-add";
     }
 
@@ -75,33 +87,25 @@ public class OrderController {
 
     @PostMapping("add")
     public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
-            , @RequestParam("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin
-            , @RequestParam("rEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rEnd
+            , @RequestParam(value = "rBegin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin
+            , @RequestParam(value = "rEnd", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rEnd
             , BindingResult bindingResult
             , Model model) {
+
+        if (!DatesUtil.chekDates(rBegin, rEnd)) {
+            return "order/order-add";
+        }
         ZoneId zoneId = ZoneId.systemDefault();
         OffsetDateTime rentBegin = rBegin.atZone(zoneId).toOffsetDateTime();
         orderDto.setRentBegin(rentBegin);
         OffsetDateTime rentEnd = rEnd.atZone(zoneId).toOffsetDateTime();
         orderDto.setRentEnd(rentEnd);
-
-//        if (carModelService.findModelByName(carModelDto.getName()) != null) {
-//            bindingResult
-//                    .rejectValue("name", "error.carModelDto",
-//                            "There is already a model with the model name provided");
-//            model.addAttribute("brands", brandService.getAll());
-//            return "model/model-add";
-//        }
-//        if (carModelDto.getBrand().getId() == null) {
-//            model.addAttribute("brandError", "Please, provide not empty brand");
-//            model.addAttribute("brands", brandService.getAll());
-//            return "model/model-add";
-//        }
-//        if (bindingResult.hasErrors()) {
-//            model.addAttribute("brands", brandService.getAll());
-//            return "model/model-add";
-//        }
+        if (bindingResult.hasErrors()) {
+            return "order/order-add";
+        }
 //        carModelService.saveModel(carModelDto);
-        return "redirect:/models";
+
+        orderService.saveOrder(orderDto);
+        return "order/orders-user";
     }
 }

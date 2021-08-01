@@ -13,11 +13,13 @@ import java.time.OffsetDateTime;
 @Data
 public class CarDto {
 
-    private Integer id;
+
 
     @NotBlank(message = "VIN should not be empty")
     @Size(min = 17, max = 17, message = "VIN size must be 17")
     private String vin;
+
+    private Integer id;
 
     private String stateNum;
 

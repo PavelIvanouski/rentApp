@@ -88,7 +88,7 @@
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <form th:action="@{/orders/send}" th:method="post">
+                        <form   th:action="@{/orders/add}" th:method="get">
                             <input type="hidden" name="carId" th:value="${car.id}"/>
                             <button type="submit" class="btn btn-outline-primary mr-2">Order</button>
                         </form>

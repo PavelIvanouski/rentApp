@@ -7,7 +7,7 @@ import by.academy.rentApp.model.entity.Type;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring", config = CommonMapperConfig.class)
 public interface TypeMapper {
 
     TypeMapper INSTANCE = Mappers.getMapper(TypeMapper.class);

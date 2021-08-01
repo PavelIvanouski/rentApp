@@ -53,8 +53,10 @@ public class BrandController {
             model.addAttribute("postURL", "/brands/add");
             return "brand/brand-add";
         }
-        brandService.saveBrand(brandDto);
-        return "redirect:/brands";
+        BrandDto savedBrand = brandService.saveBrand(brandDto);
+        Integer id = savedBrand.getId();
+        String url = "redirect:/brands/" + id + "/edit";
+        return url;
     }
 
     @GetMapping("{id}/edit")
