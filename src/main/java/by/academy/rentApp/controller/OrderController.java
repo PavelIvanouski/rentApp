@@ -1,7 +1,6 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.CarDto;
-import by.academy.rentApp.dto.CarModelDto;
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.CarService;
 import by.academy.rentApp.service.OrderService;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.util.List;
 
 
 @Controller
@@ -103,9 +102,18 @@ public class OrderController {
         if (bindingResult.hasErrors()) {
             return "order/order-add";
         }
-//        carModelService.saveModel(carModelDto);
 
-        orderService.saveOrder(orderDto);
+        List<OrderDto> currentOrders = orderService.findCurrentOrders(orderDto.getCar().getId()
+                , orderDto.getRentBegin(), orderDto.getRentEnd());
+        if (currentOrders.size() != 0) {
+            String currentOrdersMessage = "Car is already booked ";
+//            currentOrders.forEach(order -> {
+//                currentOrdersMessage += "[" + order.getRentBegin() + "]";
+//            });
+            model.addAttribute("currentOrdersMessage",currentOrdersMessage);
+            return "order/order-add";
+        }
+//        orderService.saveOrder(orderDto);
         return "order/orders-user";
     }
 }

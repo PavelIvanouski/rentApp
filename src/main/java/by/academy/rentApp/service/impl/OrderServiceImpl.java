@@ -37,7 +37,7 @@ public class OrderServiceImpl implements OrderService {
         List<Order> orders = orderRepository.findAll();
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {
-            orderDtos.add(OrderMapper.INSTANCE.orderToOrderDto(order));
+            orderDtos.add(orderMapper.orderToOrderDto(order));
         });
         return orderDtos;
     }
@@ -63,6 +63,19 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto findOrderById(Integer id) {
         Order order = orderRepository.findOrderById(id);
         return OrderMapper.INSTANCE.orderToOrderDto(order);
+    }
+
+    @Override
+    public List<OrderDto> findCurrentOrders(Integer id, OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
+        List<Integer> statuses = new ArrayList<>();
+        statuses.add(1);
+        statuses.add(2);
+        List<Order> orders = orderRepository.findOrderByCarAndStatusAndDates(id, statuses, rentBegin, rentEnd);
+        List<OrderDto> orderDtos = new ArrayList<>();
+        orders.forEach(order -> {
+            orderDtos.add(orderMapper.orderToOrderDto(order));
+        });
+        return orderDtos;
     }
 
     @Override
