@@ -48,41 +48,12 @@ public class OrderController {
         if (!carService.existsById(id)) {
             return "redirect:/cars/all";
         }
-        CarDto car = carService.findCarById(id);
-//        model.addAttribute("user", userService.findUserByUserName(userSec.getUsername()));
         OrderDto order = new OrderDto();
-        order.setCar(car);
+        order.setCar(carService.findCarById(id));
         order.setUser(userService.findUserByUserName(userSec.getUsername()));
         model.addAttribute("order", order);
         return "order/order-add";
     }
-
-//    @PostMapping("add")
-//    public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
-//            , @RequestParam("rentBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentBegin
-//            , @RequestParam("rentEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentEnd
-//            , BindingResult bindingResult
-//            , Model model) {
-//
-////        if (carModelService.findModelByName(carModelDto.getName()) != null) {
-////            bindingResult
-////                    .rejectValue("name", "error.carModelDto",
-////                            "There is already a model with the model name provided");
-////            model.addAttribute("brands", brandService.getAll());
-////            return "model/model-add";
-////        }
-////        if (carModelDto.getBrand().getId() == null) {
-////            model.addAttribute("brandError", "Please, provide not empty brand");
-////            model.addAttribute("brands", brandService.getAll());
-////            return "model/model-add";
-////        }
-////        if (bindingResult.hasErrors()) {
-////            model.addAttribute("brands", brandService.getAll());
-////            return "model/model-add";
-////        }
-////        carModelService.saveModel(carModelDto);
-//        return "redirect:/models";
-//    }
 
     @PostMapping("add")
     public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
@@ -106,14 +77,14 @@ public class OrderController {
         List<OrderDto> currentOrders = orderService.findCurrentOrders(orderDto.getCar().getId()
                 , orderDto.getRentBegin(), orderDto.getRentEnd());
         if (currentOrders.size() != 0) {
-            String currentOrdersMessage = "Car is already booked ";
-//            currentOrders.forEach(order -> {
-//                currentOrdersMessage += "[" + order.getRentBegin() + "]";
-//            });
-            model.addAttribute("currentOrdersMessage",currentOrdersMessage);
+            String currentOrdersMessage = "Car is already booked: ";
+            model.addAttribute("currentOrdersMessage", currentOrdersMessage);
+            model.addAttribute("currentOrders", currentOrders);
             return "order/order-add";
         }
-//        orderService.saveOrder(orderDto);
+
+        OrderDto savedOrder = orderService.saveOrder(orderDto);
+
         return "order/orders-user";
     }
 }

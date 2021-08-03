@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <!--    <title th:text="${title} + ' engine'"/>-->
-    <title>Add order</title>
+    <title>User order</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -15,7 +15,7 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Add order</h2>
+    <h2>Your order</h2>
     <form th:action="@{/orders/add}" th:object="${order}" th:method="post">
 
         <div class="form-group">
