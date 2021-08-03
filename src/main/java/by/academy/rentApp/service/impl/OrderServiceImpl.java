@@ -3,6 +3,7 @@ package by.academy.rentApp.service.impl;
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.mapper.OrderMapper;
 import by.academy.rentApp.model.entity.Order;
+import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.OrderRepository;
 import by.academy.rentApp.model.repository.StatusRepository;
 import by.academy.rentApp.service.OrderService;
@@ -43,6 +44,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<OrderDto> getAllByUser(User user) {
+        List<Order> orders = orderRepository.findAllByUser(user);
+        List<OrderDto> orderDtos = new ArrayList<>();
+        orders.forEach(order -> {
+            orderDtos.add(orderMapper.orderToOrderDto(order));
+        });
+        return orderDtos;
+    }
+
+    @Override
     @Transactional
     public OrderDto saveOrder(OrderDto orderDto) {
         if (orderDto.getId() == null) {
@@ -62,14 +73,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDto findOrderById(Integer id) {
         Order order = orderRepository.findOrderById(id);
-        return OrderMapper.INSTANCE.orderToOrderDto(order);
+        return orderMapper.orderToOrderDto(order);
     }
 
     @Override
-    public List<OrderDto> findCurrentOrders(Integer id, OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
-        List<Integer> statuses = new ArrayList<>();
-        statuses.add(1);
-        statuses.add(2);
+    public List<OrderDto> findCurrentOrders(Integer id, List<Integer> statuses,OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
         List<Order> orders = orderRepository.findOrderByCarAndStatusAndDates(id, statuses, rentBegin, rentEnd);
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {
@@ -80,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(OrderDto orderDto) {
-        orderRepository.delete(OrderMapper.INSTANCE.orderDtoToOrder(orderDto));
+        orderRepository.delete(orderMapper.orderDtoToOrder(orderDto));
     }
 
     @Override

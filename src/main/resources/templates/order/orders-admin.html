@@ -4,7 +4,7 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <html lang="en">
 <head>
-    <title>Users orders</title>
+    <title>All orders</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -14,23 +14,25 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Your orders</h2>
+    <h2>Orders list</h2>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
+            <th scope="col">User</th>
             <th scope="col">Car</th>
             <th scope="col">Rent begin</th>
             <th scope="col">Rent end</th>
             <th scope="col">Total</th>
             <th scope="col">Status</th>
-            <th scope="col">View</th>
+            <th scope="col">Edit</th>
         </tr>
         </thead>
         <tbody>
         <th:block th:each="order : ${orders}">
             <tr>
                 <td th:text="${order.id}"></td>
+                <td th:text="${order.user.userName}"></td>
                 <td th:text="${order.car.model.brand.name} + ' ' + ${order.car.model.name}
          + ' ' + ${order.car.year}"></td>
                 <td th:text="${#temporals.format(order.rentBegin, 'dd-MM-yyyy HH:mm')}"></td>
@@ -38,8 +40,8 @@
                 <td th:text="${order.total}"></td>
                 <td th:text="${order.status.name}"></td>
                 <td>
-                    <a class="btn btn-outline-info" th:href="@{/user/orders/{id}(id=${order.id})}"
-                       role="button">View</a>
+                    <a class="btn btn-outline-info" th:href="@{/admin/orders/{id}(id=${order.id})}"
+                       role="button">Edit</a>
                 </td>
             </tr>
         </th:block>

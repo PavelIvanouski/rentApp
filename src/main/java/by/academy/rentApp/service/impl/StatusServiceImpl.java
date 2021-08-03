@@ -36,6 +36,16 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
+    public List<StatusDto> getAllByIdList(List<Integer> idList) {
+        List<Status> statuses = statusRepository.findAllByIdList(idList);
+        List<StatusDto> statusDtos = new ArrayList<>();
+        statuses.forEach(status -> {
+            statusDtos.add(statusMapper.statusToStatusDto(status));
+        });
+        return statusDtos;
+    }
+
+    @Override
     @Transactional
     public StatusDto saveStatus(StatusDto statusDto) {
         Status savedStatus = statusRepository.save(statusMapper.statusDtoToStatus(statusDto));

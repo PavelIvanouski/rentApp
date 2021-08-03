@@ -16,7 +16,16 @@
 
 <div class="container pt-5 mt-5">
     <h2>Your order</h2>
-    <form th:action="@{/orders/add}" th:object="${order}" th:method="post">
+    <form th:object="${order}" th:method="post">
+
+        <div class="form-group">
+            <input type="text" hidden class="form-control-plaintext" th:field="*{id}">
+        </div>
+
+        <div class="form-group">
+            <td th:text="'Id: ' + ${order.id} + ' Creating date: ' +
+             ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+        </div>
 
         <div class="form-group">
             <div class="col">
@@ -27,8 +36,6 @@
 
         <div class="form-group">
             <div class="col">
-                <!--                <input type="text" hidden class="form-control-plaintext" th:name="car.id"-->
-                <!--                       th:value="${car.id}">-->
                 <input type="text" hidden class="form-control-plaintext" th:name="car.id"
                        th:value="${order.car.id}">
             </div>
@@ -58,36 +65,50 @@
         <div class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="rentBegin">Rent begin</label>
-                <input class="form-control" id="rentBegin" type="datetime-local" name="rBegin" onchange="getTotal()">
+                <input readonly class="form-control" id="rentBegin" name="rBegin"
+                       th:value="${#temporals.format(order.rentBegin, 'dd-MM-yyyy HH:mm')}">
             </div>
 
             <div class="form-group col-sm-4">
                 <label for="rentEnd">Rent end</label>
-                <input class="form-control" id="rentEnd" type="datetime-local" name="rEnd" onchange="getTotal()">
+                <input readonly class="form-control" id="rentEnd" name="rEnd"
+                       th:value="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}">
             </div>
         </div>
 
-        <div class="form-group row">
-            <div class="form-group col-sm-4">
-                <input hidden class="form-control" type="text" id="errorMessage" style="font-size: 20; color: #FF1C19;">
-            </div>
-        </div>
 
-        <span style="font-size: 20; color: #FF1C19;" th:text="${currentOrdersMessage}"></span>
-        <div th:each="currentOrder : ${currentOrders}"
-             style="font-size: 20; color: #FF1C19;"
-             th:utext="'['+ ${#temporals.format(currentOrder.rentBegin, 'dd/MM/yyyy HH:mm')} + ' - ' +
-              ${#temporals.format(currentOrder.rentEnd, 'dd/MM/yyyy HH:mm')} + ']'"></div>
+        <!--        <span style="font-size: 20; color: #FF1C19;" th:text="${currentOrdersMessage}"></span>-->
+        <!--        <div th:each="currentOrder : ${currentOrders}"-->
+        <!--             style="font-size: 20; color: #FF1C19;"-->
+        <!--             th:utext="'['+ ${#temporals.format(currentOrder.rentBegin, 'dd/MM/yyyy HH:mm')} + ' - ' +-->
+        <!--              ${#temporals.format(currentOrder.rentEnd, 'dd/MM/yyyy HH:mm')} + ']'"></div>-->
 
-        </br>
+        <!--        </br>-->
         <div class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="total">Total</label>
-                <input type="text" class="form-control" id="total" readonly>
+                <input type="text" hidden class="form-control-plaintext" th:name="total"
+                       th:value="${order.total}">
+                <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
+                       readonly>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Add order</button>
+        <div class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="selectStatus">Status</label>
+                <select th:field="*{status.id}" id="selectStatus" class="form-control">
+                    <option th:each="status : ${statuses}"
+                            th:value="${status.id}"
+                            th:utext="${status.name}"/>
+                </select>
+            </div>
+        </div>
+
+        <div th:if="${allowEdit}">
+            <button type="submit" class="btn btn-outline-primary">Save</button>
+        </div>
+
     </form>
 
 </div>
@@ -101,41 +122,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
-<script>
-    function getTotal() {
-        var start_date = new Date(document.getElementById('rentBegin').value);
-        var end_date = new Date(document.getElementById('rentEnd').value);
-        document.getElementById('errorMessage').hidden = true;
-        var today = new Date();
-        if (start_date < today) {
-            document.getElementById('errorMessage').hidden = false;
-            document.getElementById('errorMessage').value = "Invalid rent begin date!";
-            document.getElementById('total').value = 0;
-        } else {
-            var time_difference = end_date.getTime() - start_date.getTime();
-            var hours_difference = (time_difference / (1000 * 3600));
-            if (hours_difference < 0) {
-                document.getElementById('errorMessage').hidden = false;
-                document.getElementById('errorMessage').value = "Invalid dates!";
-                document.getElementById('total').value = 0;
-            } else {
-                if (!hours_difference) {
-                    document.getElementById('total').value = 0;
-                } else {
-                    var roundHours = hours_difference.toFixed(2);
-                    if (roundHours > 168) {
-                        document.getElementById('errorMessage').hidden = false;
-                        document.getElementById('errorMessage').value = "The maximum rental period is 7 days!";
-                        document.getElementById('total').value = 0;
-                    } else {
-                        var perHour = (document.getElementById('inputPrice').value / 24).toFixed(2);
-                        // document.getElementById('total').value = hours_difference.toFixed(2);
-                        document.getElementById('total').value = (roundHours * perHour).toFixed(2);
-                    }
-                }
-            }
-        }
-    }
-</script>
+
 </body>
 </html>
