@@ -32,7 +32,6 @@
         </div>
 
         <div th:if="${model.updatingDate  != null}" class="form-group">
-<!--            <input type="text" hidden class="form-control-plaintext" th:field="*{updatingDate}">-->
             <td th:text="'Updating date: ' + ${#temporals.format(model.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
 

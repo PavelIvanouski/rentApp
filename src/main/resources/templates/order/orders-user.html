@@ -36,7 +36,24 @@
                 <td th:text="${#temporals.format(order.rentBegin, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${order.total}"></td>
-                <td th:text="${order.status.name}"></td>
+                <div th:if="${order.status.id == 2}">
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                booked
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" href="#">cancelled</a>
+                            </div>
+                        </div>
+                    </td>
+                </div>
+                <div th:unless="${order.status.id == 2}">
+                    <td th:text="${order.status.name}"></td>
+                </div>
+                <!--                <td th:text="${order.status.name}"></td>-->
+
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/user/orders/{id}(id=${order.id})}"
                        role="button">View</a>
@@ -56,5 +73,12 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+<script>
+    $(function () {
+        $(".dropdown-menu").on('click', 'a', function () {
+            $(this).parents('.dropdown').find('button').text($(this).text());
+        });
+    });
+</script>
 </body>
 </html>

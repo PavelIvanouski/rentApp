@@ -27,6 +27,10 @@
              ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
 
+        <div th:if="${order.updatingDate  != null}" class="form-group">
+            <td th:text="'Updating date: ' + ${#temporals.format(order.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+        </div>
+
         <div class="form-group">
             <div class="col">
                 <input type="text" hidden class="form-control-plaintext" th:name="user"
@@ -73,6 +77,7 @@
                 <label for="rentEnd">Rent end</label>
                 <input readonly class="form-control" id="rentEnd" name="rEnd"
                        th:value="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}">
+<!--                <input readonly class="form-control" id="rentEnd" name="rentEnd" th:field="${order.rentEnd}">-->
             </div>
         </div>
 
@@ -94,7 +99,7 @@
             </div>
         </div>
 
-        <div class="form-group row">
+        <div th:if="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="selectStatus">Status</label>
                 <select th:field="*{status.id}" id="selectStatus" class="form-control">
@@ -102,6 +107,15 @@
                             th:value="${status.id}"
                             th:utext="${status.name}"/>
                 </select>
+            </div>
+        </div>
+        <div th:unless="${statuses}" class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="Status">Status</label>
+                <input type="text" hidden class="form-control-plaintext" th:name="status.id"
+                       th:value="${order.status.id}">
+                <input type="text" class="form-control" th:name="status" th:value="${order.status.name}" id="Status"
+                       readonly>
             </div>
         </div>
 

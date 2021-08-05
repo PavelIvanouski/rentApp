@@ -63,7 +63,6 @@ public class OrderServiceImpl implements OrderService {
             double pricePerHour = Math.round((Double.valueOf(orderDto.getPrice()) / 24) * 100) / 100.00;
             orderDto.setTotal(Math.round((hours * pricePerHour) * 100) / 100.00);
         } else {
-//            orderDto.setUpdatingDate(sqlTimestamp);
             orderDto.setUpdatingDate(OffsetDateTime.now());
         }
         Order savedOrder = orderRepository.save(orderMapper.orderDtoToOrder(orderDto));

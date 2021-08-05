@@ -88,6 +88,10 @@ public class OrderController {
 
     @GetMapping("user/orders")
     String getUserOrders(@AuthenticationPrincipal User userSec, Model model) {
+        List<Integer> idList = new ArrayList<>();
+        idList.add(2);
+        idList.add(5);
+        model.addAttribute("statuses", statusService.getAllByIdList(idList));
         model.addAttribute("orders", orderService.getAllByUser(userService.findUserByUserName(userSec.getUsername())));
         return "order/orders-user";
     }
@@ -110,23 +114,19 @@ public class OrderController {
     }
 
     @PostMapping("user/orders/{id}")
-    public String saveUserOrder(@ModelAttribute("order") OrderDto orderDto, Model model) {
-        if (orderDto == null) {
+    public String saveUserOrder(@ModelAttribute("order") OrderDto orderDto, Model model, BindingResult bindingResult) {
+        OrderDto orderBeforeUpdating = orderService.findOrderById(orderDto.getId());
+        if (!"booked".equals(orderBeforeUpdating.getStatus().getName())
+                || "booked".equals(orderDto.getStatus().getName())) {
+            return "order/order-user";
         }
-//        if (!orderService.existsById(id)) {
-//            return "redirect:/user/orders";
-//        }
-//        OrderDto usersOrder = orderService.findOrderById(id);
-//        if ("booked".equals(usersOrder.getStatus().getName())) {
-//            List<Integer> idList = new ArrayList<>();
-//            idList.add(2);
-//            idList.add(5);
-//            model.addAttribute("statuses", statusService.getAllByIdList(idList));
-//            model.addAttribute("allowEdit", true);
-//        }
-//        model.addAttribute("order", usersOrder);
-//        return "order/order-user";
-        return "redirect:/user/orders";
+        orderDto.setCreatingDate(orderBeforeUpdating.getCreatingDate());
+        orderDto.setRentBegin(orderBeforeUpdating.getRentBegin());
+        orderDto.setRentEnd(orderBeforeUpdating.getRentEnd());
+        if (bindingResult.hasErrors()) {
+            return "order/order-user";
+        }
+        return "redirect:/user/orders/" + orderService.saveOrder(orderDto).getId();
     }
 
     @GetMapping("admin/orders")
