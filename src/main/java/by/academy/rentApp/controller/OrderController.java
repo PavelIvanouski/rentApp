@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,20 +55,20 @@ public class OrderController {
     public String addOrder(@Validated @ModelAttribute("order") OrderDto orderDto
             , @RequestParam(value = "rBegin", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin
             , @RequestParam(value = "rEnd", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rEnd
+            , @RequestParam(value = "currentOffSet", required = false) String currentOffSet
             , BindingResult bindingResult
             , Model model) {
 
-        if (!DatesUtil.chekDates(rBegin, rEnd)) {
+        if (!DatesUtil.chekDates(rBegin, rEnd) || currentOffSet == null) {
             return "order/order-add";
         }
-        ZoneId zoneId = ZoneId.systemDefault();
-        OffsetDateTime rentBegin = rBegin.atZone(zoneId).toOffsetDateTime();
-        orderDto.setRentBegin(rentBegin);
-        OffsetDateTime rentEnd = rEnd.atZone(zoneId).toOffsetDateTime();
-        orderDto.setRentEnd(rentEnd);
+        orderDto.setRentBegin(OffsetDateTime.of(rBegin,ZoneOffset.of(currentOffSet)));
+        orderDto.setRentEnd(OffsetDateTime.of(rEnd,ZoneOffset.of(currentOffSet)));
+
         if (bindingResult.hasErrors()) {
             return "order/order-add";
         }
+
         List<Integer> statuses = new ArrayList<>();
         statuses.add(1);
         statuses.add(2);
@@ -95,6 +96,8 @@ public class OrderController {
         model.addAttribute("orders", orderService.getAllByUser(userService.findUserByUserName(userSec.getUsername())));
         return "order/orders-user";
     }
+
+
 
     @GetMapping("user/orders/{id}")
     public String getUserOrderForm(@PathVariable Integer id, Model model) {

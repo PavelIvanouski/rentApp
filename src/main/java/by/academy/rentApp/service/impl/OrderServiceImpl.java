@@ -60,7 +60,8 @@ public class OrderServiceImpl implements OrderService {
             orderDto.setCreatingDate(OffsetDateTime.now());
             orderDto.setStatus(statusService.findStatusById(2));
             double hours = DatesUtil.returnDifferenceInHours(orderDto.getRentBegin(), orderDto.getRentEnd());
-            double pricePerHour = Math.round((Double.valueOf(orderDto.getPrice()) / 24) * 100) / 100.00;
+//            double pricePerHour = Math.round((Double.valueOf(orderDto.getPrice()) / 24) * 100) / 100.00;
+            double pricePerHour = (Double.valueOf(orderDto.getPrice()) / 24) ;
             orderDto.setTotal(Math.round((hours * pricePerHour) * 100) / 100.00);
         } else {
             orderDto.setUpdatingDate(OffsetDateTime.now());

@@ -85,6 +85,8 @@
             </div>
         </div>
 
+        <input type="text" hidden class="form-control" id="currentOffSet"  name="currentOffSet">
+
         <button type="submit" class="btn btn-outline-primary">Add order</button>
     </form>
 
@@ -126,7 +128,7 @@
                         document.getElementById('errorMessage').value = "The maximum rental period is 7 days!";
                         document.getElementById('total').value = 0;
                     } else {
-                        var perHour = (document.getElementById('inputPrice').value / 24).toFixed(2);
+                        var perHour = document.getElementById('inputPrice').value / 24;
                         // document.getElementById('total').value = hours_difference.toFixed(2);
                         document.getElementById('total').value = (roundHours * perHour).toFixed(2);
                     }
@@ -134,6 +136,15 @@
             }
         }
     }
+
+    function getTimeZone() {
+        var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+        // return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
+        document.getElementById("currentOffSet").value = (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
+    }
+    $(function() {
+        getTimeZone();
+    });
 </script>
 </body>
 </html>

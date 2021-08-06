@@ -37,16 +37,23 @@
                 <td th:text="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${order.total}"></td>
                 <div th:if="${order.status.id == 2}">
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                booked
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">cancelled</a>
-                            </div>
-                        </div>
+                    <!--                    <td>-->
+                    <!--                        <div class="dropdown">-->
+                    <!--                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"-->
+                    <!--                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+                    <!--                                booked-->
+                    <!--                            </button>-->
+                    <!--                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+                    <!--                                <a class="dropdown-item" href="#">cancelled</a>-->
+                    <!--                            </div>-->
+                    <!--                        </div>-->
+                    <!--                    </td>-->
+
+                    <td><select name="currentStatus" id="currentStatus" class="selectpicker">
+                        <option value="HKD">booked</option>
+                        <option value="HKD">cancelled</option>
+                    </select>
+
                     </td>
                 </div>
                 <div th:unless="${order.status.id == 2}">
