@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
+import java.util.List;
 
 @Data
 @Entity
@@ -46,4 +47,8 @@ public class Order {
     @JoinColumn(name = "status_id", nullable = false)
     private Status status;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Invoiсe> invoiсes;
 }

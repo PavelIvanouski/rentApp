@@ -1,10 +1,8 @@
 package by.academy.rentApp.controller;
 
+import by.academy.rentApp.dto.InvoiсeDto;
 import by.academy.rentApp.dto.OrderDto;
-import by.academy.rentApp.service.CarService;
-import by.academy.rentApp.service.OrderService;
-import by.academy.rentApp.service.StatusService;
-import by.academy.rentApp.service.UserService;
+import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.DatesUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,12 +28,14 @@ public class OrderController {
     private final CarService carService;
     private final UserService userService;
     private final StatusService statusService;
+    private final InvoiceService invoiceService;
 
-    public OrderController(OrderService orderService, CarService carService, UserService userService, StatusService statusService) {
+    public OrderController(OrderService orderService, CarService carService, UserService userService, StatusService statusService, InvoiceService invoiceService) {
         this.orderService = orderService;
         this.carService = carService;
         this.userService = userService;
         this.statusService = statusService;
+        this.invoiceService = invoiceService;
     }
 
     @GetMapping("/orders/add")
@@ -168,6 +167,17 @@ public class OrderController {
             idList.add(3);
             model.addAttribute("statuses", statusService.getAllByIdList(idList));
             model.addAttribute("allowEdit", true);
+            List<InvoiсeDto> ordersInvoices = invoiceService.getAllByOrder(usersOrder);
+            if (ordersInvoices.size() != 0) {
+                model.addAttribute("invoiced",true);
+                for (InvoiсeDto invoiсeDto : ordersInvoices) {
+                    if (invoiсeDto.getSerialNumber() == 1) {
+                        model.addAttribute("mainInvoice", invoiсeDto.getId());
+                    } else if (invoiсeDto.getSerialNumber() == 2) {
+                        model.addAttribute("extraInvoice", invoiсeDto.getId());
+                    }
+                }
+            }
         }
 
         model.addAttribute("order", usersOrder);
@@ -224,8 +234,12 @@ public class OrderController {
 
 
         if (orderDto.getStatus().getId() == 1) {
-
-
+            InvoiсeDto invoiсeDto = new InvoiсeDto();
+            invoiсeDto.setSerialNumber(1);
+            invoiсeDto.setTotal(orderDto.getTotal());
+            invoiсeDto.setOrder(orderDto);
+            invoiсeDto.setMessage("rent payment");
+            invoiceService.saveInvoice(invoiсeDto);
         }
 
         return "redirect:/admin/orders/" + orderService.saveOrder(orderDto).getId();

@@ -103,6 +103,7 @@
             <!--                <label for="message">Message</label>-->
             <!--                <input type="text" hidden class="form-control" th:name="message"  id="message">-->
             <!--            </div>-->
+
         </div>
         <div th:unless="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
@@ -114,10 +115,19 @@
             </div>
         </div>
 
+        <div th:if="${invoiced}" class="form-group row">
+            <div th:if="${mainInvoice}" class="form-group col-sm-2">
+                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >
+                    <!--                    <input type="hidden" name="carId" th:value="${car.id}"/>-->
+                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>
+                </form>
+            </div>
+        </div>
+
         <div hidden class="form-group row" id="messageRow">
             <div class="form-group col-sm-8">
                 <label for="message">Message</label>
-                <input type="text" class="form-control" th:name="message" th:value="${order.message}"id="message">
+                <input type="text" class="form-control" th:name="message" th:value="${order.message}" id="message">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('message')}"
                       th:errors="*{message}"></span>
             </div>
@@ -151,7 +161,8 @@
             document.getElementById('messageRow').hidden = true;
         }
     }
-    $(function() {
+
+    $(function () {
         setMessageView();
     });
 </script>

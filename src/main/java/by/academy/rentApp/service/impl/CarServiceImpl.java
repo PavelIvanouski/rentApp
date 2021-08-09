@@ -39,8 +39,6 @@ public class CarServiceImpl implements CarService {
     @Override
     @Transactional
     public CarDto saveCar(CarDto carDto) {
-        long now = System.currentTimeMillis();
-        Timestamp sqlTimestamp = new Timestamp(now);
         if (carDto.getId() == null) {
             carDto.setCreatingDate(OffsetDateTime.now());
         } else {
