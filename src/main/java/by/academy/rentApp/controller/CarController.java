@@ -59,7 +59,7 @@ public class CarController {
 
     @PostMapping("add")
     public String addCar(@Validated @ModelAttribute("car") CarDto carDto
-            , @RequestParam("image") MultipartFile multipartFile, BindingResult bindingResult
+            , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
@@ -110,6 +110,8 @@ public class CarController {
 
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }
+        CarDto carBeforeUpdating = carService.findCarById(carDto.getId());
+        carDto.setCreatingDate(carBeforeUpdating.getCreatingDate());
         carService.saveCar(carDto);
         return "redirect:/cars";
     }

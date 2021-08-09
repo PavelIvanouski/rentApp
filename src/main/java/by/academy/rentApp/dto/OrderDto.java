@@ -7,6 +7,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
@@ -38,5 +39,8 @@ public class OrderDto {
     private Integer price;
 
     private double total;
+
+    @Max(value = 70, message = "Max value = 70")
+    private String message;
 
 }

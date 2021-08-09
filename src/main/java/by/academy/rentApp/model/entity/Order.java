@@ -29,6 +29,9 @@ public class Order {
     private Integer price;
 
     @Column
+    private String message;
+
+    @Column
     private double total;
 
     @ManyToOne(fetch = FetchType.LAZY)

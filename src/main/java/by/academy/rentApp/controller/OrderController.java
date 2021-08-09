@@ -62,8 +62,8 @@ public class OrderController {
         if (!DatesUtil.chekDates(rBegin, rEnd) || currentOffSet == null) {
             return "order/order-add";
         }
-        orderDto.setRentBegin(OffsetDateTime.of(rBegin,ZoneOffset.of(currentOffSet)));
-        orderDto.setRentEnd(OffsetDateTime.of(rEnd,ZoneOffset.of(currentOffSet)));
+        orderDto.setRentBegin(OffsetDateTime.of(rBegin, ZoneOffset.of(currentOffSet)));
+        orderDto.setRentEnd(OffsetDateTime.of(rEnd, ZoneOffset.of(currentOffSet)));
 
         if (bindingResult.hasErrors()) {
             return "order/order-add";
@@ -81,10 +81,7 @@ public class OrderController {
             return "order/order-add";
         }
 
-        OrderDto savedOrder = orderService.saveOrder(orderDto);
-
-//        return "order/orders-user";
-        return "redirect:/user/orders";
+        return "redirect:/user/orders/" + orderService.saveOrder(orderDto).getId();
     }
 
     @GetMapping("user/orders")
@@ -98,14 +95,13 @@ public class OrderController {
     }
 
 
-
     @GetMapping("user/orders/{id}")
     public String getUserOrderForm(@PathVariable Integer id, Model model) {
         if (!orderService.existsById(id)) {
             return "redirect:/user/orders";
         }
         OrderDto usersOrder = orderService.findOrderById(id);
-        if ("booked".equals(usersOrder.getStatus().getName())) {
+        if (usersOrder.getStatus().getId() == 2) {
             List<Integer> idList = new ArrayList<>();
             idList.add(2);
             idList.add(5);
@@ -119,14 +115,27 @@ public class OrderController {
     @PostMapping("user/orders/{id}")
     public String saveUserOrder(@ModelAttribute("order") OrderDto orderDto, Model model, BindingResult bindingResult) {
         OrderDto orderBeforeUpdating = orderService.findOrderById(orderDto.getId());
-        if (!"booked".equals(orderBeforeUpdating.getStatus().getName())
-                || "booked".equals(orderDto.getStatus().getName())) {
-            return "order/order-user";
-        }
         orderDto.setCreatingDate(orderBeforeUpdating.getCreatingDate());
         orderDto.setRentBegin(orderBeforeUpdating.getRentBegin());
         orderDto.setRentEnd(orderBeforeUpdating.getRentEnd());
+        List<Integer> idList = new ArrayList<>();
+        idList.add(2);
+        idList.add(5);
+
+        if (orderBeforeUpdating.getStatus().getId() != 2
+                || orderDto.getStatus().getId() == 2) {
+
+            model.addAttribute("statuses", statusService.getAllByIdList(idList));
+            model.addAttribute("allowEdit", true);
+            bindingResult
+                    .rejectValue("status", "error.orderDto",
+                            "Order is already booked");
+            return "order/order-user";
+        }
+
         if (bindingResult.hasErrors()) {
+            model.addAttribute("statuses", statusService.getAllByIdList(idList));
+            model.addAttribute("allowEdit", true);
             return "order/order-user";
         }
         return "redirect:/user/orders/" + orderService.saveOrder(orderDto).getId();
@@ -136,5 +145,89 @@ public class OrderController {
     String getAllOrders(Model model) {
         model.addAttribute("orders", orderService.getAll());
         return "order/orders-admin";
+    }
+
+    @GetMapping("admin/orders/{id}")
+    public String getAdminOrderForm(@PathVariable Integer id, Model model) {
+        if (!orderService.existsById(id)) {
+            return "redirect:/admin/orders";
+        }
+        OrderDto usersOrder = orderService.findOrderById(id);
+        if (usersOrder.getStatus().getId() == 2) {
+            List<Integer> idList = new ArrayList<>();
+            idList.add(1);
+            idList.add(2);
+            idList.add(4);
+            model.addAttribute("statuses", statusService.getAllByIdList(idList));
+            model.addAttribute("allowEdit", true);
+        }
+
+        if (usersOrder.getStatus().getId() == 1) {
+            List<Integer> idList = new ArrayList<>();
+            idList.add(1);
+            idList.add(3);
+            model.addAttribute("statuses", statusService.getAllByIdList(idList));
+            model.addAttribute("allowEdit", true);
+        }
+
+        model.addAttribute("order", usersOrder);
+        return "order/order-admin";
+    }
+
+    @PostMapping("admin/orders/{id}")
+    public String saveAdminOrder(@ModelAttribute("order") OrderDto orderDto, Model model, BindingResult bindingResult) {
+        OrderDto orderBeforeUpdating = orderService.findOrderById(orderDto.getId());
+        orderDto.setCreatingDate(orderBeforeUpdating.getCreatingDate());
+        orderDto.setRentBegin(orderBeforeUpdating.getRentBegin());
+        orderDto.setRentEnd(orderBeforeUpdating.getRentEnd());
+
+        List<Integer> idListBooked = new ArrayList<>();
+        idListBooked.add(1);
+        idListBooked.add(2);
+        idListBooked.add(4);
+
+        List<Integer> idListInvoised = new ArrayList<>();
+        idListInvoised.add(1);
+        idListInvoised.add(3);
+
+        if (orderBeforeUpdating.getStatus().getId() != 2
+                && orderBeforeUpdating.getStatus().getId() != 1) {
+            return "redirect:/admin/orders";
+        }
+
+        if (orderDto.getStatus().getId() == 4 && orderDto.getMessage().length() == 0) {
+            model.addAttribute("statuses", statusService.getAllByIdList(idListBooked));
+            model.addAttribute("allowEdit", true);
+            bindingResult
+                    .rejectValue("message", "error.orderDto",
+                            "Message should not  be empty for а denied order");
+            return "order/order-admin";
+        }
+
+        if (orderBeforeUpdating.getStatus().getId() == 2 && orderDto.getStatus().getId() == 2) {
+            model.addAttribute("statuses", statusService.getAllByIdList(idListBooked));
+            model.addAttribute("allowEdit", true);
+            bindingResult
+                    .rejectValue("status", "error.orderDto",
+                            "Order is already booked");
+            return "order/order-admin";
+        }
+
+        if (orderBeforeUpdating.getStatus().getId() == 1 && orderDto.getStatus().getId() == 1) {
+            model.addAttribute("statuses", statusService.getAllByIdList(idListInvoised));
+            model.addAttribute("allowEdit", true);
+            bindingResult
+                    .rejectValue("status", "error.orderDto",
+                            "Order is already invoised");
+            return "order/order-admin";
+        }
+
+
+        if (orderDto.getStatus().getId() == 1) {
+
+
+        }
+
+        return "redirect:/admin/orders/" + orderService.saveOrder(orderDto).getId();
     }
 }
