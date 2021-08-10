@@ -10,6 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 public class InvoiceController {
     private final CarService carService;
@@ -39,25 +42,25 @@ public class InvoiceController {
 //        return "car/cars";
 //    }
 //
-    @GetMapping("/admin/invoices/add/{id}")
-    public String getInvoiceAddForm(@PathVariable Integer id,Model model) {
-        if (!orderService.existsById(id)) {
-            return "redirect: admin/invoices";
-        }
-        OrderDto orderDto = orderService.findOrderById(id);
-        InvoiсeDto invoiсeDto = new InvoiсeDto();
-        invoiсeDto.setOrder(orderDto);
-        invoiсeDto.setSerialNumber(2);
-        model.addAttribute("invoice",invoiсeDto);
-        return "invoice/invoice-add";
-    }
+//    @GetMapping("/admin/invoices/add/{id}")
+//    public String getInvoiceAddForm(@PathVariable Integer id,Model model) {
+//        if (!orderService.existsById(id)) {
+//            return "redirect: admin/invoices";
+//        }
+//        OrderDto orderDto = orderService.findOrderById(id);
+//        InvoiсeDto invoiсeDto = new InvoiсeDto();
+//        invoiсeDto.setOrder(orderDto);
+//        invoiсeDto.setSerialNumber(2);
+//        model.addAttribute("invoice",invoiсeDto);
+//        return "invoice/invoice-add";
+//    }
 
-    @PostMapping("/admin/invoices/add/{id}")
-    public String saveExtraInvoice(@ModelAttribute("invoice") InvoiсeDto invoiсeDto,Model model) {
-
-
-        return "invoice/invoice-add";
-    }
+//    @PostMapping("/admin/invoices/add/{id}")
+//    public String saveExtraInvoice(@ModelAttribute("invoice") InvoiсeDto invoiсeDto,Model model) {
+//
+//
+//        return "invoice/invoice-add";
+//    }
 //
 //    @GetMapping("all")
 //    public String getAllCarsForm(Model model) {
@@ -88,6 +91,14 @@ public class InvoiceController {
 //        return "redirect:/cars";
 //    }
 //
+
+    @GetMapping("user/invoices")
+    String getUserInvoices(@AuthenticationPrincipal User userSec, Model model) {
+//        model.addAttribute("invoices",
+//                invoiceService.);
+        return "order/orders-user";
+    }
+
     @GetMapping("/invoices/{id}")
     public String getInvoiceForm(@PathVariable Integer id, @AuthenticationPrincipal User userSec, Model model) {
         if (!invoiceService.existsById(id)) {
