@@ -107,6 +107,21 @@ public class OrderController {
             model.addAttribute("statuses", statusService.getAllByIdList(idList));
             model.addAttribute("allowEdit", true);
         }
+
+        if (usersOrder.getStatus().getId() == 1 || usersOrder.getStatus().getId() == 3) {
+            List<InvoiсeDto> ordersInvoices = invoiceService.getAllByOrder(usersOrder);
+            if (ordersInvoices.size() != 0) {
+                model.addAttribute("invoiced", true);
+                for (InvoiсeDto invoiсeDto : ordersInvoices) {
+                    if (invoiсeDto.getSerialNumber() == 1) {
+                        model.addAttribute("mainInvoice", invoiсeDto.getId());
+                    } else if (invoiсeDto.getSerialNumber() == 2) {
+                        model.addAttribute("extraInvoice", invoiсeDto.getId());
+                    }
+                }
+            }
+        }
+
         model.addAttribute("order", usersOrder);
         return "order/order-user";
     }
@@ -192,7 +207,7 @@ public class OrderController {
     public String saveAdminOrder(@ModelAttribute("order") OrderDto orderDto
             , Model model
             , @RequestParam(value = "extraMessage", required = false) String extraMessage
-            , @RequestParam(value = "extraTotal", required = false) String extraTotal
+            , @RequestParam(value = "extraTotal", required = false) Double extraTotal
             , BindingResult bindingResult) {
         OrderDto orderBeforeUpdating = orderService.findOrderById(orderDto.getId());
         orderDto.setCreatingDate(orderBeforeUpdating.getCreatingDate());
@@ -248,12 +263,6 @@ public class OrderController {
         if (orderBeforeUpdating.getStatus().getId() == 1 && orderDto.getStatus().getId() == 1) {
             model.addAttribute("statuses", statusService.getAllByIdList(idListInvoised));
             model.addAttribute("allowEdit", true);
-            List<Integer> idList = new ArrayList<>();
-            idList.add(1);
-            idList.add(3);
-            model.addAttribute("statuses", statusService.getAllByIdList(idList));
-            model.addAttribute("allowEdit", true);
-
             bindingResult
                     .rejectValue("status", "error.orderDto",
                             "Order is already invoised");
@@ -262,16 +271,30 @@ public class OrderController {
         }
 
         if (orderDto.getStatus().getId() == 1) {
-            InvoiсeDto invoiсeDto = new InvoiсeDto();
-            invoiсeDto.setSerialNumber(1);
-            invoiсeDto.setTotal(orderDto.getTotal());
-            invoiсeDto.setOrder(orderDto);
-            invoiсeDto.setMessage("rent payment");
-            invoiceService.saveInvoice(invoiсeDto);
+            InvoiсeDto invoiсeDto1 = new InvoiсeDto();
+            invoiсeDto1.setSerialNumber(1);
+            invoiсeDto1.setTotal(orderDto.getTotal());
+            invoiсeDto1.setOrder(orderDto);
+            invoiсeDto1.setMessage("rent payment");
+            invoiceService.saveInvoice(invoiсeDto1);
         }
 
         if (orderDto.getStatus().getId() == 3) {
-
+            if ((extraTotal != 0 && extraMessage == "")
+                    || (extraTotal == 0 && extraMessage != "")) {
+                model.addAttribute("extraError", "incorrect data");
+                model.addAttribute("statuses", statusService.getAllByIdList(idListInvoised));
+                model.addAttribute("allowEdit", true);
+                return "order/order-admin";
+            }
+            if (extraTotal != 0 && extraMessage != "") {
+                InvoiсeDto invoiсeDto2 = new InvoiсeDto();
+                invoiсeDto2.setSerialNumber(2);
+                invoiсeDto2.setTotal(extraTotal);
+                invoiсeDto2.setOrder(orderDto);
+                invoiсeDto2.setMessage(extraMessage);
+                invoiceService.saveInvoice(invoiсeDto2);
+            }
 
         }
 

@@ -24,7 +24,18 @@
 
         <div class="form-group">
             <td th:text="'Id: ' + ${order.id} + ' Creating date: ' +
-             ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+             ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}
+              + ' ' +'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
+         + ' ' + ${order.car.year}"></td>
+        </div>
+
+        <div class="form-group">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"
+                   th:value="${order.car.model.brand.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"
+                   th:value="${order.car.model.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.year"
+                   th:value="${order.car.year}">
         </div>
 
         <div th:if="${order.updatingDate  != null}" class="form-group">
@@ -45,16 +56,16 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"
-                   th:value="${order.car.model.brand.name}">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"
-                   th:value="${order.car.model.name}">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.year"
-                   th:value="${order.car.year}">
-            <td th:text="'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
-         + ' ' + ${order.car.year}"></td>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"-->
+<!--                   th:value="${order.car.model.brand.name}">-->
+<!--            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"-->
+<!--                   th:value="${order.car.model.name}">-->
+<!--            <input type="text" hidden class="form-control-plaintext" th:name="car.year"-->
+<!--                   th:value="${order.car.year}">-->
+<!--            <td th:text="'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}-->
+<!--         + ' ' + ${order.car.year}"></td>-->
+<!--        </div>-->
 
         <div class="form-group row">
             <label for="inputPrice" class="col-sm-2 col-form-label">Price per day</label>
@@ -62,6 +73,11 @@
                 <input type="text" hidden class="form-control-plaintext" th:name="car.price"
                        th:value="${order.car.price}">
                 <input type="text" class="form-control" th:name="price" th:value="${order.car.price}" id="inputPrice"
+                       readonly>
+            </div>
+            <label for="total" class="col-sm-2 col-form-label">Total</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
                        readonly>
             </div>
         </div>
@@ -81,23 +97,6 @@
             </div>
         </div>
 
-
-        <!--        <span style="font-size: 20; color: #FF1C19;" th:text="${currentOrdersMessage}"></span>-->
-        <!--        <div th:each="currentOrder : ${currentOrders}"-->
-        <!--             style="font-size: 20; color: #FF1C19;"-->
-        <!--             th:utext="'['+ ${#temporals.format(currentOrder.rentBegin, 'dd/MM/yyyy HH:mm')} + ' - ' +-->
-        <!--              ${#temporals.format(currentOrder.rentEnd, 'dd/MM/yyyy HH:mm')} + ']'"></div>-->
-
-        <!--        </br>-->
-        <div class="form-group row">
-            <div class="form-group col-sm-4">
-                <label for="total">Total</label>
-                <input type="text" hidden class="form-control-plaintext" th:name="total"
-                       th:value="${order.total}">
-                <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
-                       readonly>
-            </div>
-        </div>
 
         <div th:if="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
@@ -120,6 +119,34 @@
         </div>
         <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('status')}"
               th:errors="*{status}"></span>
+
+        <div th:if="${invoiced}" class="form-group row">
+            <div th:if="${mainInvoice}" class="form-group col-sm-2">
+                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
+                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
+                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
+                <!--                </form>-->
+                <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${mainInvoice})}"
+                   role="button">Main invoice</a>
+                <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
+            </div>
+
+            <div th:if="${extraInvoice}" class="form-group col-sm-2">
+                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
+                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
+                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
+                <!--                </form>-->
+                <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${extraInvoice})}"
+                   role="button">Extra invoice</a>
+                <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
+            </div>
+            <div th:unless="${extraInvoice}" class="form-group col-sm-2">
+                <!--                <a class="btn btn-outline-info" th:href="@{/admin/invoices/add/{orderId}(orderId =${order.id})}"-->
+                <!--                   role="button" >Add extra invoice</a>-->
+
+                <!--                <input type="text" name="extraMessage" />-->
+            </div>
+        </div>
 
         <div hidden class="form-group row" id="messageRow">
             <div class="form-group col-sm-8">

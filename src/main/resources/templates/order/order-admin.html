@@ -24,7 +24,18 @@
 
         <div class="form-group">
             <td th:text="'Id: ' + ${order.id} + ' Creating date: ' +
-             ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+             ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}
+              + ' ' +'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
+         + ' ' + ${order.car.year}"></td>
+        </div>
+
+        <div class="form-group">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"
+                   th:value="${order.car.model.brand.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"
+                   th:value="${order.car.model.name}">
+            <input type="text" hidden class="form-control-plaintext" th:name="car.year"
+                   th:value="${order.car.year}">
         </div>
 
         <div th:if="${order.updatingDate  != null}" class="form-group">
@@ -45,16 +56,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"
-                   th:value="${order.car.model.brand.name}">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.model.name"
-                   th:value="${order.car.model.name}">
-            <input type="text" hidden class="form-control-plaintext" th:name="car.year"
-                   th:value="${order.car.year}">
-            <td th:text="'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
-         + ' ' + ${order.car.year}"></td>
-        </div>
 
         <div class="form-group row">
             <label for="inputPrice" class="col-sm-2 col-form-label">Price per day</label>
@@ -62,6 +63,11 @@
                 <input type="text" hidden class="form-control-plaintext" th:name="car.price"
                        th:value="${order.car.price}">
                 <input type="text" class="form-control" th:name="price" th:value="${order.car.price}" id="inputPrice"
+                       readonly>
+            </div>
+            <label for="total" class="col-sm-2 col-form-label">Total</label>
+            <div class="col-sm-2">
+                <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
                        readonly>
             </div>
         </div>
@@ -77,16 +83,6 @@
                 <label for="rentEnd">Rent end</label>
                 <input readonly class="form-control" id="rentEnd" name="rEnd"
                        th:value="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="form-group col-sm-4">
-                <label for="total">Total</label>
-                <input type="text" hidden class="form-control-plaintext" th:name="total"
-                       th:value="${order.total}">
-                <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
-                       readonly>
             </div>
         </div>
 
@@ -146,8 +142,16 @@
             </div>
             <div class="form-group col-sm-2">
                 <label for="extraPrice">Extra price</label>
-                <input type="text" class="form-control" name="extraTotal" id="extraPrice">
+                <!--                <input type="number" step="0.01" class="form-control"-->
+                <!--                       name="extraTotal" id="extraPrice">-->
+                <input type="number" name="extraTotal" id="extraPrice" placeholder="0.00" min="0" value="0" step="0.01"
+                       pattern="^\d+(?:\.\d{1,2})?$" onblur="
+this.parentNode.parentNode.style.backgroundColor
+=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
             </div>
+        </div>
+        <div th:if="${extraError}">
+            <p style="font-size: 20; color: #FF1C19;" th:text="${extraError}"></p>
         </div>
 
         <div th:if="${allowEdit}">
