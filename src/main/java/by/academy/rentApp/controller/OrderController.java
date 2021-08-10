@@ -231,7 +231,7 @@ public class OrderController {
             return "order/order-admin";
         }
 
-        if (orderDto.getStatus().getId() == 1 && orderDto.getStatus().getId() == 3) {
+        if (orderDto.getStatus().getId() == 1 || orderDto.getStatus().getId() == 3) {
             List<InvoiсeDto> ordersInvoices = invoiceService.getAllByOrder(orderDto);
             if (ordersInvoices.size() != 0) {
                 model.addAttribute("invoiced", true);
