@@ -39,7 +39,7 @@ public class Order {
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

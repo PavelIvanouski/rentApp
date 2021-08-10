@@ -1,21 +1,14 @@
 package by.academy.rentApp.controller;
 
-import by.academy.rentApp.dto.CarDto;
-import by.academy.rentApp.service.CarModelService;
-import by.academy.rentApp.service.CarService;
-import by.academy.rentApp.service.EngineService;
-import by.academy.rentApp.service.TypeService;
-import by.academy.rentApp.util.FileUploadUtil;
+import by.academy.rentApp.dto.InvoiсeDto;
+import by.academy.rentApp.dto.OrderDto;
+import by.academy.rentApp.service.*;
+import by.academy.rentApp.util.DatesUtil;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.List;
 
 @Controller
 public class InvoiceController {
@@ -23,18 +16,22 @@ public class InvoiceController {
     private final CarModelService carModelService;
     private final TypeService typeService;
     private final EngineService engineService;
+    private final InvoiceService invoiceService;
+    private final OrderService orderService;
 
 
     public InvoiceController(CarService carService, CarModelService carModelService
-            , TypeService typeService, EngineService engineService) {
+            , TypeService typeService, EngineService engineService, InvoiceService invoiceService, OrderService orderService) {
         this.carService = carService;
         this.carModelService = carModelService;
         this.typeService = typeService;
         this.engineService = engineService;
+        this.invoiceService = invoiceService;
+        this.orderService = orderService;
     }
 
 
-//    @GetMapping("")
+    //    @GetMapping("")
 //    public String getCars(Model model) {
 //        List<CarDto> cars = carService.getAll();
 //        model.addAttribute("cars", cars);
@@ -42,14 +39,25 @@ public class InvoiceController {
 //        return "car/cars";
 //    }
 //
-//    @GetMapping("add")
-//    public String getCarAddForm(Model model) {
-//        model.addAttribute("car", new CarDto());
-//        model.addAttribute("models", carModelService.getAll());
-//        model.addAttribute("types", typeService.getAll());
-//        model.addAttribute("engines", engineService.getAll());
-//        return "car/car-add";
-//    }
+    @GetMapping("/admin/invoices/add/{id}")
+    public String getInvoiceAddForm(@PathVariable Integer id,Model model) {
+        if (!orderService.existsById(id)) {
+            return "redirect: admin/invoices";
+        }
+        OrderDto orderDto = orderService.findOrderById(id);
+        InvoiсeDto invoiсeDto = new InvoiсeDto();
+        invoiсeDto.setOrder(orderDto);
+        invoiсeDto.setSerialNumber(2);
+        model.addAttribute("invoice",invoiсeDto);
+        return "invoice/invoice-add";
+    }
+
+    @PostMapping("/admin/invoices/add/{id}")
+    public String saveExtraInvoice(@ModelAttribute("invoice") InvoiсeDto invoiсeDto,Model model) {
+
+
+        return "invoice/invoice-add";
+    }
 //
 //    @GetMapping("all")
 //    public String getAllCarsForm(Model model) {
@@ -80,17 +88,20 @@ public class InvoiceController {
 //        return "redirect:/cars";
 //    }
 //
-//    @GetMapping("{id}/edit")
-//    public String getCarEditForm(@PathVariable Integer id, Model model) {
-//        if (!carService.existsById(id)) {
-//            return "redirect:/cars";
-//        }
-//        model.addAttribute("car", carService.findCarById(id));
-//        model.addAttribute("models", carModelService.getAll());
-//        model.addAttribute("types", typeService.getAll());
-//        model.addAttribute("engines", engineService.getAll());
-//        return "car/car-edit";
-//    }
+    @GetMapping("/invoices/{id}")
+    public String getInvoiceForm(@PathVariable Integer id, @AuthenticationPrincipal User userSec, Model model) {
+        if (!invoiceService.existsById(id)) {
+//            return "redirect:/invoices";
+        }
+        InvoiсeDto invoiсeDto = invoiceService.findInvoiceById(id);
+        model.addAttribute("user",invoiсeDto.getOrder().getUser());
+        double hours = DatesUtil.returnDifferenceInHours(invoiсeDto.getOrder().getRentBegin(), invoiсeDto.getOrder().getRentEnd());
+        model.addAttribute("hours",hours);
+        model.addAttribute("invoice",invoiсeDto);
+
+        return "invoice/invoice-details";
+//        return "invoice/invoice-modal :: view";
+    }
 //
 //    @PostMapping("{id}/edit")
 //    public String updateCar(@Validated @ModelAttribute("car") CarDto carDto

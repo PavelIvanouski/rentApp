@@ -99,10 +99,6 @@
                             th:utext="${status.name}"/>
                 </select>
             </div>
-            <!--            <div class="form-group col-sm-4">-->
-            <!--                <label for="message">Message</label>-->
-            <!--                <input type="text" hidden class="form-control" th:name="message"  id="message">-->
-            <!--            </div>-->
 
         </div>
         <div th:unless="${statuses}" class="form-group row">
@@ -117,19 +113,51 @@
 
         <div th:if="${invoiced}" class="form-group row">
             <div th:if="${mainInvoice}" class="form-group col-sm-2">
-                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >
-                    <!--                    <input type="hidden" name="carId" th:value="${car.id}"/>-->
-                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>
-                </form>
+                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
+                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
+                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
+                <!--                </form>-->
+                <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${mainInvoice})}"
+                   role="button">Main invoice</a>
+                <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
+            </div>
+
+            <div th:if="${extraInvoice}" class="form-group col-sm-2">
+                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
+                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
+                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
+                <!--                </form>-->
+                <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${extraInvoice})}"
+                   role="button">Extra invoice</a>
+                <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
+            </div>
+            <div th:unless="${extraInvoice}" class="form-group col-sm-2">
+                <!--                <a class="btn btn-outline-info" th:href="@{/admin/invoices/add/{orderId}(orderId =${order.id})}"-->
+                <!--                   role="button" >Add extra invoice</a>-->
+
+                <!--                <input type="text" name="extraMessage" />-->
             </div>
         </div>
 
-        <div hidden class="form-group row" id="messageRow">
-            <div class="form-group col-sm-8">
-                <label for="message">Message</label>
-                <input type="text" class="form-control" th:name="message" th:value="${order.message}" id="message">
-                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('message')}"
-                      th:errors="*{message}"></span>
+        <div hidden class="form-group row" id="extraInvoiceRow">
+            <div class="form-group col-sm-4">
+                <label for="extraMessage">Extra description</label>
+                <input type="text" class="form-control" name="extraMessage" id="extraMessage">
+            </div>
+            <div class="form-group col-sm-2">
+                <label for="extraPrice">Extra price</label>
+                <input type="text" class="form-control" name="extraTotal" id="extraPrice">
+            </div>
+        </div>
+
+        <div th:if="${allowEdit}">
+            <div hidden class="form-group row" id="messageRow">
+                <div class="form-group col-sm-8">
+                    <label for="message">Message</label>
+                    <input type="text" class="form-control" th:name="message" th:value="${order.message}" id="message">
+                    <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('message')}"
+                          th:errors="*{message}"></span>
+                </div>
             </div>
         </div>
         <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('status')}"
@@ -139,6 +167,7 @@
             <button type="submit" class="btn btn-outline-primary">Save</button>
         </div>
 
+        <div id="viewUserHolder"></div>
     </form>
 
 </div>
@@ -146,6 +175,17 @@
 <!--empty space for more representable view-->
 <div class="col-xs-12" style="height:250px;"></div>
 <div th:insert="blocks/footer :: footer"></div>
+<div id="viewUser" class="modal modal-fixed-footer" th:fragment="view">
+    <div class="modal-content">
+        <h4>View User</h4>
+
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-light btn-floating red"><i class="material-icons">close</i>
+        </button>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -160,11 +200,28 @@
         } else {
             document.getElementById('messageRow').hidden = true;
         }
+        if (statusId == 3) {
+            document.getElementById('extraInvoiceRow').hidden = false;
+        } else {
+            document.getElementById('extraInvoiceRow').hidden = true;
+        }
     }
 
     $(function () {
         setMessageView();
     });
+
+    function openInvoiceModal(id) {
+        $.ajax({
+            url: "/invoices/" + id,
+            success: function (response) {
+                $('#viewUserHolder').html(response);
+                $('#viewUser').modal();
+                $('#viewUser').modal('open');
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
