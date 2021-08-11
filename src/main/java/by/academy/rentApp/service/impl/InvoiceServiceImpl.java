@@ -8,6 +8,7 @@ import by.academy.rentApp.mapper.InvoiceMapper;
 import by.academy.rentApp.mapper.OrderMapper;
 import by.academy.rentApp.model.entity.Car;
 import by.academy.rentApp.model.entity.Invoiсe;
+import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.CarRepository;
 import by.academy.rentApp.model.repository.InvoiceRepository;
 import by.academy.rentApp.service.InvoiceService;
@@ -48,6 +49,16 @@ public class InvoiceServiceImpl implements InvoiceService {
     @Override
     public List<InvoiсeDto> getAllByOrder(OrderDto orderDto) {
         List<Invoiсe> invoiсes = invoiceRepository.findAllByOrder(orderMapper.orderDtoToOrder(orderDto));
+        List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
+        invoiсes.forEach(invoiсe -> {
+            invoiсeDtos.add(invoiceMapper.invoiceToInvoiceDto(invoiсe));
+        });
+        return invoiсeDtos;
+    }
+
+    @Override
+    public List<InvoiсeDto> getAllByUser(User user) {
+        List<Invoiсe> invoiсes = invoiceRepository.findAllByUser(user);
         List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
         invoiсes.forEach(invoiсe -> {
             invoiсeDtos.add(invoiceMapper.invoiceToInvoiceDto(invoiсe));

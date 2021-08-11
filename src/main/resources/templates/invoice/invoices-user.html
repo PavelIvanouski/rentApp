@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <title>Users invoices</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container pt-5 mt-5">
+    <h2>Your invoices</h2>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Creating date</th>
+            <th scope="col">Order id</th>
+            <th scope="col">Description</th>
+            <th scope="col">Total</th>
+            <th scope="col">View</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="invoice : ${invoices}">
+            <tr>
+                <td th:text="${invoice.id}"></td>
+                <td th:text="${#temporals.format(invoice.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+                <td th:text="${invoice.order.id}"></td>
+                <td th:text="${invoice.message}"></td>
+                <td th:text="${invoice.total}"></td>
+                <td>
+                    <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${invoice.id})}"
+                       role="button">View</a>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+<!--empty space for more representable view-->
+<div class="col-xs-12" style="height:250px;"></div>
+<div th:insert="blocks/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+</body>
+</html>

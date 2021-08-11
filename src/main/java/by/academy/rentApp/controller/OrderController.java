@@ -275,6 +275,7 @@ public class OrderController {
             invoiсeDto1.setSerialNumber(1);
             invoiсeDto1.setTotal(orderDto.getTotal());
             invoiсeDto1.setOrder(orderDto);
+            invoiсeDto1.setUser(orderDto.getUser());
             invoiсeDto1.setMessage("rent payment");
             invoiceService.saveInvoice(invoiсeDto1);
         }
@@ -292,6 +293,7 @@ public class OrderController {
                 invoiсeDto2.setSerialNumber(2);
                 invoiсeDto2.setTotal(extraTotal);
                 invoiсeDto2.setOrder(orderDto);
+                invoiсeDto2.setUser(orderDto.getUser());
                 invoiсeDto2.setMessage(extraMessage);
                 invoiceService.saveInvoice(invoiсeDto2);
             }

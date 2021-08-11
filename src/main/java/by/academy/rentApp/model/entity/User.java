@@ -66,4 +66,9 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Order> orderList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<Invoiсe> invoiсeList;
 }

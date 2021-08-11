@@ -1,7 +1,6 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.InvoiсeDto;
-import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.DatesUtil;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -10,27 +9,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 public class InvoiceController {
-    private final CarService carService;
-    private final CarModelService carModelService;
-    private final TypeService typeService;
-    private final EngineService engineService;
+
     private final InvoiceService invoiceService;
     private final OrderService orderService;
+    private final UserService userService;
 
 
     public InvoiceController(CarService carService, CarModelService carModelService
-            , TypeService typeService, EngineService engineService, InvoiceService invoiceService, OrderService orderService) {
-        this.carService = carService;
-        this.carModelService = carModelService;
-        this.typeService = typeService;
-        this.engineService = engineService;
+            , TypeService typeService, EngineService engineService, InvoiceService invoiceService, OrderService orderService, UserService userService) {
         this.invoiceService = invoiceService;
         this.orderService = orderService;
+        this.userService = userService;
     }
 
 
@@ -94,9 +85,15 @@ public class InvoiceController {
 
     @GetMapping("user/invoices")
     String getUserInvoices(@AuthenticationPrincipal User userSec, Model model) {
-//        model.addAttribute("invoices",
-//                invoiceService.);
-        return "order/orders-user";
+        model.addAttribute("invoices", invoiceService.getAllByUser(userService
+                .findUserByUserName(userSec.getUsername())));
+        return "invoice/invoices-user";
+    }
+
+    @GetMapping("admin/invoices")
+    String getAllInvoices(Model model) {
+        model.addAttribute("invoices", invoiceService.getAll());
+        return "invoice/invoices-admin";
     }
 
     @GetMapping("/invoices/{id}")
@@ -105,10 +102,10 @@ public class InvoiceController {
 //            return "redirect:/invoices";
         }
         InvoiсeDto invoiсeDto = invoiceService.findInvoiceById(id);
-        model.addAttribute("user",invoiсeDto.getOrder().getUser());
+//        model.addAttribute("user",invoiсeDto.getOrder().getUser());
         double hours = DatesUtil.returnDifferenceInHours(invoiсeDto.getOrder().getRentBegin(), invoiсeDto.getOrder().getRentEnd());
-        model.addAttribute("hours",hours);
-        model.addAttribute("invoice",invoiсeDto);
+        model.addAttribute("hours", hours);
+        model.addAttribute("invoice", invoiсeDto);
 
         return "invoice/invoice-details";
 //        return "invoice/invoice-modal :: view";
