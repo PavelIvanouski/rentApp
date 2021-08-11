@@ -17,18 +17,20 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2 th:text="${title} + ' brand'"></h2>
-    <!--    <form  th:object="${brand}" th:method="post" th:href="@{/brands/{id}/edit(id=${brand.id})}">-->
+    <h2 th:text="#{label.add} + ' ' + #{label.brand}"></h2>
     <form th:object="${brand}" th:method="post" th:href="@{postURL}">
 
-        <div class="form-group">
-            <label for="InputName">Name</label>
-            <input type="text" class="form-control" id="InputName" th:field="*{name}"
-                   placeholder="Please, enter name here">
-            <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}"
-                  th:errors="*{name}"></span>
+        <div class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="InputName" th:text="#{label.name}">Name</label>
+                <input type="text" class="form-control" id="InputName" th:field="*{name}"
+                       placeholder="Please, enter name here">
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
+            </div>
         </div>
-        <button type="submit" class="btn btn-outline-primary" th:text="${title}"></button>
+
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.add}">Add</button>
     </form>
 </div>
 <!--empty space for more representable view-->

@@ -15,16 +15,17 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Brand list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/brands/add}" role="button">Add brand</a>
+    <h2 th:text="#{label.brandList}">Brand list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/brands/add}" role="button"
+       th:text="#{label.add} + ' ' + #{label.brand}">Add brand</a>
     </p>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+            <th scope="col" th:text="#{label.name}">Name</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
+<!--            <th scope="col">Delete</th>-->
         </tr>
         </thead>
         <tbody>
@@ -34,15 +35,15 @@
                 <td th:text="${brand.name}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/brands/{id}/edit(id=${brand.id})}"
-                       role="button">Edit</a>
+                       role="button" th:text="#{label.edit}">Edit</a>
                 </td>
-                <td>
-                    <form th:action="@{/brands/{id}/delete(id=${brand.id})}" method="post"
-                          onSubmit="return confirm('Are you sure you wish to delete?');">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete">
-                        <input name="id" th:value="${brand.id}" type="hidden">
-                    </form>
-                </td>
+<!--                <td>-->
+<!--                    <form th:action="@{/brands/{id}/delete(id=${brand.id})}" method="post"-->
+<!--                          onSubmit="return confirm('Are you sure you wish to delete?');">-->
+<!--                        <input class="btn btn-outline-danger" type="submit" value="Delete">-->
+<!--                        <input name="id" th:value="${brand.id}" type="hidden">-->
+<!--                    </form>-->
+<!--                </td>-->
             </tr>
         </th:block>
         </tbody>
