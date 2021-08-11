@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <title>Registration Form</title>
+    <link rel="icon" href="/images/favicon.png" type="image/png" sizes="16x16">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -21,14 +22,15 @@
             <!--            <div class="card card-signin flex-row my-5">-->
             <div class="card my-5">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Create Account</h5>
+                    <h5 class="card-title text-center" th:text="#{label.createAccount}">Create Account</h5>
                     <form action="#" th:action="@{/registration}"
                           th:object="${user}" method="post" class="form-horizontal"
                           role="form">
                         <br/>
 
                         <div class="form-group row">
-                            <label for="firstName" class="col-md-4 col-form-label text-md-right">First Name</label>
+                            <label for="firstName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.firstName}">First Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="firstName" th:field="*{firstName}" placeholder="First name"
                                        class="form-control"/>
@@ -38,7 +40,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="lastName" class="col-md-4 col-form-label text-md-right">Last Name</label>
+                            <label for="lastName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.lastName}">Last Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="lastName" th:field="*{lastName}"
                                        placeholder="Last name" class="form-control"/>
@@ -48,7 +51,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">E-mail</label>
+                            <label for="email" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.eMail}">E-mail</label>
                             <div class="col-md-6">
                                 <input type="text" id="email" th:field="*{email}" placeholder="Email"
                                        class="form-control"/>
@@ -58,7 +62,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="userName" class="col-md-4 col-form-label text-md-right">User Name</label>
+                            <label for="userName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.userName}">User Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="userName" th:field="*{userName}" placeholder="User Name"
                                        class="form-control"/>
@@ -68,7 +73,8 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.password}">Password</label>
                             <div class="col-md-6">
                                 <input type="password" id="password" th:field="*{password}"
                                        placeholder="Password" class="form-control"/>
@@ -78,26 +84,35 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="passwordConfirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                            <label for="passwordConfirm" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.confirmPassword}">Confirm
+                                Password</label>
                             <div class="col-md-6">
                                 <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}"
                                        placeholder="Confirm Password" class="form-control"/>
-                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('passwordConfirm')}"
+                                <span style="font-size: 20; color: #FF1C19;"
+                                      th:if="${#fields.hasErrors('passwordConfirm')}"
                                       th:errors="*{passwordConfirm}"></span>
                             </div>
-                        </div>         <br/>
-<!--                        <div class="form-group">-->
+                        </div>
+                        <br/>
+                        <div class="form-group">
                             <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary btn-block">Create Account</button>
+                                <button type="submit" class="btn btn-primary btn-block"
+                                        th:text="#{label.createAccount}">Create Account
+                                </button>
                             </div>
-<!--                        </div>-->
+                        </div>
+                        <!--                        </div>-->
+                        <!--                        </div>-->
 
                         <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
 
                     </form>
                     <div class="mt-4">
                         <div class="d-flex justify-content-center links">
-                            Have an account? <a th:href="@{/login}" class="ml-2">Log in</a>
+                            <a class="nav-link disabled" th:text="#{label.haveAnAccount}"> </a>
+                            <a th:href="@{/login}" class="nav-link" th:text="#{label.login}">Log in</a>
                         </div>
                     </div>
                 </div>
