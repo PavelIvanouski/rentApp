@@ -20,7 +20,7 @@
                 <div class="card-body">
                     <img th:src="@{/images/carkey.jpg}" class="img-responsive center-block" width="400" height="300"
                          alt="Logo"/>
-                    <h5 class="card-title text-center">Welcome</h5>
+                    <h5 class="card-title text-center" th:text="#{label.welcome}"></h5>
                     <form th:action="@{/login}" method="POST" class="form-signin">
                         <br/>
                             <input type="text" id="user_name" name="user_name" placeholder="User Name"
@@ -37,15 +37,13 @@
                         <!--                            </div>-->
                         <!--                        </div>-->
                         <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit"
-                                th:text="Login"></button>
+                                 th:text="#{label.login}"></button>
                     </form>
                     <div class="mt-4">
                         <div class="d-flex justify-content-center links">
-                            Don't have an account? <a th:href="@{/registration}" class="ml-2">Sign Up</a>
+                            <a class="nav-link disabled" th:text="#{label.dontHaveAccount}"> </a>
+                            <a th:href="@{/registration}" class="nav-link" th:text="#{label.signUp}">Sign Up</a>
                         </div>
-                        <!--                        <div class="d-flex justify-content-center links">-->
-                        <!--                            <a href="#">Forgot your password?</a>-->
-                        <!--                        </div>-->
                     </div>
                 </div>
             </div>

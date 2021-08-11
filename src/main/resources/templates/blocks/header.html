@@ -1,22 +1,31 @@
 <div th:fragment="header">
     <nav class="navbar navbar-expand-sm bg-light navbar-light  fixed-top ">
         <!--        <nav class="navbar navbar-expand-sm  navbar-light  fixed-top " style="background-color: #71d0d3">-->
-        <a class="navbar-brand" href="/">Car rent</a>
+        <a class="navbar-brand" href="/" th:text="#{label.mainName}"></a>
         <!--        <ul class="navbar-nav mr-auto">-->
         <!--           -->
         <!--        </ul>-->
 
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/?lang=en">EN</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/?lang=be">BE</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/?lang=ru">RU</a>
+            </li>
             <li th:if="${#request.userPrincipal  != null}">
-                <a class="nav-link disabled">Hello, <span th:text="${#authentication.name}"></span></a>
+                <a class="nav-link disabled" th:text="#{label.hello} + ' ' +${#authentication.name}"> </a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="nav-link disabled"> Hello, guest!</a>
+                <a class="nav-link disabled" th:text="#{label.hello} + ' ' +#{label.guest}"> </a>
             </li>
             <!-- Dropdown -->
             <li sec:authorize="hasAuthority('ADMIN')" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    Admin room
+                <a class="nav-link dropdown-toggle"  href="#" id="navbardrop"  data-toggle="dropdown" th:text="#{label.adminRoom}">
+
                 </a>
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="/brands">Brands</a>
@@ -32,19 +41,19 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/cars/all">Cars</a>
+                <a class="nav-link" href="/cars/all" th:text="#{label.cars}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/contact">Contact</a>
+                <a class="nav-link" href="/contact" th:text="#{label.contact}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="#" th:text="#{label.about}"></a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="btn btn-outline-primary mr-2" href="/login">Login</a>
+                <a class="btn btn-outline-primary mr-2" href="/login" th:text="#{label.login}"></a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="btn btn-primary mr-2" href="/registration">Sign-up</a>
+                <a class="btn btn-primary mr-2" href="/registration" th:text="#{label.signUp}"></a>
             </li>
             <li th:if="${ #authorization.expression('isAuthenticated()')
 and ((#strings.contains(#authentication.principal.authorities,'ADMIN'))

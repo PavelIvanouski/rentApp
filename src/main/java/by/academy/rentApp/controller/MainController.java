@@ -36,6 +36,14 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/localhost:8080?lang=be")
+    public String getMainPageBe(Model model) {
+        model.addAttribute("models", carModelService.getAll());
+        model.addAttribute("types", typeService.getAll());
+        model.addAttribute("engines", engineService.getAll());
+        return "home";
+    }
+
     @GetMapping("/test")
     public String getTestPage(Model model) {
 
