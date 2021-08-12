@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <title th:text="${title}"/>
+    <link rel="icon" href="/images/favicon.png" type="image/png" sizes="16x16">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container pt-5 mt-5">
+    <h2 th:text="#{label.brandList}">Brand list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/brands/add}" role="button"
+       th:text="#{label.add} + ' ' + #{label.brand}">Add brand</a>
+    </p>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col" th:text="#{label.name}">Name</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
+<!--            <th scope="col">Delete</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="brand : ${brands}">
+            <tr>
+                <td th:text="${brand.id}"></td>
+                <td th:text="${brand.name}"></td>
+                <td>
+                    <a class="btn btn-outline-info" th:href="@{/brands/{id}/edit(id=${brand.id})}"
+                       role="button" th:text="#{label.edit}">Edit</a>
+                </td>
+<!--                <td>-->
+<!--                    <form th:action="@{/brands/{id}/delete(id=${brand.id})}" method="post"-->
+<!--                          onSubmit="return confirm('Are you sure you wish to delete?');">-->
+<!--                        <input class="btn btn-outline-danger" type="submit" value="Delete">-->
+<!--                        <input name="id" th:value="${brand.id}" type="hidden">-->
+<!--                    </form>-->
+<!--                </td>-->
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+
+<div th:insert="blocks/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+</body>
+</html>
