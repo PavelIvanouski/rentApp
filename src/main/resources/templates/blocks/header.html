@@ -32,11 +32,12 @@
                     <a class="dropdown-item" href="/models" th:text="#{label.models}">Models</a>
                     <a class="dropdown-item" href="/engines" th:text="#{label.engines}">Engines</a>
                     <a class="dropdown-item" href="/types" th:text="#{label.types}">Types</a>
-                    <a class="dropdown-item" href="/cars" th:text="#{label.cars}">Cars</a>
+                    <a class="dropdown-item" href="/admin/cars" th:text="#{label.cars}">Cars</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="/users" th:text="#{label.users}">Users</a>
+                    <a class="dropdown-item" href="/admin/users" th:text="#{label.users}">Users</a>
                     <a class="dropdown-item" href="/admin/orders" th:text="#{label.orders}">Orders</a>
                     <a class="dropdown-item" href="/admin/invoices" th:text="#{label.invoices}">Invoices</a>
+                    <a class="dropdown-item" href="/admin/messages" th:text="#{label.messages}">Messages</a>
                 </div>
             </li>
             <li class="nav-item">
@@ -63,7 +64,7 @@ or(#strings.contains(#authentication.principal.authorities,'USER')))}"
                     My account
                 </a>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#" th:text="#{label.userInfo}">User info</a>
+                    <a class="dropdown-item" href="/user/info" th:text="#{label.userInfo}">User info</a>
                     <a class="dropdown-item" href="/user/orders" th:text="#{label.orders}">Orders</a>
                     <a class="dropdown-item" href="/user/invoices" th:text="#{label.invoices}">Invoices</a>
                     <div class="dropdown-divider"></div>

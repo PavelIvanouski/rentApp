@@ -16,7 +16,7 @@
 
 <div class="container pt-5 mt-5">
     <h2>Car list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/cars/add}" role="button">Add car</a>
+    <a class="btn btn-outline-primary" th:href="@{/admin/cars/add}" role="button">Add car</a>
     </p>
     <table class="table">
         <thead class="thead-light">
@@ -41,7 +41,7 @@
                 <td th:text="${car.engineVolume}"></td>
                 <td th:text="${car.year}"></td>
                 <td>
-                    <a class="btn btn-outline-info" th:href="@{/cars/{id}/edit(id=${car.id})}"
+                    <a class="btn btn-outline-info" th:href="@{/admin/cars/{id}/edit(id=${car.id})}"
                        role="button">Edit</a>
                 </td>
                 <td>

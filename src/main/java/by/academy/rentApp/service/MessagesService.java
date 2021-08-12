@@ -5,11 +5,13 @@ import by.academy.rentApp.dto.MessagesDto;
 
 import java.util.List;
 
-public interface MessgesService {
+public interface MessagesService {
 
     List<MessagesDto> getAll();
 
     MessagesDto findMessageById(Integer id);
+
+    MessagesDto saveMessage(MessagesDto messagesDto);
 
     boolean existsById(Integer id);
 

@@ -13,7 +13,7 @@ public class MessagesDto {
 
     private Integer id;
 
-    @Size(min = 5,max = 40)
+    @Size(min = 1,max = 40)
     private String userName;
 
     @Size(min = 5,max = 40)

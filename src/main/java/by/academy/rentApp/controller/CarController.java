@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cars")
 public class CarController {
     private final CarService carService;
     private final CarModelService carModelService;
@@ -33,7 +32,14 @@ public class CarController {
         this.engineService = engineService;
     }
 
-    @GetMapping("")
+    @GetMapping("/cars/all")
+    public String getAllCarsForm(Model model) {
+        List<CarDto> cars = carService.getAll();
+        model.addAttribute("cars", cars);
+        return "car/cars-all";
+    }
+
+    @GetMapping("/admin/cars")
     public String getCars(Model model) {
         List<CarDto> cars = carService.getAll();
         model.addAttribute("cars", cars);
@@ -41,7 +47,7 @@ public class CarController {
         return "car/cars";
     }
 
-    @GetMapping("add")
+    @GetMapping("/admin/cars/add")
     public String getCarAddForm(Model model) {
         model.addAttribute("car", new CarDto());
         model.addAttribute("models", carModelService.getAll());
@@ -50,14 +56,7 @@ public class CarController {
         return "car/car-add";
     }
 
-    @GetMapping("all")
-    public String getAllCarsForm(Model model) {
-        List<CarDto> cars = carService.getAll();
-        model.addAttribute("cars", cars);
-        return "car/cars-all";
-    }
-
-    @PostMapping("add")
+    @PostMapping("/admin/cars/add")
     public String addCar(@Validated @ModelAttribute("car") CarDto carDto
             , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {
@@ -76,13 +75,13 @@ public class CarController {
 
         FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
 
-        return "redirect:/cars";
+        return "redirect:/admin/cars";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/admin/cars/{id}/edit")
     public String getCarEditForm(@PathVariable Integer id, Model model) {
         if (!carService.existsById(id)) {
-            return "redirect:/cars";
+            return "redirect:/admin/cars";
         }
         model.addAttribute("car", carService.findCarById(id));
         model.addAttribute("models", carModelService.getAll());
@@ -91,7 +90,7 @@ public class CarController {
         return "car/car-edit";
     }
 
-    @PostMapping("{id}/edit")
+    @PostMapping("/admin/cars/{id}/edit")
     public String updateCar(@Validated @ModelAttribute("car") CarDto carDto
             , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {
@@ -113,11 +112,11 @@ public class CarController {
         CarDto carBeforeUpdating = carService.findCarById(carDto.getId());
         carDto.setCreatingDate(carBeforeUpdating.getCreatingDate());
         carService.saveCar(carDto);
-        return "redirect:/cars";
+        return "redirect:/admin/cars";
     }
 
 
-    @GetMapping("{id}/details")
+    @GetMapping("/cars/details/{id}")
     public String getCarDetailsForm(@PathVariable Integer id, Model model) {
         if (!carService.existsById(id)) {
             return "redirect:/cars/all";
@@ -134,7 +133,7 @@ public class CarController {
     public String deleteCar(@RequestParam Integer id, Model model) {
         CarDto carDto = carService.findCarById(id);
         carService.deleteCar(carDto);
-        return "redirect:/cars";
+        return "redirect:/admin/cars";
     }
 
 }
