@@ -46,13 +46,13 @@
                 <a class="nav-link" href="/contact" th:text="#{label.contact}"></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#" th:text="#{label.about}"></a>
+                <a class="nav-link" href="/about" th:text="#{label.about}"></a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="btn btn-outline-primary mr-2" href="/login" th:text="#{label.login}"></a>
+                <a class="btn btn-outline-secondary mr-2" href="/login" th:text="#{label.login}"></a>
             </li>
             <li th:if="${#request.userPrincipal  == null}" class="nav-item">
-                <a class="btn btn-primary mr-2" href="/registration" th:text="#{label.signUp}"></a>
+                <a class="btn  btn-secondary mr-2" href="/registration" th:text="#{label.signUp}"></a>
             </li>
             <li th:if="${ #authorization.expression('isAuthenticated()')
 and ((#strings.contains(#authentication.principal.authorities,'ADMIN'))

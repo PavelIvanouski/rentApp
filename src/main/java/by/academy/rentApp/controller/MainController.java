@@ -55,4 +55,9 @@ public class MainController {
         return "contact";
     }
 
+    @GetMapping("/about")
+    public String getAboutPage(Model model) {
+        return "about";
+    }
+
 }
