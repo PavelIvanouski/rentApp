@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 
@@ -14,14 +15,17 @@ public class MessagesDto {
 
     private Integer id;
 
-    @Size(min = 1,max = 40)
+    @NotBlank(message = "{label.shouldNotBeEmpty}")
+    @Size(min = 1, max = 40, message = "{label.mustRange} [1;40]")
     private String userName;
 
-    @Size(min = 5,max = 40)
+    @NotBlank(message = "{label.shouldNotBeEmpty}")
+    @Size(min = 5, max = 40, message = "{label.mustRange} [5;40]")
     @Email
     private String email;
 
-    @Size(min = 5,max = 70)
+    @NotBlank(message = "{label.shouldNotBeEmpty}")
+    @Size(min = 5, max = 70, message = "{label.mustRange} [5;70]")
     private String message;
 
 }

@@ -15,18 +15,18 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Orders list</h2>
+    <h2 th:text="#{label.orderList}">Orders list</h2>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">User</th>
-            <th scope="col">Car</th>
-            <th scope="col">Rent begin</th>
-            <th scope="col">Rent end</th>
-            <th scope="col">Total</th>
-            <th scope="col">Status</th>
-            <th scope="col">Edit</th>
+            <th scope="col" th:text="#{label.user1}">User</th>
+            <th scope="col" th:text="#{label.car1}">Car</th>
+            <th scope="col" th:text="#{label.rentBegin}">Rent begin</th>
+            <th scope="col" th:text="#{label.rentEnd}">Rent end</th>
+            <th scope="col" th:text="#{label.total}">Total</th>
+            <th scope="col" th:text="#{label.status}">Status</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
                 <td th:text="${order.status.name}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/admin/orders/{id}(id=${order.id})}"
-                       role="button">Edit</a>
+                       role="button" th:text="#{label.edit}">Edit</a>
                 </td>
             </tr>
         </th:block>

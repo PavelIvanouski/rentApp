@@ -17,7 +17,7 @@
 <!--        <div class="modal-content">Your content</div>-->
 <!--    </div>-->
 <!--</div>-->
-<header th:insert="blocks/header :: header"></header>
+<!--<header th:insert="blocks/header :: header"></header>-->
 
 <div class="container pt-5 mt-5">
 
@@ -75,23 +75,28 @@
                         </table>
                     </div>
                 </div>
-                <!--                <div class="text-right mb-3">-->
-                <!--                    <button class="btn btn-danger btn-sm mr-5" type="button">Pay Now</button>-->
-                <!--                </div>-->
+
+            </div>
+            <div class="text-right mb-3" th:if="${toPdf}">
+                <p></p>
+                <a class="btn btn-outline-info" th:href="@{/invoices/{id}/pdf(id=${invoice.id})}"
+                   role="button" >To pdf</a>
             </div>
         </div>
+
     </div>
     <!--    </form>-->
 </div>
+
 <!--empty space for more representable view-->
-<div class="col-xs-12" style="height:300px;"></div>
-<div th:insert="blocks/footer :: footer"></div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
-        crossorigin="anonymous"></script>
-<script src="ShowModal.js"></script>
+<!--<div class="col-xs-12" style="height:300px;"></div>-->
+<!--<div th:insert="blocks/footer :: footer"></div>-->
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"-->
+<!--        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"-->
+<!--        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"-->
+<!--        crossorigin="anonymous"></script>-->
+<!--<script src="ShowModal.js"></script>-->
 </body>
 </html>

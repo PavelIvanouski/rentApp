@@ -16,7 +16,7 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Add order</h2>
+    <h2 th:text="#{label.add} + ' ' + #{label.order1}">Add order</h2>
     <form th:action="@{/orders/add}" th:object="${order}" th:method="post">
 
         <div class="form-group">
@@ -40,12 +40,13 @@
                    th:value="${order.car.model.name}">
             <input type="text" hidden class="form-control-plaintext" th:name="car.year"
                    th:value="${order.car.year}">
-            <td th:text="'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
+            <td th:text="#{label.car1} + ' '  +  ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
          + ' ' + ${order.car.year}"></td>
         </div>
 
         <div class="form-group row">
-            <label for="inputPrice" class="col-sm-2 col-form-label">Price per day</label>
+            <label for="inputPrice" class="col-sm-2 col-form-label"
+                   th:text="#{label.pricePerDay}">Price per day</label>
             <div class="col-sm-2">
                 <input type="text" hidden class="form-control-plaintext" th:name="car.price"
                        th:value="${order.car.price}">
@@ -56,12 +57,12 @@
 
         <div class="form-group row">
             <div class="form-group col-sm-4">
-                <label for="rentBegin">Rent begin</label>
+                <label for="rentBegin" th:text="#{label.rentBegin}">Rent begin</label>
                 <input class="form-control" id="rentBegin" type="datetime-local" name="rBegin" onchange="getTotal()">
             </div>
 
             <div class="form-group col-sm-4">
-                <label for="rentEnd">Rent end</label>
+                <label for="rentEnd" th:text="#{label.rentEnd}">Rent end</label>
                 <input class="form-control" id="rentEnd" type="datetime-local" name="rEnd" onchange="getTotal()">
             </div>
         </div>
@@ -81,14 +82,14 @@
         </br>
         <div class="form-group row">
             <div class="form-group col-sm-4">
-                <label for="total">Total</label>
+                <label for="total" th:text="#{label.total}">Total</label>
                 <input type="text" class="form-control" id="total" readonly>
             </div>
         </div>
 
-        <input type="text" hidden class="form-control" id="currentOffSet"  name="currentOffSet">
+        <input type="text" hidden class="form-control" id="currentOffSet" name="currentOffSet">
 
-        <button type="submit" class="btn btn-outline-primary">Add order</button>
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.add}">Add order</button>
     </form>
 
 </div>
@@ -143,7 +144,8 @@
         // return (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
         document.getElementById("currentOffSet").value = (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2) + ":" + ("00" + (o % 60)).slice(-2);
     }
-    $(function() {
+
+    $(function () {
         getTimeZone();
     });
 </script>

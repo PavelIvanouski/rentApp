@@ -31,41 +31,47 @@
                     <h2 class="main-title text-left" th:text="${car.model.brand.name} + ' ' + ${car.model.name}"></h2>
                     <hr class="hr-style-left"/>
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Year</p>
+                        <p class="menu-name text-uppercase font-weight-bold" th:text="#{label.year}">Year</p>
                         <p class="menu-price" th:text="${car.year}"></p>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Engine volume</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.volume}">Engine volume</p>
                         <p class="menu-price" th:text="${car.engineVolume}"></p>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Engine type</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.engine}">Engine type</p>
                         <p class="menu-price" th:text="${car.engine.name}"></p>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Type</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.type}">Type</p>
                         <p class="menu-price" th:text="${car.type.name}"></p>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Seats number</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.seatsNumber}">Seats number</p>
                         <p class="menu-price" th:text="${car.seatsNum}"></p>
                     </div>
 
                     <div th:if="${car.stateNum}">
                         <div th:if="${#strings.length(car.stateNum)} != 0">
                             <div class="menu-content d-flex justify-content-between">
-                                <p class="menu-name text-uppercase font-weight-bold">State number</p>
+                                <p class="menu-name text-uppercase font-weight-bold"
+                                   th:text="#{label.stateNumber}">State number</p>
                                 <p class="menu-price" th:text="${car.stateNum}"></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Transmission</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.transmission}">Transmission</p>
                         <div th:if="${car.autoTransmission}">
                             <p class="menu-price">Auto</p>
                         </div>
@@ -77,21 +83,24 @@
                     <div th:if="${car.color}">
                         <div th:if="${#strings.length(car.color)} != 0">
                             <div class="menu-content d-flex justify-content-between">
-                                <p class="menu-name text-uppercase font-weight-bold">Color</p>
+                                <p class="menu-name text-uppercase font-weight-bold"
+                                   th:text="#{label.color}">Color</p>
                                 <p class="menu-price" th:text="${car.color}"></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <p class="menu-name text-uppercase font-weight-bold">Price per day</p>
+                        <p class="menu-name text-uppercase font-weight-bold"
+                           th:text="#{label.pricePerDay}">Price per day</p>
                         <p class="menu-price" th:text="${car.price}"></p>
                     </div>
 
                     <div class="menu-content d-flex justify-content-between">
-                        <form   th:action="@{/orders/add}" th:method="get">
+                        <form th:action="@{/orders/add}" th:method="get">
                             <input type="hidden" name="carId" th:value="${car.id}"/>
-                            <button type="submit" class="btn btn-outline-primary mr-2">Order</button>
+                            <button type="submit" class="btn btn-outline-primary mr-2"
+                                    th:text="#{label.order}">Order</button>
                         </form>
                     </div>
 

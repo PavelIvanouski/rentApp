@@ -16,7 +16,7 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Update car</h2>
+    <h2 th:text="#{label.edit} + ' ' + #{label.car}">Update car</h2>
     <form th:href="@{/cars/edit/{id}(id=${car.id})}" th:object="${car}" th:method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input type="text" hidden class="form-control-plaintext" th:field="*{id}">
@@ -27,17 +27,17 @@
         </div>
 
         <div class="form-group">
-<!--            <input type="text" hidden class="form-control-plaintext" th:field="*{creatingDate}">-->
-            <td th:text="'Creating date: ' + ${#temporals.format(car.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <!--            <input type="text" hidden class="form-control-plaintext" th:field="*{creatingDate}">-->
+            <td th:text="#{label.creatingDate} + ' ' + ${#temporals.format(car.creatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
 
         <div th:if="${car.updatingDate  != null}" class="form-group">
-<!--            <input type="text" hidden class="form-control-plaintext" th:field="*{updatingDate}">-->
-            <td th:text="'Updating date: ' + ${#temporals.format(car.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
+            <!--            <input type="text" hidden class="form-control-plaintext" th:field="*{updatingDate}">-->
+            <td th:text="#{label.updatingDate} + ' '  +  ${#temporals.format(car.updatingDate, 'dd-MM-yyyy HH:mm')}"></td>
         </div>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="selectModel">Model</label>
+                <label for="selectModel" th:text="#{label.model1}">Model</label>
                 <select th:field="*{model.id}" id="selectModel" class="form-control">
                     <option value=""> --</option>
                     <option th:each="model : ${models}"
@@ -49,7 +49,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="selectType">Type</label>
+                <label for="selectType" th:text="#{label.type1}">Type</label>
                 <select th:field="*{type.id}" id="selectType" class="form-control">
                     <option value=""> --</option>
                     <option th:each="type : ${types}"
@@ -63,7 +63,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="selectEngine">Engine</label>
+                <label for="selectEngine" th:text="#{label.engine1}">Engine</label>
                 <select th:field="*{engine.id}" id="selectEngine" class="form-control">
                     <option value=""> --</option>
                     <option th:each="engine : ${engines}"
@@ -75,7 +75,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputVolume">Volume</label>
+                <label for="inputVolume" th:text="#{label.volume}">Volume</label>
                 <input type="text" class="form-control" id="inputVolume" th:field="*{engineVolume}"
                        placeholder="Please, enter volume here">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}"
@@ -85,7 +85,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputYear">Year</label>
+                <label for="inputYear" th:text="#{label.year}">Year</label>
                 <input type="text" class="form-control" id="inputYear" placeholder="Please, enter year here"
                        th:field="*{year}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}"
@@ -103,7 +103,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputStateNum">State number</label>
+                <label for="inputStateNum" th:text="#{label.stateNumber}">State number</label>
                 <input type="text" class="form-control" id="inputStateNum" placeholder="Please, enter state number here"
                        th:field="*{stateNum}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}"
@@ -111,7 +111,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputSeatsNum">Seats number</label>
+                <label for="inputSeatsNum" th:text="#{label.seatsNumber}">Seats number</label>
                 <input type="text" class="form-control" id="inputSeatsNum" placeholder="Please, enter seats number here"
                        th:field="*{seatsNum}">
                 <span th:if="${#fields.hasErrors('seatsNum')}" th:errors="*{seatsNum}"></span>
@@ -120,13 +120,13 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputColor">Color</label>
+                <label for="inputColor" th:text="#{label.color}">Color</label>
                 <input type="text" class="form-control" id="inputColor" placeholder="Please, enter color here"
                        th:field="*{color}">
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputPrice">Price per day</label>
+                <label for="inputPrice" th:text="#{label.pricePerDay}">Price per day</label>
                 <input type="text" class="form-control" id="inputPrice" placeholder="Please, enter price here"
                        th:field="*{price}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('price')}"
@@ -138,7 +138,8 @@
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="inputAutoTransmission"
                        th:field="*{autoTransmission}">
-                <label class="form-check-label" for="inputAutoTransmission">
+                <label class="form-check-label" for="inputAutoTransmission"
+                       th:field="*{autoTransmission}" th:text="#{label.autoTr}">
                     Auto transmission
                 </label>
             </div>
@@ -156,12 +157,12 @@
         </br>
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputFile">Photos: </label>
+                <label for="inputFile" th:text="#{label.photos}">Photos: </label>
                 <input type="file" name="image" id="inputFile" accept="image/png, image/jpeg"/>
             </div>
         </div>
         </br>
-        <button type="submit" class="btn btn-outline-primary">Update car</button>
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.edit}">Update car</button>
 
     </form>
 </div>

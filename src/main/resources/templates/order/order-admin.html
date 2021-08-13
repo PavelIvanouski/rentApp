@@ -16,7 +16,7 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Edit order</h2>
+    <h2 th:text="#{label.edit} + ' ' + #{label.order1}">Edit order</h2>
     <form th:object="${order}" th:method="post">
 
         <div class="form-group">
@@ -24,9 +24,9 @@
         </div>
 
         <div class="form-group">
-            <td th:text="'Id: ' + ${order.id} + ' Creating date: ' +
+            <td th:text="'Id: ' + ${order.id} + ' ' +  #{label.creatingDate} + ' ' +
              ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}
-              + ' ' +'Car: ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
+              + ' ' +#{label.car1} +': ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
          + ' ' + ${order.car.year}"></td>
         </div>
 
@@ -59,14 +59,16 @@
 
 
         <div class="form-group row">
-            <label for="inputPrice" class="col-sm-2 col-form-label">Price per day</label>
+            <label for="inputPrice" class="col-sm-2 col-form-label"
+                   th:text="#{label.pricePerDay}">Price per day</label>
             <div class="col-sm-2">
                 <input type="text" hidden class="form-control-plaintext" th:name="car.price"
                        th:value="${order.car.price}">
                 <input type="text" class="form-control" th:name="price" th:value="${order.car.price}" id="inputPrice"
                        readonly>
             </div>
-            <label for="total" class="col-sm-2 col-form-label">Total</label>
+            <label for="total" class="col-sm-2 col-form-label"
+                   th:text="#{label.total}">Total</label>
             <div class="col-sm-2">
                 <input type="text" class="form-control" th:name="total" th:value="${order.total}" id="total"
                        readonly>
@@ -75,13 +77,13 @@
 
         <div class="form-group row">
             <div class="form-group col-sm-4">
-                <label for="rentBegin">Rent begin</label>
+                <label for="rentBegin" th:text="#{label.rentBegin}">Rent begin</label>
                 <input readonly class="form-control" id="rentBegin" name="rBegin"
                        th:value="${#temporals.format(order.rentBegin, 'dd-MM-yyyy HH:mm')}">
             </div>
 
             <div class="form-group col-sm-4">
-                <label for="rentEnd">Rent end</label>
+                <label for="rentEnd" th:text="#{label.rentEnd}">Rent end</label>
                 <input readonly class="form-control" id="rentEnd" name="rEnd"
                        th:value="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}">
             </div>
@@ -89,7 +91,7 @@
 
         <div th:if="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
-                <label for="selectStatus">Status</label>
+                <label for="selectStatus" th:text="#{label.status}">Status</label>
                 <select th:field="*{status.id}" id="selectStatus" class="form-control" onchange="setMessageView()">
                     <option th:each="status : ${statuses}"
                             th:value="${status.id}"
@@ -115,7 +117,7 @@
                 <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
                 <!--                </form>-->
                 <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${mainInvoice})}"
-                   role="button">Main invoice</a>
+                   role="button" th:text="#{label.invoice}">Main invoice</a>
                 <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
             </div>
 
@@ -125,7 +127,7 @@
                 <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
                 <!--                </form>-->
                 <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${extraInvoice})}"
-                   role="button">Extra invoice</a>
+                   role="button" th:text="#{label.extraInvoice}">Extra invoice</a>
                 <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
             </div>
             <div th:unless="${extraInvoice}" class="form-group col-sm-2">
@@ -169,7 +171,7 @@ this.parentNode.parentNode.style.backgroundColor
               th:errors="*{status}"></span>
 
         <div th:if="${allowEdit}">
-            <button type="submit" class="btn btn-outline-primary">Save</button>
+            <button type="submit" class="btn btn-outline-primary" th:text="#{label.save}">Save</button>
         </div>
 
         <div id="viewUserHolder"></div>

@@ -15,33 +15,33 @@ public class CarDto {
 
 
 
-    @NotBlank(message = "VIN should not be empty")
-    @Size(min = 17, max = 17, message = "VIN size must be 17")
+    @NotBlank(message = "VIN {label.shouldNotBeEmpty}")
+    @Size(min = 17, max = 17, message = "VIN {label.mustBe} 17")
     private String vin;
 
     private Integer id;
 
     private String stateNum;
 
-    @NotBlank(message = "Year should not be empty")
-    @Size(min = 4, max = 4, message = "Year size must be 4")
+    @NotBlank(message = "{label.year} {label.shouldNotBeEmpty}")
+    @Size(min = 4, max = 4, message = "{label.year} {label.mustBe} 4")
     private String year;
 
     private int engineVolume;
 
-    @Min(value = 2, message = "Seats num should not be less than 2")
-    @Max(value = 9, message = "Seats num should not be greater than 9")
+    @Min(value = 2, message = "{label.seatsNumber} > 1")
+    @Max(value = 9, message = "{label.seatsNumber} < 10")
     private int seatsNum;
 
     private boolean autoTransmission;
 
-    @NotNull(message = "Model should not be empty")
+    @NotNull(message = "{label.model1} {label.shouldNotBeEmpty}")
     private CarModelDto model;
 
-    @NotNull(message = "Engine should not be empty")
+    @NotNull(message = "{label.engine1} {label.shouldNotBeEmpty}")
     private EngineDto engine;
 
-    @NotNull(message = "Type should not be empty")
+    @NotNull(message = "{label.type1} {label.shouldNotBeEmpty}")
     private TypeDto type;
 
     private OffsetDateTime creatingDate;
@@ -52,7 +52,7 @@ public class CarDto {
 
     private String photos;
 
-    @Min(value = 1, message = "Price should be greater than 0")
+    @Min(value = 1, message = "{label.pricePerDay} > 0")
     private Integer price;
 
     public String getPhotosImagePath() {
