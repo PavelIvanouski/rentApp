@@ -4,6 +4,8 @@ import by.academy.rentApp.dto.BrandDto;
 import by.academy.rentApp.dto.EngineDto;
 import by.academy.rentApp.service.BrandService;
 import by.academy.rentApp.service.EngineService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +17,8 @@ import java.util.List;
 @Controller
 @RequestMapping("/brands")
 public class BrandController {
+
+    private static final Logger logger = LogManager.getLogger(BrandController.class);
     private final BrandService brandService;
 
     public BrandController(BrandService brandService) {
@@ -53,11 +57,8 @@ public class BrandController {
             model.addAttribute("postURL", "/brands/add");
             return "brand/brand-add";
         }
-        brandService.saveBrand(brandDto);
-//        BrandDto savedBrand = brandService.saveBrand(brandDto);
-//        Integer id = savedBrand.getId();
-//        String url = "redirect:/brands/edit" + id;
-//        return url;
+        BrandDto savedBrand = brandService.saveBrand(brandDto);
+        logger.info("New brand added id=" + savedBrand.getId());
         return "redirect:/brands";
     }
 
@@ -76,6 +77,12 @@ public class BrandController {
     public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
         if (brandService.findBrandByName(brandDto.getName()) != null) {
+            logger.info("Attempt to edit brand id=" + brandDto.getId());
+//            logger.debug("Debugging log");
+//            logger.info("Info log");
+//            logger.warn("Hey, This is a warning!");
+//            logger.error("Oops! We have an Error. OK");
+//            logger.fatal("Damn! Fatal error. Please fix me.");
             bindingResult
                     .rejectValue("name", "error.BrandDto",
                             "There is already a brand with the brand name provided");
@@ -89,6 +96,7 @@ public class BrandController {
             return "brand/brand-edit";
         }
         brandService.saveBrand(brandDto);
+
         return "redirect:/brands";
     }
 
