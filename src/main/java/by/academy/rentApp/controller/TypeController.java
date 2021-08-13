@@ -51,7 +51,7 @@ public class TypeController {
         return "redirect:/types";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/edit/{id}")
     public String getTypeEditForm(@PathVariable Integer id, Model model) {
         if (!typeService.existsById(id)) {
             return "redirect:/types";
@@ -60,7 +60,7 @@ public class TypeController {
         return "type/type-edit";
     }
 
-    @PostMapping("{id}/edit")
+    @PostMapping("/edit/{id}")
     public String updateType(@Validated @ModelAttribute("type") TypeDto typeDto, BindingResult bindingResult
             , Model model) {
         if (typeService.findTypeByName(typeDto.getName()) != null) {

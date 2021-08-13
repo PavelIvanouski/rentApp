@@ -49,7 +49,7 @@ public class EngineController {
         return "redirect:/engines";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/edit/{id}")
     public String getEngineEditForm(@PathVariable Integer id, Model model) {
         if (!engineService.existsById(id)) {
             return "redirect:/engines";
@@ -58,7 +58,7 @@ public class EngineController {
         return "engine/engine-edit";
     }
 
-    @PostMapping("{id}/edit")
+    @PostMapping("/edit/{id}")
     public String updateEngine(@Validated @ModelAttribute("engine") EngineDto engineDto, BindingResult bindingResult
             , Model model) {
         if (engineService.findEngineByName(engineDto.getName()) != null) {

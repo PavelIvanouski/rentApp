@@ -1,11 +1,8 @@
-package by.academy.rentApp.mapperTests;
+package by.academy.rentApp.mapper;
 
 
 import by.academy.rentApp.dto.BrandDto;
 import by.academy.rentApp.dto.CarModelDto;
-import by.academy.rentApp.mapper.BrandMapperImpl;
-import by.academy.rentApp.mapper.CarModelMapper;
-import by.academy.rentApp.mapper.CarModelMapperImpl;
 import by.academy.rentApp.model.entity.Brand;
 import by.academy.rentApp.model.entity.CarModel;
 import org.junit.Test;

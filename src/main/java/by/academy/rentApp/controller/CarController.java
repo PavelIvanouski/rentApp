@@ -78,7 +78,7 @@ public class CarController {
         return "redirect:/admin/cars";
     }
 
-    @GetMapping("/admin/cars/{id}/edit")
+    @GetMapping("/admin/cars/edit/{id}")
     public String getCarEditForm(@PathVariable Integer id, Model model) {
         if (!carService.existsById(id)) {
             return "redirect:/admin/cars";
@@ -90,7 +90,7 @@ public class CarController {
         return "car/car-edit";
     }
 
-    @PostMapping("/admin/cars/{id}/edit")
+    @PostMapping("/admin/cars/edit/{id}")
     public String updateCar(@Validated @ModelAttribute("car") CarDto carDto
             , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {

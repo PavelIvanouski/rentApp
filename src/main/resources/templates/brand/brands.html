@@ -34,7 +34,7 @@
                 <td th:text="${brand.id}"></td>
                 <td th:text="${brand.name}"></td>
                 <td>
-                    <a class="btn btn-outline-info" th:href="@{/brands/{id}/edit(id=${brand.id})}"
+                    <a class="btn btn-outline-info" th:href="@{/brands/edit/{id}(id=${brand.id})}"
                        role="button" th:text="#{label.edit}">Edit</a>
                 </td>
 <!--                <td>-->

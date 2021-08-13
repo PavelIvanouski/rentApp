@@ -24,7 +24,7 @@
             <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Edit</th>
-            <th scope="col">Delete</th>
+<!--            <th scope="col">Delete</th>-->
         </tr>
         </thead>
         <tbody>
@@ -33,16 +33,16 @@
                 <td th:text="${engine.id}"></td>
                 <td th:text="${engine.name}"></td>
                 <td>
-                    <a class="btn btn-outline-info" th:href="@{/engines/{id}/edit(id=${engine.id})}"
+                    <a class="btn btn-outline-info" th:href="@{/engines/edit/{id}(id=${engine.id})}"
                        role="button">Edit</a>
                 </td>
-                <td>
-                    <form th:action="@{/engines/{id}/delete(id=${engine.id})}" method="post"
-                          onSubmit="return confirm('Are you sure you wish to delete?');">
-                        <input class="btn btn-outline-danger" type="submit" value="Delete">
-                        <input name="id" th:value="${engine.id}" type="hidden">
-                    </form>
-                </td>
+<!--                <td>-->
+<!--                    <form th:action="@{/engines/{id}/delete(id=${engine.id})}" method="post"-->
+<!--                          onSubmit="return confirm('Are you sure you wish to delete?');">-->
+<!--                        <input class="btn btn-outline-danger" type="submit" value="Delete">-->
+<!--                        <input name="id" th:value="${engine.id}" type="hidden">-->
+<!--                    </form>-->
+<!--                </td>-->
             </tr>
         </th:block>
         </tbody>

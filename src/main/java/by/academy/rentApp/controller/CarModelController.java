@@ -66,7 +66,7 @@ public class CarModelController {
         return "redirect:/models";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/edit/{id}")
     public String getModelEditForm(@PathVariable Integer id, Model model) {
         if (!carModelService.existsById(id)) {
             return "redirect:/models";
@@ -76,7 +76,7 @@ public class CarModelController {
         return "model/model-edit";
     }
 
-    @PostMapping("{id}/edit")
+    @PostMapping("/edit/{id}")
     public String updateModel(@NotNull @Validated @ModelAttribute("model") CarModelDto carModelDto
 //            ,@RequestParam(name = "creatingD") String creatingD
             , BindingResult bindingResult

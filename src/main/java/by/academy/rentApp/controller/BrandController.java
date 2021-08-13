@@ -53,24 +53,26 @@ public class BrandController {
             model.addAttribute("postURL", "/brands/add");
             return "brand/brand-add";
         }
-        BrandDto savedBrand = brandService.saveBrand(brandDto);
-        Integer id = savedBrand.getId();
-        String url = "redirect:/brands/" + id + "/edit";
-        return url;
+        brandService.saveBrand(brandDto);
+//        BrandDto savedBrand = brandService.saveBrand(brandDto);
+//        Integer id = savedBrand.getId();
+//        String url = "redirect:/brands/edit" + id;
+//        return url;
+        return "redirect:/brands";
     }
 
-    @GetMapping("{id}/edit")
+    @GetMapping("/edit/{id}")
     public String getBrandEditForm(@PathVariable Integer id, Model model) {
         if (!brandService.existsById(id)) {
             return "redirect:/brands";
         }
         model.addAttribute("brand", brandService.findBrandById(id));
-        model.addAttribute("postURL", "/brands/" + id + "/edit");
+        model.addAttribute("postURL", "/brands/edit" + id);
         model.addAttribute("title", "Update");
         return "brand/brand-edit";
     }
 
-    @PostMapping("{id}/edit")
+    @PostMapping("/edit/{id}")
     public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
         if (brandService.findBrandByName(brandDto.getName()) != null) {
@@ -78,12 +80,12 @@ public class BrandController {
                     .rejectValue("name", "error.BrandDto",
                             "There is already a brand with the brand name provided");
             model.addAttribute("title", "Update");
-            model.addAttribute("postURL", "/brands/" + brandDto.getId() + "/edit");
+            model.addAttribute("postURL", "/brands/edit" + brandDto.getId());
             return "brand/brand-edit";
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("title", "Update");
-            model.addAttribute("postURL", "/brands/" + brandDto.getId() + "/edit");
+            model.addAttribute("postURL", "/brands/edit" + brandDto.getId());
             return "brand/brand-edit";
         }
         brandService.saveBrand(brandDto);

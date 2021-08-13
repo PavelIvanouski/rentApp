@@ -1,20 +1,15 @@
-package by.academy.rentApp.serviceTests;
+package by.academy.rentApp.service;
 
 import by.academy.rentApp.dto.BrandDto;
-import by.academy.rentApp.mapper.BrandMapper;
 import by.academy.rentApp.model.entity.Brand;
 import by.academy.rentApp.model.repository.BrandRepository;
-import by.academy.rentApp.service.BrandService;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -41,7 +36,6 @@ public class BrandServiceTest {
         given(this.brandRepository.findBrandById(any()))
                 .willReturn(new Brand(35, "Ford", null));
         BrandDto brandDto = brandService.findBrandById(35);
-
         assertThat(brandDto).isNotNull();
         assertThat(brandDto.getId()).isEqualTo(35);
         assertThat(brandDto.getName()).isEqualTo("Ford");

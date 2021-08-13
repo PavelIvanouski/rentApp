@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
 
@@ -17,6 +18,7 @@ public class MessagesDto {
     private String userName;
 
     @Size(min = 5,max = 40)
+    @Email
     private String email;
 
     @Size(min = 5,max = 70)
