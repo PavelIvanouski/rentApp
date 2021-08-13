@@ -15,19 +15,20 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Car list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/admin/cars/add}" role="button">Add car</a>
+    <h2 th:text="#{label.carList}">Car list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/admin/cars/add}" role="button"
+       th:text="#{label.add} + ' ' + #{label.car}">Add car</a>
     </p>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Model</th>
-            <th scope="col">Type</th>
-            <th scope="col">Engine</th>
-            <th scope="col">Volume</th>
-            <th scope="col">Year</th>
-            <th scope="col">Edit</th>
+            <th scope="col" th:text="#{label.model1}">Model</th>
+            <th scope="col" th:text="#{label.type1}">Type</th>
+            <th scope="col" th:text="#{label.engine1}">Engine</th>
+            <th scope="col" th:text="#{label.volume}">Volume</th>
+            <th scope="col" th:text="#{label.year}">Year</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
 <!--            <th scope="col">Delete</th>-->
         </tr>
         </thead>
@@ -42,7 +43,7 @@
                 <td th:text="${car.year}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/admin/cars/edit/{id}(id=${car.id})}"
-                       role="button">Edit</a>
+                       role="button" th:text="#{label.edit}">Edit</a>
                 </td>
 <!--                <td>-->
 <!--                    <form th:action="@{/cars/{id}/delete(id=${car.id})}" method="post"-->

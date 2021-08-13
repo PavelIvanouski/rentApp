@@ -16,11 +16,11 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Add car</h2>
+    <h2 th:text="#{label.add} + ' ' + #{label.car}">Add car</h2>
     <form th:action="@{/admin/cars/add}" th:object="${car}" th:method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="selectModel">Model</label>
+                <label for="selectModel" th:text="#{label.model1}">Model</label>
                 <select th:field="*{model.id}" id="selectModel" class="form-control">
                     <option value=""> --</option>
                     <option th:each="model : ${models}"
@@ -32,7 +32,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="selectType">Type</label>
+                <label for="selectType" th:text="#{label.type1}">Type</label>
                 <select th:field="*{type.id}" id="selectType" class="form-control">
                     <option value=""> --</option>
                     <option th:each="type : ${types}"
@@ -46,7 +46,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="selectEngine">Engine</label>
+                <label for="selectEngine" th:text="#{label.engine1}">Engine</label>
                 <select th:field="*{engine.id}" id="selectEngine" class="form-control">
                     <option value=""> --</option>
                     <option th:each="engine : ${engines}"
@@ -58,7 +58,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputVolume">Volume</label>
+                <label for="inputVolume" th:text="#{label.volume}">Volume</label>
                 <input type="text" class="form-control" id="inputVolume" th:field="*{engineVolume}"
                        placeholder="Please, enter volume here">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('engineVolume')}"
@@ -68,7 +68,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputYear">Year</label>
+                <label for="inputYear" th:text="#{label.year}">Year</label>
                 <input type="text" class="form-control" id="inputYear" placeholder="Please, enter year here"
                        th:field="*{year}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('year')}"
@@ -86,7 +86,7 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputStateNum">State number</label>
+                <label for="inputStateNum" th:text="#{label.stateNumber}">State number</label>
                 <input type="text" class="form-control" id="inputStateNum" placeholder="Please, enter state number here"
                        th:field="*{stateNum}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('stateNum')}"
@@ -94,7 +94,7 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputSeatsNum">Seats number</label>
+                <label for="inputSeatsNum" th:text="#{label.seatsNumber}">Seats number</label>
                 <input type="text" class="form-control" id="inputSeatsNum" placeholder="Please, enter seats number here"
                        th:field="*{seatsNum}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('seatsNum')}"
@@ -104,13 +104,13 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputColor">Color</label>
+                <label for="inputColor" th:text="#{label.color}">Color</label>
                 <input type="text" class="form-control" id="inputColor" placeholder="Please, enter color here"
                        th:field="*{color}">
             </div>
 
             <div class="form-group col-md-4">
-                <label for="inputPrice">Price per day</label>
+                <label for="inputPrice" th:text="#{label.pricePerDay}">Price per day</label>
                 <input type="text" class="form-control" id="inputPrice" placeholder="Please, enter price here"
                        th:field="*{price}">
                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('price')}"
@@ -122,7 +122,7 @@
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="inputAutoTransmission"
                        th:field="*{autoTransmission}">
-                <label class="form-check-label" for="inputAutoTransmission">
+                <label class="form-check-label" for="inputAutoTransmission" th:text="#{label.autoTr}">
                     Auto transmission
                 </label>
             </div>
@@ -130,12 +130,12 @@
 
         <div class="form-row">
             <div class="form-group col-md-4">
-                <label for="inputFile">Photos: </label>
+                <label for="inputFile" th:text="#{label.photos}">Photos: </label>
                 <input type="file" name="image" id="inputFile" accept="image/png, image/jpeg"/>
             </div>
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Add car</button>
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.add}">Add car</button>
 
     </form>
 </div>
