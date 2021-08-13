@@ -15,15 +15,16 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Type list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/types/add}" role="button">Add type</a>
+    <h2 th:text="#{label.typeList}">Type list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/types/add}" role="button"
+       th:text="#{label.add} + ' ' + #{label.type}">Add type</a>
     </p>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Edit</th>
+            <th scope="col" th:text="#{label.name}">Name</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
 <!--            <th scope="col">Delete</th>-->
         </tr>
         </thead>
@@ -34,7 +35,7 @@
                 <td th:text="${type.name}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/types/edit/{id}(id=${type.id})}"
-                       role="button">Edit</a>
+                       role="button" th:text="#{label.edit}">Edit</a>
                 </td>
 <!--                <td>-->
 <!--                    <form th:action="@{/types/{id}/delete(id=${type.id})}" method="post"-->

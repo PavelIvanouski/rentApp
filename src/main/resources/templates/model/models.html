@@ -15,16 +15,17 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Model list</h2>
-    <a class="btn btn-outline-primary" th:href="@{/models/add}" role="button">Add model</a>
+    <h2 th:text="#{label.modelList}">Model list</h2>
+    <a class="btn btn-outline-primary" th:href="@{/models/add}" role="button"
+       th:text="#{label.add} + ' ' + #{label.model}">Add model</a>
     </p>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Model</th>
-            <th scope="col">Brand</th>
-            <th scope="col">Edit</th>
+            <th scope="col" th:text="#{label.name}">Model</th>
+            <th scope="col"th:text="#{label.brand1}">Brand</th>
+            <th scope="col" th:text="#{label.edit}">Edit</th>
 <!--            <th scope="col">Delete</th>-->
         </tr>
         </thead>
@@ -36,7 +37,7 @@
                 <td th:text="${model.brand.name}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/models/edit/{id}(id=${model.id})}"
-                       role="button">Edit</a>
+                       role="button" th:text="#{label.edit}">Edit</a>
                 </td>
 <!--                <td>-->
 <!--                    <form th:action="@{/models/{id}/delete(id=${model.id})}" method="post"-->

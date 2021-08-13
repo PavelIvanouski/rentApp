@@ -16,24 +16,27 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Update type</h2>
+    <h2 th:text="#{label.edit} + ' ' + #{label.type}">Update type</h2>
     <form th:href="@{/types/edit/{id}(id=${type.id})}" th:object="${type}" th:method="post">
 
         <div class="form-group">
-            <input type="text" hidden class="form-control-plaintext"  th:field="*{id}">
+            <input type="text" hidden class="form-control-plaintext" th:field="*{id}">
         </div>
 
         <div class="form-group">
             <td th:text="'Id: ' + ${type.id}"></td>
         </div>
 
-        <div class="form-group">
-            <label for="InputName">Name</label>
-            <input type="text" class="form-control" id="InputName" th:field="*{name}"
-                   placeholder="Please, enter name here">
-            <span  style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+        <div class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="InputName" th:text="#{label.name}">Name</label>
+                <input type="text" class="form-control" id="InputName" th:field="*{name}"
+                       placeholder="Please, enter name here">
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
+            </div>
         </div>
-        <button type="submit" class="btn btn-outline-primary">Update type</button>
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.edit}">Update type</button>
     </form>
 </div>
 <!--empty space for more representable view-->

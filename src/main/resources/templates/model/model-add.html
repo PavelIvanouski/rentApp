@@ -17,28 +17,32 @@
 
 <div class="container pt-5 mt-5">
     <!--    <h2 th:text="${title} + ' engine'"></h2>-->
-    <h2>Add model</h2>
+    <h2 th:text="#{label.add} + ' ' + #{label.model}">Add model</h2>
     <form th:action="@{/models/add}" th:object="${model}" th:method="post" class="needs-validation" novalidate>
-        <div class="form-group">
-            <label for="InputName">Name</label>
-            <input type="text" class="form-control" id="InputName" th:field="*{name}"
-                   placeholder="Please, enter name here">
-            <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}"
-                  th:errors="*{name}"></span>
-        </div>
-        <div class="form-group">
-            <label for="selectBrand">Brand</label>
-            <select th:field="*{brand.id}" id="selectBrand" class="form-control">
-                <option value=""> --</option>
-                <option th:each="brand : ${brands}"
-                        th:value="${brand.id}"
-                        th:utext="${brand.name}"/>
-            </select>
-            <div th:if="${brandError}">
-                <p style="font-size: 20; color: #FF1C19;" th:text="${brandError}"></p>
+        <div class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="InputName" th:text="#{label.name}">Name</label>
+                <input type="text" class="form-control" id="InputName" th:field="*{name}"
+                       placeholder="Please, enter name here">
+                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('name')}"
+                      th:errors="*{name}"></span>
             </div>
         </div>
-        <button type="submit" class="btn btn-outline-primary">Add model</button>
+        <div class="form-group row">
+            <div class="form-group col-sm-4">
+                <label for="selectBrand" th:text="#{label.brand1}">Brand</label>
+                <select th:field="*{brand.id}" id="selectBrand" class="form-control">
+                    <option value=""> --</option>
+                    <option th:each="brand : ${brands}"
+                            th:value="${brand.id}"
+                            th:utext="${brand.name}"/>
+                </select>
+                <div th:if="${brandError}">
+                    <p style="font-size: 20; color: #FF1C19;" th:text="#{label.brandMessage}"></p>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-outline-primary" th:text="#{label.add}">Add model</button>
     </form>
 </div>
 <!--empty space for more representable view-->

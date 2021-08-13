@@ -16,11 +16,11 @@ public class CarModelDto {
 
     private Integer id;
 
-    @NotBlank(message = "Name should not be empty")
-    @Size(min = 2, max = 30, message = "Name size must be between 2 and 30")
+    @NotBlank(message = "{label.notEmptyName}")
+    @Size(min = 2, max = 30, message = "{label.nameSize} [2;20]")
     private String name;
 
-    @NotNull(message = "Brand should not be empty")
+    @NotNull(message = "{label.notEmptyName}")
     private BrandDto brand;
 
     private OffsetDateTime creatingDate;
