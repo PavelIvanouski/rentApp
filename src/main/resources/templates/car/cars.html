@@ -19,12 +19,16 @@
     <a class="btn btn-outline-primary" th:href="@{/admin/cars/add}" role="button"
        th:text="#{label.add} + ' ' + #{label.car}">Add car</a>
     </p>
-    <form th:action="@{/admin/cars}">
-        Filter: <input type="text" name="keyword" id="keyword" size="50" th:value="${keyword}" required />
-        &nbsp;
-        <input type="submit" value="Search" />
-        &nbsp;
-        <input type="button" value="Clear" id="btnClear" onclick="clearSearch()" />
+    <form class="form-inline" th:action="@{/admin/cars}">
+        <div class="form-group">
+            <label for="keyword" th:text="#{label.filter}">Filter:</label>
+            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="50"
+                   th:value="${keyword}" required></input>
+        </div>
+        <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
+        <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
+               onclick="clearSearch()"></input>
+
     </form>
     </p>
     <table class="table">
