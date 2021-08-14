@@ -1,12 +1,10 @@
 package by.academy.rentApp.service.impl;
 
-import by.academy.rentApp.dto.CarDto;
 import by.academy.rentApp.dto.InvoiсeDto;
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.mapper.CarMapper;
 import by.academy.rentApp.mapper.InvoiceMapper;
 import by.academy.rentApp.mapper.OrderMapper;
-import by.academy.rentApp.model.entity.Car;
 import by.academy.rentApp.model.entity.Invoiсe;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.CarRepository;
@@ -15,7 +13,6 @@ import by.academy.rentApp.service.InvoiceService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;

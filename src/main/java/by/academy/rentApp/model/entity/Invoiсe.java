@@ -37,8 +37,8 @@ public class Invoiсe {
     @EqualsAndHashCode.Exclude
     private Order order;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
 
 }
