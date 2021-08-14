@@ -27,7 +27,15 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public List<CarDto> getAll() {
+    public List<CarDto> getAll(String keyword) {
+        if (keyword != null) {
+            List<Car> cars = carRepository.search(keyword);
+            List<CarDto> carDtos = new ArrayList<>();
+            cars.forEach(car -> {
+                carDtos.add(carMapper.carToCarDto(car));
+            });
+            return carDtos;
+        }
         List<Car> cars = carRepository.findAll();
         List<CarDto> carDtos = new ArrayList<>();
         cars.forEach(car -> {
@@ -35,6 +43,16 @@ public class CarServiceImpl implements CarService {
         });
         return carDtos;
     }
+
+//    @Override
+//    public List<CarDto> search(String keyword) {
+//        List<Car> cars = carRepository.search(keyword);
+//        List<CarDto> carDtos = new ArrayList<>();
+//        cars.forEach(car -> {
+//            carDtos.add(carMapper.carToCarDto(car));
+//        });
+//        return carDtos;
+//    }
 
     @Override
     @Transactional

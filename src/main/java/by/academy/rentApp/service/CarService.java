@@ -6,7 +6,9 @@ import by.academy.rentApp.dto.CarDto;
 import java.util.List;
 
 public interface CarService {
-    List<CarDto> getAll();
+    List<CarDto> getAll(String keyword);
+
+//    List<CarDto> search(String keyword);
 
     CarDto saveCar(CarDto carDto);
 

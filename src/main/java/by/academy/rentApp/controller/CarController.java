@@ -5,6 +5,7 @@ import by.academy.rentApp.dto.CarModelDto;
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.FileUploadUtil;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -33,17 +34,18 @@ public class CarController {
     }
 
     @GetMapping("/cars/all")
-    public String getAllCarsForm(Model model) {
-        List<CarDto> cars = carService.getAll();
+    public String getAllCarsForm(Model model,@Param("keyword") String keyword) {
+        List<CarDto> cars = carService.getAll(keyword);
         model.addAttribute("cars", cars);
         return "car/cars-all";
     }
 
     @GetMapping("/admin/cars")
-    public String getCars(Model model) {
-        List<CarDto> cars = carService.getAll();
+    public String getCars(Model model, @Param("keyword") String keyword) {
+        List<CarDto> cars = carService.getAll(keyword);
         model.addAttribute("cars", cars);
         model.addAttribute("title", "Cars");
+        model.addAttribute("keyword", keyword);
         return "car/cars";
     }
 
