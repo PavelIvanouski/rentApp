@@ -21,13 +21,50 @@
     </p>
     <form class="form-inline" th:action="@{/admin/cars}">
         <div class="form-group">
-            <label for="keyword" th:text="#{label.filter}">Filter:</label>
-            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="50"
-                   th:value="${keyword}" required></input>
+            <label for="keyword" th:text="#{label.filter} +':'">Filter:</label>
+            <!--            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="20"-->
+            <!--                   th:value="${keyword}" ></input>-->
+        </div>
+
+        <div class="form-group ml-2">
+            <label for="typeId" th:text="#{label.model1}">Model:</label>
+            <select id="modelId" name="modelId" class="form-control mr-2 ml-2">
+                <option value="" hidden th:text="#{label.model}">Select model</option>
+                <option th:each="model : ${models}"
+                        th:value="${model.id}"
+                        th:utext="${model.brand.name} + ' ' + ${model.name}"
+                        th:selected="${model.id==modelId}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="typeId" th:text="#{label.type1}">Type:</label>
+            <select id="typeId" name="typeId" class="form-control mr-2 ml-2">
+                <option value="" hidden th:text="#{label.type}">Select type</option>
+                <option th:each="type : ${types}"
+                        th:value="${type.id}"
+                        th:utext="${type.name}" th:selected="${type.id==typeId}"></option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="engineId" th:text="#{label.engine1}">Engine:</label>
+            <select id="engineId" name="engineId" class="form-control mr-2 ml-2">
+                <option value="" hidden th:text="#{label.engine}">Select engine</option>
+                <option th:each="engine : ${engines}"
+                        th:value="${engine.id}"
+                        th:utext="${engine.name}" th:selected="${engine.id==engineId}"></option>
+            </select>
         </div>
         <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
         <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
                onclick="clearSearch()"></input>
+
+        <div class="form-group">
+            <label for="rBegin" >Rent begin:</label>
+            <input type="datetime-local" class="form-control mr-2 ml-2" name="rBegin" id="rBegin" size="20"
+                   th:value="${rBegin}"></input>
+        </div>
 
     </form>
     </p>

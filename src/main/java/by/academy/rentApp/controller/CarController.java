@@ -1,11 +1,11 @@
 package by.academy.rentApp.controller;
 
-import by.academy.rentApp.dto.CarDto;
-import by.academy.rentApp.dto.CarModelDto;
-import by.academy.rentApp.dto.OrderDto;
+import by.academy.rentApp.dto.*;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.FileUploadUtil;
 import org.springframework.data.repository.query.Param;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -34,18 +35,40 @@ public class CarController {
     }
 
     @GetMapping("/cars/all")
-    public String getAllCarsForm(Model model,@Param("keyword") String keyword) {
-        List<CarDto> cars = carService.getAll(keyword);
+    public String getAllCarsForm(Model model
+            , @Param("modelId") Integer modelId
+            , @Param("typeId") Integer typeId
+            , @Param("engineId") Integer engineId) {
+//        List<CarDto> cars = carService.getAll(keyword, typeId);
+        List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
         model.addAttribute("cars", cars);
         return "car/cars-all";
     }
 
     @GetMapping("/admin/cars")
-    public String getCars(Model model, @Param("keyword") String keyword) {
-        List<CarDto> cars = carService.getAll(keyword);
+    public String getCars(Model model, @Param("keyword") String keyword
+            , @Param("modelId") Integer modelId
+            , @Param("typeId") Integer typeId
+            , @Param("engineId") Integer engineId
+            , @Param("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin) {
+        List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
+
+        List<CarModelDto> modelDtos = carModelService.getAll();
+        model.addAttribute("models", modelDtos);
+
+        List<TypeDto> types = typeService.getAll();
+        model.addAttribute("types", types);
+
+        List<EngineDto> engineDtos = engineService.getAll();
+        model.addAttribute("engines", engineDtos);
+
         model.addAttribute("cars", cars);
         model.addAttribute("title", "Cars");
         model.addAttribute("keyword", keyword);
+        model.addAttribute("modelId", modelId);
+        model.addAttribute("typeId", typeId);
+        model.addAttribute("engineId", engineId);
+        model.addAttribute("rBegin", rBegin);
         return "car/cars";
     }
 

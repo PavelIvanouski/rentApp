@@ -16,6 +16,8 @@
 
 <div class="container pt-5 mt-5">
     <h2 th:text="#{label.orderList}">Orders list</h2>
+<!--    <input class="form-control mb-4" id="tableSearch" type="text"-->
+<!--           placeholder="Type something to search list items">-->
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -29,7 +31,7 @@
             <th scope="col" th:text="#{label.edit}">Edit</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="myTable">
         <th:block th:each="order : ${orders}">
             <tr>
                 <td th:text="${order.id}"></td>
@@ -48,16 +50,28 @@
         </th:block>
         </tbody>
     </table>
+
 </div>
 
 <!--empty space for more representable view-->
 <div class="col-xs-12" style="height:250px;"></div>
 <div th:insert="blocks/footer :: footer"></div>
+<script>
+    $(document).ready(function () {
+        $("#tableSearch").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+
 </body>
 </html>

@@ -27,9 +27,10 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public List<CarDto> getAll(String keyword) {
-        if (keyword != null) {
-            List<Car> cars = carRepository.search(keyword);
+    public List<CarDto> getAll(Integer modelId, Integer typeId, Integer engineId) {
+        if (modelId != null || typeId != null || engineId != null) {
+//            List<Car> cars = carRepository.search(keyword,typeId);
+            List<Car> cars = carRepository.search(modelId, typeId, engineId);
             List<CarDto> carDtos = new ArrayList<>();
             cars.forEach(car -> {
                 carDtos.add(carMapper.carToCarDto(car));
