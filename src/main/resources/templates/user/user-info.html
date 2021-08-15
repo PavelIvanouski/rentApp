@@ -28,14 +28,14 @@
                     <h5 th:if="${user.updatingDate}" class="card-title text-center" th:text="#{label.updatingDate} + ' '
                     + ${#temporals.format(user.updatingDate, 'dd-MM-yyyy HH:mm')}">Updating date </h5>
                     <form th:object=" ${user}" method="post" class="form-horizontal"
-                          role="form">
+                          role="form" onsubmit="return verifyPassword()">
                         <br/>
                         <div hidden class="form-group row">
                             <label for="userId" class="col-md-4 col-form-label text-md-right"
-                                   >User id</label>
+                            >User id</label>
                             <div class="col-md-6">
                                 <input type="text" id="userId" th:field="*{id}" placeholder="User id"
-                                       class="form-control" />
+                                       class="form-control"/>
                             </div>
                         </div>
 
@@ -44,7 +44,7 @@
                                    th:text="#{label.userName}">User Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="userName" th:field="*{userName}" placeholder="User Name"
-                                       class="form-control" />
+                                       class="form-control" readonly/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('userName')}"
                                       th:errors="*{userName}"></span>
                             </div>
@@ -55,7 +55,7 @@
                                    th:text="#{label.eMail}">E-mail</label>
                             <div class="col-md-6">
                                 <input type="text" id="email" th:field="*{email}" placeholder="Email"
-                                       class="form-control" />
+                                       class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('email')}"
                                       th:errors="*{email}"></span>
                             </div>
@@ -66,7 +66,7 @@
                                    th:text="#{label.firstName}">First Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="firstName" th:field="*{firstName}" placeholder="First name"
-                                       class="form-control" />
+                                       class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('firstName')}"
                                       th:errors="*{firstName}"></span>
                             </div>
@@ -77,7 +77,7 @@
                                    th:text="#{label.lastName}">Last Name</label>
                             <div class="col-md-6">
                                 <input type="text" id="lastName" th:field="*{lastName}"
-                                       placeholder="Last name" class="form-control" />
+                                       placeholder="Last name" class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('lastName')}"
                                       th:errors="*{lastName}"></span>
                             </div>
@@ -87,7 +87,7 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.password}">Password</label>
                             <div class="col-md-6">
-                                <input type="password" id="password" name="password"  th:value="${user.password}"
+                                <input type="password" id="password" name="password" th:value="${user.password}"
                                        placeholder="Password" class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('password')}"
                                       th:errors="*{password}"></span>
@@ -112,18 +112,18 @@
                                    th:text="#{label.passport}">Passport</label>
                             <div class="col-md-6">
                                 <input type="text" id="passport" th:field="*{passport}"
-                                       placeholder="passport" class="form-control" />
+                                       placeholder="passport" class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('passport')}"
                                       th:errors="*{passport}"></span>
                             </div>
                         </div>
 
-                        <div  class="form-group row">
+                        <div class="form-group row">
                             <label for="passport" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.role}">Role</label>
                             <div class="col-md-6">
                                 <th:block th:each="role : ${user.getRoles()}">
-                                    <input type="text"  th:value="${role.role.toString()}"
+                                    <input type="text" th:value="${role.role.toString()}"
                                            placeholder="Last name" class="form-control" readonly/>
                                 </th:block>
                             </div>
@@ -137,6 +137,39 @@
                                        placeholder="Last name" class="form-control"/>
                             </div>
                         </div>
+
+                        <div class="form-group row">
+                            <label for="changePassword" class="col-md-4 col-form-label text-md-right"
+                            ></label>
+                            <div class="col-md-6">
+                                <input lass="form-check-input" type="checkbox" id="changePassword"
+                                       name="changePassword" value="yes"/>
+                                <label class="form-check-label" for="changePassword"
+                                       th:text="#{label.changePassword}">
+                                    Change password
+                                </label>
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group row" id="newPasswordRow">
+                            <label for="newPassword" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.password}">Password</label>
+                            <div class="col-md-6">
+                                <input type="password" id="newPassword" name="newPassword"
+                                       placeholder="password" class="form-control" onkeyup='check();'/>
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group row" id="newPasswordConfirmRow">
+                            <label for="newPasswordConfirm" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.confirmPassword}">Password</label>
+                            <div class="col-md-6">
+                                <input type="password" id="newPasswordConfirm"
+                                       placeholder="password" class="form-control" onkeyup='check();'/>
+                                <span id='message'></span>
+                            </div>
+                        </div>
+
 
                         <br/>
                         <div class="form-group">
@@ -177,35 +210,52 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 <script>
-    function setMessageView() {
-        var statusId = document.getElementById('selectStatus').value;
-        if (statusId == 4) {
-            document.getElementById('messageRow').hidden = false;
-        } else {
-            document.getElementById('messageRow').hidden = true;
-        }
-        if (statusId == 3) {
-            document.getElementById('extraInvoiceRow').hidden = false;
-        } else {
-            document.getElementById('extraInvoiceRow').hidden = true;
-        }
-    }
 
-    $(function () {
-        setMessageView();
-    });
-
-    function openInvoiceModal(id) {
-        $.ajax({
-            url: "/invoices/" + id,
-            success: function (response) {
-                $('#viewUserHolder').html(response);
-                $('#viewUser').modal();
-                $('#viewUser').modal('open');
+    $('#changePassword').on('click', function () {
+        if ($(this).is(':checked')) {
+            document.getElementById('newPasswordRow').hidden = false;
+            document.getElementById('newPasswordConfirmRow').hidden = false;
+        } else {
+            document.getElementById('newPasswordRow').hidden = true;
+            document.getElementById('newPasswordConfirmRow').hidden = true;
+        }
+    })
+</script>
+<script>
+    function verifyPassword() {
+        const cb = document.getElementById('changePassword');
+        if (cb.checked) {
+            var pw = document.getElementById("newPassword").value;
+            var pwc = document.getElementById("newPasswordConfirm").value;
+            if (pw == "" || pwc == "") {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById("message").innerHTML = "**Fill the password please!";
+                return false;
             }
-        });
+            if (pw != pwc) {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById("message").innerHTML = "**Password and password confirm are not matching!";
+                return false;
+            }
+            if (pw.length < 5) {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById("message").innerHTML = "**Password must contain at least five characters!";
+                return false;
+            }
+        }
+        return true;
     }
 
+    var check = function () {
+        if (document.getElementById('newPassword').value ==
+            document.getElementById('newPasswordConfirm').value) {
+            document.getElementById('message').style.color = 'green';
+            document.getElementById('message').innerHTML = 'matching';
+        } else {
+            document.getElementById('message').style.color = 'red';
+            document.getElementById('message').innerHTML = 'not matching';
+        }
+    }
 </script>
 </body>
 </html>

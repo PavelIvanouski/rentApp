@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @Controller
@@ -56,9 +57,9 @@ public class UserController {
             return "user/user-admin";
         }
 
-        userService.saveUser(userFormDto,false);
+        userService.saveUser(userFormDto, false);
         model.addAttribute("user", userFormDto);
-        model.addAttribute("successMessage","user saved");
+        model.addAttribute("successMessage", "user saved");
         return "user/user-admin";
     }
 
@@ -70,6 +71,8 @@ public class UserController {
 
     @PostMapping("/user/info")
     public String updateUserInfo(@Validated @ModelAttribute("user") UserFormDto userFormDto
+            , @RequestParam(value = "changePassword", required = false) Boolean changePassword
+            , @RequestParam(value = "newPassword", required = false) String newPassword
             , BindingResult bindingResult
             , Model model) {
 
@@ -79,8 +82,16 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             return "user/user-info";
         }
-        userService.saveUser(userFormDto,false);
-        model.addAttribute("successMessage","user saved");
+
+        Boolean setNewPassword = false;
+        if (changePassword != null) {
+            if (changePassword && !"".equals(newPassword)) {
+                userFormDto.setPassword(newPassword);
+                setNewPassword = true;
+            }
+        }
+        userService.saveUser(userFormDto, setNewPassword);
+        model.addAttribute("successMessage", "user saved");
         return "user/user-info";
     }
 }
