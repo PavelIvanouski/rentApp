@@ -32,8 +32,6 @@ public class User {
     @NotEmpty(message = "*Please provide your password")
     private String password;
     @Transient
-    @Length(min = 5, message = "*Your password  confirm must have at least 5 characters")
-    @NotEmpty(message = "*Please confirm your password")
     private String passwordConfirm;
     @Column(name = "first_name", nullable = false)
     @NotEmpty(message = "*Please provide your first name")

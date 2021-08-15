@@ -37,6 +37,10 @@ public class UserDto {
 
     private Boolean active;
 
+    private OffsetDateTime creatingDate;
+
+    private OffsetDateTime updatingDate;
+
     private Set<Role> roles;
 
 //    private List<Order> orderList;

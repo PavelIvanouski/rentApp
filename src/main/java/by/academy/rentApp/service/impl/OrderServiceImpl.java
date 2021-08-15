@@ -2,6 +2,7 @@ package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.dto.UserDto;
+import by.academy.rentApp.dto.UserFormDto;
 import by.academy.rentApp.mapper.OrderMapper;
 import by.academy.rentApp.mapper.UserMapper;
 import by.academy.rentApp.model.entity.Order;
@@ -48,8 +49,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllByUser(UserDto userDto) {
-        User user = userMapper.userDtoToUser(userDto);
+    public List<OrderDto> getAllByUser(UserFormDto userFormDto) {
+        User user = userMapper.userFormDtoToUser(userFormDto);
         List<Order> orders = orderRepository.findAllByUser(user);
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {

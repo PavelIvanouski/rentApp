@@ -17,28 +17,28 @@ public class UserFormDto {
 
     private Integer id;
 
-    @Length(min = 5, message = "*Your user name must have at least 5 characters")
-    @NotEmpty(message = "*Please provide a user name")
+    @Length(min = 5, message = "{label.nameSize} >4")
+    @NotEmpty(message = "{label.shouldNotBeEmpty}")
     private String userName;
 
     @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please provide your password")
+    @NotEmpty(message = "{label.shouldNotBeEmpty}")
     private String password;
 
     @Length(min = 5, message = "*Your password  confirm must have at least 5 characters")
     @NotEmpty(message = "*Please confirm your password")
     private String passwordConfirm;
 
-    @NotEmpty(message = "*Please provide your first name")
+    @NotEmpty(message = "{label.shouldNotBeEmpty}")
     private String firstName;
 
-    @NotEmpty(message = "*Please provide your last name")
+    @NotEmpty(message = "{label.shouldNotBeEmpty}")
     private String lastName;
 
     private String passport;
 
     @Email(message = "*Please provide a valid Email")
-    @NotEmpty(message = "*Please provide an email")
+    @NotEmpty(message = "{label.shouldNotBeEmpty}")
     private String email;
 
     private Boolean active;

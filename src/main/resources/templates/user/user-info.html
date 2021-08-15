@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html lang="en">
+<head>
+    <!--    <title th:text="${title} + ' engine'"/>-->
+    <title>User info</title>
+    <link rel="icon" href="/images/favicon.png" type="image/png" sizes="16x16">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+<header th:insert="blocks/header :: header"></header>
+
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <!--                <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">-->
+        <div class="col-md-8">
+            <!--            <div class="card card-signin flex-row my-5">-->
+            <div class="card my-5">
+                <div class="card-body">
+                    <h5 class="card-title text-center" th:text="#{label.user1} + ' id='+ ${user.id}">User </h5>
+                    <h5 class="card-title text-center" th:text="#{label.creatingDate} + ' '
+                    + ${#temporals.format(user.creatingDate, 'dd-MM-yyyy HH:mm')}">Creating date </h5>
+                    <h5 th:if="${user.updatingDate}" class="card-title text-center" th:text="#{label.updatingDate} + ' '
+                    + ${#temporals.format(user.updatingDate, 'dd-MM-yyyy HH:mm')}">Updating date </h5>
+                    <form th:object=" ${user}" method="post" class="form-horizontal"
+                          role="form">
+                        <br/>
+                        <div hidden class="form-group row">
+                            <label for="userId" class="col-md-4 col-form-label text-md-right"
+                                   >User id</label>
+                            <div class="col-md-6">
+                                <input type="text" id="userId" th:field="*{id}" placeholder="User id"
+                                       class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="userName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.userName}">User Name</label>
+                            <div class="col-md-6">
+                                <input type="text" id="userName" th:field="*{userName}" placeholder="User Name"
+                                       class="form-control" />
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('userName')}"
+                                      th:errors="*{userName}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="email" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.eMail}">E-mail</label>
+                            <div class="col-md-6">
+                                <input type="text" id="email" th:field="*{email}" placeholder="Email"
+                                       class="form-control" />
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('email')}"
+                                      th:errors="*{email}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="firstName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.firstName}">First Name</label>
+                            <div class="col-md-6">
+                                <input type="text" id="firstName" th:field="*{firstName}" placeholder="First name"
+                                       class="form-control" />
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('firstName')}"
+                                      th:errors="*{firstName}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="lastName" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.lastName}">Last Name</label>
+                            <div class="col-md-6">
+                                <input type="text" id="lastName" th:field="*{lastName}"
+                                       placeholder="Last name" class="form-control" />
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('lastName')}"
+                                      th:errors="*{lastName}"></span>
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group row">
+                            <label for="password" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.password}">Password</label>
+                            <div class="col-md-6">
+                                <input type="password" id="password" name="password"  th:value="${user.password}"
+                                       placeholder="Password" class="form-control"/>
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('password')}"
+                                      th:errors="*{password}"></span>
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group row">
+                            <label for="passwordConfirm" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.confirmPassword}">Confirm
+                                Password</label>
+                            <div class="col-md-6">
+                                <input type="password" id="passwordConfirm" name="passwordConfirm"
+                                       placeholder="Confirm Password" class="form-control" th:value="${user.password}"/>
+                                <span style="font-size: 20; color: #FF1C19;"
+                                      th:if="${#fields.hasErrors('passwordConfirm')}"
+                                      th:errors="*{passwordConfirm}"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="passport" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.passport}">Passport</label>
+                            <div class="col-md-6">
+                                <input type="text" id="passport" th:field="*{passport}"
+                                       placeholder="passport" class="form-control" />
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('passport')}"
+                                      th:errors="*{passport}"></span>
+                            </div>
+                        </div>
+
+                        <div  class="form-group row">
+                            <label for="passport" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.role}">Role</label>
+                            <div class="col-md-6">
+                                <th:block th:each="role : ${user.getRoles()}">
+                                    <input type="text"  th:value="${role.role.toString()}"
+                                           placeholder="Last name" class="form-control" readonly/>
+                                </th:block>
+                            </div>
+                        </div>
+
+                        <div hidden class="form-group row">
+                            <label for="active" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.active}">Active</label>
+                            <div class="col-md-6">
+                                <input type="checkbox" id="active" th:field="*{active}"
+                                       placeholder="Last name" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <br/>
+                        <div class="form-group">
+                            <div class="col-md-6 offset-md-4">
+                                <button type="submit" class="btn btn-primary btn-block"
+                                        th:text="#{label.edit}">Update
+                                </button>
+                            </div>
+                        </div>
+
+                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--empty space for more representable view-->
+<div class="col-xs-12" style="height:250px;"></div>
+<div th:insert="blocks/footer :: footer"></div>
+<div id="viewUser" class="modal modal-fixed-footer" th:fragment="view">
+    <div class="modal-content">
+        <h4>View User</h4>
+
+    </div>
+    <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-light btn-floating red"><i class="material-icons">close</i>
+        </button>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+<script>
+    function setMessageView() {
+        var statusId = document.getElementById('selectStatus').value;
+        if (statusId == 4) {
+            document.getElementById('messageRow').hidden = false;
+        } else {
+            document.getElementById('messageRow').hidden = true;
+        }
+        if (statusId == 3) {
+            document.getElementById('extraInvoiceRow').hidden = false;
+        } else {
+            document.getElementById('extraInvoiceRow').hidden = true;
+        }
+    }
+
+    $(function () {
+        setMessageView();
+    });
+
+    function openInvoiceModal(id) {
+        $.ajax({
+            url: "/invoices/" + id,
+            success: function (response) {
+                $('#viewUserHolder').html(response);
+                $('#viewUser').modal();
+                $('#viewUser').modal('open');
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

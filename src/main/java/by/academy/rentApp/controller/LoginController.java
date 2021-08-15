@@ -1,6 +1,7 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.UserDto;
+import by.academy.rentApp.dto.UserFormDto;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.service.UserService;
 import by.academy.rentApp.service.impl.UserServiceImpl;
@@ -17,8 +18,11 @@ import javax.validation.Valid;
 @Controller
 public class LoginController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping(value = {"/login"})
     public String login(Model model) {
@@ -28,13 +32,14 @@ public class LoginController {
 
     @GetMapping(value = "/registration")
     public String registration(Model model) {
-        model.addAttribute("user", new User());
+//        model.addAttribute("user", new User());
+        model.addAttribute("user", new UserFormDto());
         return "registration";
     }
 
     @PostMapping(value = "/registration")
-    public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
-        UserDto userExists = userService.findUserByUserName(user.getUserName());
+    public String createNewUser(@Valid UserFormDto user, BindingResult bindingResult, Model model) {
+        UserFormDto userExists = userService.findUserByUserName(user.getUserName());
         if (userExists != null) {
             bindingResult
                     .rejectValue("userName", "error.user",
@@ -50,9 +55,9 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "registration";
         } else {
-//            userService.saveUser(user);
+            userService.saveUser(user,true);
             model.addAttribute("successMessage", "User has been registered successfully");
-            model.addAttribute("user", new User());
+            model.addAttribute("user", new UserFormDto());
             return "registration";
         }
     }

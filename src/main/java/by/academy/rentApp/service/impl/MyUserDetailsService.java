@@ -1,6 +1,7 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.UserDto;
+import by.academy.rentApp.dto.UserFormDto;
 import by.academy.rentApp.mapper.UserMapper;
 import by.academy.rentApp.model.entity.Role;
 import by.academy.rentApp.model.entity.User;
@@ -31,8 +32,8 @@ public class MyUserDetailsService implements UserDetailsService {
     @Transactional
     public UserDetails loadUserByUsername(String userName) {
 //        User user = userService.findUserByUserName(userName);
-        UserDto userDto = userService.findUserByUserName(userName);
-        User user = userMapper.userDtoToUser(userDto);
+        UserFormDto userFormDto = userService.findUserByUserName(userName);
+        User user = userMapper.userFormDtoToUser(userFormDto);
         List<GrantedAuthority> authorities = getUserAuthority(user.getRoles());
         return buildUserForAuthentication(user, authorities);
     }

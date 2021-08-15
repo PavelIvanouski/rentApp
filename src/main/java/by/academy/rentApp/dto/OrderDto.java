@@ -32,7 +32,7 @@ public class OrderDto {
     private CarDto car;
 
     @NotNull(message = "User should not be empty")
-    private UserDto user;
+    private UserFormDto user;
 
     private StatusDto status;
 
