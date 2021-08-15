@@ -3,7 +3,7 @@ package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.BrandDto;
 import by.academy.rentApp.service.BrandService;
-import by.academy.rentApp.service.MyUserDetailsService;
+import by.academy.rentApp.service.impl.MyUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

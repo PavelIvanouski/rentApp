@@ -2,6 +2,7 @@ package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.InvoiсeDto;
 import by.academy.rentApp.service.*;
+import by.academy.rentApp.service.impl.UserServiceImpl;
 import by.academy.rentApp.util.DatesUtil;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
@@ -31,11 +32,11 @@ public class InvoiceController {
 
     private final InvoiceService invoiceService;
     private final OrderService orderService;
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final TemplateEngine templateEngine;
 
     public InvoiceController(CarService carService, CarModelService carModelService
-            , TypeService typeService, EngineService engineService, InvoiceService invoiceService, OrderService orderService, UserService userService, TemplateEngine templateEngine) {
+            , TypeService typeService, EngineService engineService, InvoiceService invoiceService, OrderService orderService, UserServiceImpl userService, TemplateEngine templateEngine) {
         this.invoiceService = invoiceService;
         this.orderService = orderService;
         this.userService = userService;

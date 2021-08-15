@@ -1,10 +1,10 @@
 package by.academy.rentApp.controller;
 
+import by.academy.rentApp.dto.UserDto;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.service.UserService;
+import by.academy.rentApp.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,7 +34,7 @@ public class LoginController {
 
     @PostMapping(value = "/registration")
     public String createNewUser(@Valid User user, BindingResult bindingResult, Model model) {
-        User userExists = userService.findUserByUserName(user.getUserName());
+        UserDto userExists = userService.findUserByUserName(user.getUserName());
         if (userExists != null) {
             bindingResult
                     .rejectValue("userName", "error.user",
@@ -50,21 +50,11 @@ public class LoginController {
         if (bindingResult.hasErrors()) {
             return "registration";
         } else {
-            userService.saveUser(user);
+//            userService.saveUser(user);
             model.addAttribute("successMessage", "User has been registered successfully");
             model.addAttribute("user", new User());
             return "registration";
         }
     }
 
-//    @GetMapping(value="/admin/home")
-//    public ModelAndView home(){
-//        ModelAndView modelAndView = new ModelAndView();
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        User user = userService.findUserByUserName(auth.getName());
-//        modelAndView.addObject("userName", "Welcome " + user.getUserName() + "/" + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-//        modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-//        modelAndView.setViewName("admin/home");
-//        return modelAndView;
-//    }
 }

@@ -3,6 +3,7 @@ package by.academy.rentApp.controller;
 import by.academy.rentApp.dto.InvoiсeDto;
 import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.*;
+import by.academy.rentApp.service.impl.UserServiceImpl;
 import by.academy.rentApp.util.DatesUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,11 +27,11 @@ public class OrderController {
 
     private final OrderService orderService;
     private final CarService carService;
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final StatusService statusService;
     private final InvoiceService invoiceService;
 
-    public OrderController(OrderService orderService, CarService carService, UserService userService, StatusService statusService, InvoiceService invoiceService) {
+    public OrderController(OrderService orderService, CarService carService, UserServiceImpl userService, StatusService statusService, InvoiceService invoiceService) {
         this.orderService = orderService;
         this.carService = carService;
         this.userService = userService;
@@ -89,7 +90,8 @@ public class OrderController {
         idList.add(2);
         idList.add(5);
         model.addAttribute("statuses", statusService.getAllByIdList(idList));
-        model.addAttribute("orders", orderService.getAllByUser(userService.findUserByUserName(userSec.getUsername())));
+        model.addAttribute("orders", orderService
+                .getAllByUser(userService.findUserByUserName(userSec.getUsername())));
         return "order/orders-user";
     }
 

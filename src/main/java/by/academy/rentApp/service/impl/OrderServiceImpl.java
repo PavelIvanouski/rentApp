@@ -1,7 +1,9 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.OrderDto;
+import by.academy.rentApp.dto.UserDto;
 import by.academy.rentApp.mapper.OrderMapper;
+import by.academy.rentApp.mapper.UserMapper;
 import by.academy.rentApp.model.entity.Order;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.OrderRepository;
@@ -13,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.OffsetDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +27,13 @@ public class OrderServiceImpl implements OrderService {
 
     private final StatusService statusService;
 
-    public OrderServiceImpl(OrderRepository orderRepository, StatusRepository statusRepository, OrderMapper orderMapper, StatusService statusService) {
+    private final UserMapper userMapper;
+
+    public OrderServiceImpl(OrderRepository orderRepository, StatusRepository statusRepository, OrderMapper orderMapper, StatusService statusService, UserMapper userMapper) {
         this.orderRepository = orderRepository;
         this.orderMapper = orderMapper;
         this.statusService = statusService;
+        this.userMapper = userMapper;
     }
 
 
@@ -44,7 +48,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllByUser(User user) {
+    public List<OrderDto> getAllByUser(UserDto userDto) {
+        User user = userMapper.userDtoToUser(userDto);
         List<Order> orders = orderRepository.findAllByUser(user);
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {

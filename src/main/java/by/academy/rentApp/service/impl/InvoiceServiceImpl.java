@@ -2,9 +2,11 @@ package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.InvoiсeDto;
 import by.academy.rentApp.dto.OrderDto;
+import by.academy.rentApp.dto.UserDto;
 import by.academy.rentApp.mapper.CarMapper;
 import by.academy.rentApp.mapper.InvoiceMapper;
 import by.academy.rentApp.mapper.OrderMapper;
+import by.academy.rentApp.mapper.UserMapper;
 import by.academy.rentApp.model.entity.Invoiсe;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.CarRepository;
@@ -21,15 +23,15 @@ import java.util.List;
 public class InvoiceServiceImpl implements InvoiceService {
 
     private final InvoiceRepository invoiceRepository;
-
     private final InvoiceMapper invoiceMapper;
-
     private final OrderMapper orderMapper;
+    private final UserMapper userMapper;
 
-    public InvoiceServiceImpl(CarRepository carRepository, CarMapper carMapper, InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, OrderMapper orderMapper) {
+    public InvoiceServiceImpl(CarRepository carRepository, CarMapper carMapper, InvoiceRepository invoiceRepository, InvoiceMapper invoiceMapper, OrderMapper orderMapper, UserMapper userMapper) {
         this.invoiceRepository = invoiceRepository;
         this.invoiceMapper = invoiceMapper;
         this.orderMapper = orderMapper;
+        this.userMapper = userMapper;
     }
 
 
@@ -54,7 +56,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiсeDto> getAllByUser(User user) {
+    public List<InvoiсeDto> getAllByUser(UserDto userDto) {
+        User user = userMapper.userDtoToUser(userDto);
         List<Invoiсe> invoiсes = invoiceRepository.findAllByUser(user);
         List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
         invoiсes.forEach(invoiсe -> {

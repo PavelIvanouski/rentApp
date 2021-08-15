@@ -1,6 +1,6 @@
 package by.academy.rentApp.configuration;
 
-import by.academy.rentApp.service.MyUserDetailsService;
+import by.academy.rentApp.service.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
