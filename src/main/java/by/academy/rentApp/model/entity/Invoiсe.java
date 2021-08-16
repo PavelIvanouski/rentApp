@@ -1,8 +1,6 @@
 package by.academy.rentApp.model.entity;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
@@ -10,6 +8,8 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "invoice")
 public class Invoiсe {
@@ -36,9 +36,5 @@ public class Invoiсe {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Order order;
-
-//    @ManyToOne(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "user_id", nullable = false)
-//    private User user;
 
 }

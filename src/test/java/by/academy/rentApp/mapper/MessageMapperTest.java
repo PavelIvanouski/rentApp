@@ -21,7 +21,7 @@ public class MessageMapperTest {
     private MessagesMapper messagesMapper;
 
     @Test
-    public void messagesToMessagesDto() {
+    public void testMessagesToMessagesDto() {
 
         Messages messages = new Messages();
         messages.setId(100);
@@ -32,7 +32,7 @@ public class MessageMapperTest {
     }
 
     @Test
-    public void messagesDtoToMessages() {
+    public void testMessagesDtoToMessages() {
 
         MessagesDto messagesDto = new MessagesDto();
         messagesDto.setId(100);

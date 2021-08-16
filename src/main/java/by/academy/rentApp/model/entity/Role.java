@@ -20,10 +20,6 @@ public class Role {
     @Column(nullable = false)
     private String role;
 
-//    @ManyToMany(mappedBy = "roles")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    private Set<User> users = new HashSet<User>();
 
 
 }

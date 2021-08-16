@@ -26,8 +26,5 @@ public class InvoiсeDto {
     @Size(min = 1, message = "Total should not be 0")
     private double total;
 
-//    @NotNull(message = "User should not be empty")
-//    private User user;
-
     private OrderDto order;
 }

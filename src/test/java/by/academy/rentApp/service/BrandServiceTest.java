@@ -26,9 +26,6 @@ public class BrandServiceTest {
 
     @Autowired
     private BrandService brandService;
-//
-//    @Autowired
-//    private BrandMapper brandMapper;
 
     @Test
     public void testFindBrandById() {

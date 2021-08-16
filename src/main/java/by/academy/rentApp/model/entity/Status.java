@@ -7,6 +7,8 @@ import java.util.List;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table
 public class Status {

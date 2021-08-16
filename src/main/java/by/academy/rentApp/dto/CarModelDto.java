@@ -1,7 +1,9 @@
 package by.academy.rentApp.dto;
 
 import by.academy.rentApp.model.entity.Brand;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -12,6 +14,8 @@ import java.time.OffsetDateTime;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CarModelDto {
 
     private Integer id;

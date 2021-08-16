@@ -8,6 +8,7 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "ordr")
 public class Order {

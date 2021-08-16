@@ -37,29 +37,29 @@
                 <td th:text="${#temporals.format(order.rentBegin, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${#temporals.format(order.rentEnd, 'dd-MM-yyyy HH:mm')}"></td>
                 <td th:text="${order.total}"></td>
-                <div th:if="${order.status.id == 2}">
-                    <!--                    <td>-->
-                    <!--                        <div class="dropdown">-->
-                    <!--                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"-->
-                    <!--                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-                    <!--                                booked-->
-                    <!--                            </button>-->
-                    <!--                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-                    <!--                                <a class="dropdown-item" href="#">cancelled</a>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </td>-->
+<!--                <div th:if="${order.status.id == 2}">-->
+<!--                    &lt;!&ndash;                    <td>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        <div class="dropdown">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <button class="btn btn-outline-secondary dropdown-toggle" type="button"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                booked&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </button>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                                <a class="dropdown-item" href="#">cancelled</a>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                        </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    </td>&ndash;&gt;-->
 
-                    <td><select name="currentStatus" id="currentStatus" class="selectpicker">
-                        <option value="HKD">booked</option>
-                        <option value="HKD">cancelled</option>
-                    </select>
+<!--                    <td><select name="currentStatus" id="currentStatus" class="selectpicker">-->
+<!--                        <option value="HKD">booked</option>-->
+<!--                        <option value="HKD">cancelled</option>-->
+<!--                    </select>-->
 
-                    </td>
-                </div>
-                <div th:unless="${order.status.id == 2}">
+<!--                    </td>-->
+<!--                </div>-->
+<!--                <div th:unless="${order.status.id == 2}">-->
                     <td th:text="${order.status.name}"></td>
-                </div>
+<!--                </div>-->
                 <!--                <td th:text="${order.status.name}"></td>-->
 
                 <td>
