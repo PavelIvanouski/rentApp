@@ -15,16 +15,16 @@
 <header th:insert="blocks/header :: header"></header>
 
 <div class="container pt-5 mt-5">
-    <h2>Your invoices</h2>
+    <h2 th:text="#{label.yourInvoices}">Invoices</h2>
     <table class="table">
         <thead class="thead-light">
         <tr>
             <th scope="col">Id</th>
-            <th scope="col">Creating date</th>
-            <th scope="col">Order id</th>
-            <th scope="col">Description</th>
-            <th scope="col">Total</th>
-            <th scope="col">View</th>
+            <th scope="col" th:text="#{label.creatingDate}">Creating date</th>
+            <th scope="col" th:text="#{label.order}">Order id</th>
+            <th scope="col" th:text="#{label.Description}">Description</th>
+            <th scope="col" th:text="#{label.total}">Total</th>
+            <th scope="col" th:text="#{label.view}">View</th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@
                 <td th:text="${invoice.total}"></td>
                 <td>
                     <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${invoice.id})}"
-                       role="button">View</a>
+                       role="button" th:text="#{label.view}">View</a>
                 </td>
             </tr>
         </th:block>

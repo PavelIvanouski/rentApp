@@ -3,6 +3,8 @@ package by.academy.rentApp.controller;
 import by.academy.rentApp.dto.*;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.FileUploadUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.parameters.P;
@@ -20,6 +22,7 @@ import java.util.List;
 
 @Controller
 public class CarController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarController.class);
     private final CarService carService;
     private final CarModelService carModelService;
     private final TypeService typeService;
@@ -94,7 +97,9 @@ public class CarController {
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         carDto.setPhotos(fileName);
 
+        LOGGER.debug("carService.saveCar called for " + carDto);
         CarDto savedCar = carService.saveCar(carDto);
+        LOGGER.debug("Car added " + savedCar);
 
         String uploadDir = "./car-photos/" + savedCar.getId();
 

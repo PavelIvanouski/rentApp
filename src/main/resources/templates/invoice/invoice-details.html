@@ -20,16 +20,18 @@
             <div class="p-3 bg-white rounded">
                 <div class="row">
                     <div class="col-md-6">
-                        <h1 class="text-uppercase">Invoice</h1>
-                        <div class="billed"><span class="font-weight-bold text-uppercase">To:
+                        <h1 class="text-uppercase" th:text="#{label.invoice}">Invoice</h1>
+                        <div class="billed"><span class="font-weight-bold text-uppercase" th:text="#{label.to} + ':'">To:
                                 </span><span class="ml-1" th:text="${invoice.order.user.firstName}
                                 + ' ' + ${invoice.order.user.lastName}"></span>
                         </div>
-                        <div class="billed"><span class="font-weight-bold text-uppercase">Date:</span>
+                        <div class="billed"><span class="font-weight-bold text-uppercase"
+                                                  th:text="#{label.date} + ':'">Date:</span>
                             <span class="ml-1"
                                   th:text="${#temporals.format(invoice.getCreatingDate(), 'dd-MM-yyyy')}"></span>
                         </div>
-                        <div class="billed"><span class="font-weight-bold text-uppercase">Order ID:</span><span
+                        <div class="billed"><span class="font-weight-bold text-uppercase"
+                                                  th:text="#{label.order} + ' id:'">Order ID:</span><span
                                 class="ml-1" th:text="${invoice.getOrder().id}"></span></div>
                     </div>
                     <div class="col-md-6 text-right mt-3">
@@ -41,11 +43,11 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Description</th>
-                                <th>Car</th>
-                                <th>Price (per 24 hours)</th>
-                                <th>Hours</th>
-                                <th>Total</th>
+                                <th th:text="#{label.Description}">Description</th>
+                                <th th:text="#{label.car1}">Car</th>
+                                <th th:text="#{label.price24}">Price (per 24 hours)</th>
+                                <th th:text="#{label.hours}">Hours</th>
+                                <th th:text="#{label.total}">Total</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -61,7 +63,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td>Total</td>
+                                <td th:text="#{label.total}">Total</td>
                                 <td th:text="${#numbers.formatDecimal(invoice.getTotal(),0,2)}"></td>
                             </tr>
                             </tbody>
@@ -73,7 +75,7 @@
             <div class="text-right mb-3" th:if="${toPdf}">
                 <p></p>
                 <a class="btn btn-outline-info" th:href="@{/invoices/{id}/pdf(id=${invoice.id})}"
-                   role="button" >To pdf</a>
+                   role="button">To pdf</a>
             </div>
         </div>
 

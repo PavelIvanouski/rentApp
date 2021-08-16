@@ -1,11 +1,10 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.BrandDto;
-import by.academy.rentApp.dto.EngineDto;
 import by.academy.rentApp.service.BrandService;
-import by.academy.rentApp.service.EngineService;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +17,17 @@ import java.util.List;
 @RequestMapping("/brands")
 public class BrandController {
 
-    private static final Logger logger = LogManager.getLogger(BrandController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BrandController.class);
+    public static final String BRAND_EDIT = "brand/brand-edit";
+    public static final String BRAND_ADD = "brand/brand-add";
+    public static final String REDIRECT_BRANDS = "redirect:/brands";
+    public static final String POST_URL = "postURL";
+    public static final String POST_URL_EDIT = "/brands/edit";
+    public static final String POST_URL_ADD = "/brands/add";
+    public static final String ADD = "add";
+    public static final String UPDATE = "update";
+    public static final String TITLE = "title";
+
     private final BrandService brandService;
 
     public BrandController(BrandService brandService) {
@@ -36,9 +45,9 @@ public class BrandController {
     @GetMapping("add")
     public String getBrandAddForm(Model model) {
         model.addAttribute("brand", new BrandDto());
-        model.addAttribute("title", "Add");
-        model.addAttribute("postURL", "/brands/add");
-        return "brand/brand-add";
+        model.addAttribute(TITLE, ADD);
+        model.addAttribute(POST_URL, POST_URL_ADD);
+        return BRAND_ADD;
     }
 
     @PostMapping("add")
@@ -48,63 +57,59 @@ public class BrandController {
             bindingResult
                     .rejectValue("name", "error.BrandDto",
                             "There is already a brand with the brand name provided");
-            model.addAttribute("title", "Add");
-            model.addAttribute("postURL", "/brands/add");
-            return "brand/brand-add";
+            model.addAttribute(TITLE, "Add");
+            model.addAttribute(POST_URL, POST_URL_ADD);
+            return BRAND_ADD;
         }
         if (bindingResult.hasErrors()) {
-            model.addAttribute("title", "Add");
-            model.addAttribute("postURL", "/brands/add");
-            return "brand/brand-add";
+            model.addAttribute(TITLE, ADD);
+            model.addAttribute(POST_URL, POST_URL_ADD);
+            return BRAND_ADD;
         }
+        LOGGER.debug("brandService.saveBrand called for " + brandDto);
         BrandDto savedBrand = brandService.saveBrand(brandDto);
-        logger.info("New brand added id=" + savedBrand.getId());
-        return "redirect:/brands";
+        LOGGER.debug("New brand added " + savedBrand);
+        return REDIRECT_BRANDS;
     }
 
     @GetMapping("/edit/{id}")
     public String getBrandEditForm(@PathVariable Integer id, Model model) {
         if (!brandService.existsById(id)) {
-            return "redirect:/brands";
+            return REDIRECT_BRANDS;
         }
         model.addAttribute("brand", brandService.findBrandById(id));
-        model.addAttribute("postURL", "/brands/edit" + id);
-        model.addAttribute("title", "Update");
-        return "brand/brand-edit";
+        model.addAttribute(POST_URL, POST_URL_EDIT + id);
+        model.addAttribute(TITLE, UPDATE);
+        return BRAND_EDIT;
     }
 
     @PostMapping("/edit/{id}")
     public String updateBrand(@Validated @ModelAttribute("brand") BrandDto brandDto, BindingResult bindingResult
             , Model model) {
         if (brandService.findBrandByName(brandDto.getName()) != null) {
-            logger.info("Attempt to edit brand id=" + brandDto.getId());
-//            logger.debug("Debugging log");
-//            logger.info("Info log");
-//            logger.warn("Hey, This is a warning!");
-//            logger.error("Oops! We have an Error. OK");
-//            logger.fatal("Damn! Fatal error. Please fix me.");
             bindingResult
                     .rejectValue("name", "error.BrandDto",
                             "There is already a brand with the brand name provided");
-            model.addAttribute("title", "Update");
-            model.addAttribute("postURL", "/brands/edit" + brandDto.getId());
-            return "brand/brand-edit";
+            model.addAttribute(TITLE, UPDATE);
+            model.addAttribute(POST_URL, POST_URL_EDIT + brandDto.getId());
+            return BRAND_EDIT;
         }
         if (bindingResult.hasErrors()) {
-            model.addAttribute("title", "Update");
-            model.addAttribute("postURL", "/brands/edit" + brandDto.getId());
-            return "brand/brand-edit";
+            model.addAttribute(TITLE, UPDATE);
+            model.addAttribute(POST_URL, POST_URL_EDIT + brandDto.getId());
+            return BRAND_EDIT;
         }
-        brandService.saveBrand(brandDto);
-
-        return "redirect:/brands";
+        LOGGER.debug("brandService.saveBrand called for " + brandDto);
+        BrandDto savedBrand = brandService.saveBrand(brandDto);
+        LOGGER.debug("Brand edited " + savedBrand);
+        return REDIRECT_BRANDS;
     }
 
     @PostMapping("{id}/delete")
     public String deleteBrand(@RequestParam Integer id, Model model) {
         BrandDto brandDto = brandService.findBrandById(id);
         brandService.deleteBrand(brandDto);
-        return "redirect:/brands";
+        return REDIRECT_BRANDS;
     }
 
 }

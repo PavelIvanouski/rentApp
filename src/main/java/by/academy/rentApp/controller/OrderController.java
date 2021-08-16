@@ -5,6 +5,8 @@ import by.academy.rentApp.dto.OrderDto;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.service.impl.UserServiceImpl;
 import by.academy.rentApp.util.DatesUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -24,7 +26,7 @@ import java.util.List;
 @Controller
 //@RequestMapping("/orders")
 public class OrderController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderController.class);
     private final OrderService orderService;
     private final CarService carService;
     private final UserServiceImpl userService;
@@ -154,7 +156,10 @@ public class OrderController {
             model.addAttribute("allowEdit", true);
             return "order/order-user";
         }
-        return "redirect:/user/orders/" + orderService.saveOrder(orderDto).getId();
+        LOGGER.debug("orderService.saveOrder called for " + orderDto);
+        OrderDto savedOrder = orderService.saveOrder(orderDto);
+        LOGGER.debug("Order edited " + savedOrder);
+        return "redirect:/user/orders/" + savedOrder.getId();
     }
 
     @GetMapping("admin/orders")
@@ -301,7 +306,9 @@ public class OrderController {
             }
 
         }
-
-        return "redirect:/admin/orders/" + orderService.saveOrder(orderDto).getId();
+        LOGGER.debug("orderService.saveOrder called for " + orderDto);
+        OrderDto savedOrder = orderService.saveOrder(orderDto);
+        LOGGER.debug("Order edited " + savedOrder);
+        return "redirect:/admin/orders/" + savedOrder.getId();
     }
 }

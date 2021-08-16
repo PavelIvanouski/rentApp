@@ -2,6 +2,8 @@ package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.EngineDto;
 import by.academy.rentApp.service.EngineService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/engines")
 public class EngineController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(EngineController.class);
     private final EngineService engineService;
 
     public EngineController(EngineService engineService) {
@@ -45,7 +48,10 @@ public class EngineController {
         if (bindingResult.hasErrors()) {
             return "engine/engine-add";
         }
-        engineService.saveEngine(engineDto);
+        LOGGER.debug("engineService.saveEngine called for " + engineDto);
+        EngineDto savedEngine = engineService.saveEngine(engineDto);
+        LOGGER.debug("New engine added " + savedEngine);
+
         return "redirect:/engines";
     }
 
@@ -70,7 +76,9 @@ public class EngineController {
         if (bindingResult.hasErrors()) {
             return "engine/engine-edit";
         }
-        engineService.saveEngine(engineDto);
+        LOGGER.debug("engineService.saveEngine called for " + engineDto);
+        EngineDto savedEngine = engineService.saveEngine(engineDto);
+        LOGGER.debug("Engine edited " + savedEngine);
         return "redirect:/engines";
     }
 

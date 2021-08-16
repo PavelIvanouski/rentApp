@@ -80,6 +80,8 @@ public class UserServiceImpl implements UserService {
         if (userFormDto.getId() == null) {
             userFormDto.setActive(true);
             userFormDto.setCreatingDate(OffsetDateTime.now());
+            Role userRole = roleRepository.findByRole("USER");
+            userFormDto.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         } else {
             userFormDto.setUpdatingDate(OffsetDateTime.now());
             userFormDto.setActive(userFormDto.getActive());
@@ -89,8 +91,8 @@ public class UserServiceImpl implements UserService {
         }
 
 //        Role userRole = roleRepository.findByRole("ADMIN");
-        Role userRole = roleRepository.findByRole("USER");
-        userFormDto.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+//        Role userRole = roleRepository.findByRole("USER");
+//        userFormDto.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
         User savedUser = userRepository.save(userMapper.userFormDtoToUser(userFormDto));
         return userMapper.userToUserFormDto(savedUser);
     }

@@ -5,6 +5,8 @@ import by.academy.rentApp.model.entity.CarModel;
 import by.academy.rentApp.service.BrandService;
 import by.academy.rentApp.service.CarModelService;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,10 @@ import java.util.List;
 @Controller
 @RequestMapping("/models")
 public class CarModelController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CarModelController.class);
+    public static final String MODEL_EDIT = "model/model-edit";
+    public static final String MODEL_ADD = "model/model-add";
+    public static final String REDIRECT_MODELS = "redirect:/models";
     private final CarModelService carModelService;
     private final BrandService brandService;
 
@@ -40,7 +46,7 @@ public class CarModelController {
     public String getCarModelAddForm(Model model) {
         model.addAttribute("model", new CarModelDto());
         model.addAttribute("brands", brandService.getAll());
-        return "model/model-add";
+        return MODEL_ADD;
     }
 
     @PostMapping("add")
@@ -51,29 +57,31 @@ public class CarModelController {
                     .rejectValue("name", "error.carModelDto",
                             "There is already a model with the model name provided");
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-add";
+            return MODEL_ADD;
         }
         if (carModelDto.getBrand().getId() == null) {
             model.addAttribute("brandError", "Please, provide not empty brand");
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-add";
+            return MODEL_ADD;
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-add";
+            return MODEL_ADD;
         }
-        carModelService.saveModel(carModelDto);
-        return "redirect:/models";
+        LOGGER.debug("carModelService.saveModel called for " + carModelDto);
+        CarModelDto savedModel = carModelService.saveModel(carModelDto);
+        LOGGER.debug("New model added " + savedModel);
+        return REDIRECT_MODELS;
     }
 
     @GetMapping("/edit/{id}")
     public String getModelEditForm(@PathVariable Integer id, Model model) {
         if (!carModelService.existsById(id)) {
-            return "redirect:/models";
+            return REDIRECT_MODELS;
         }
         model.addAttribute("model", carModelService.findModelById(id));
         model.addAttribute("brands", brandService.getAll());
-        return "model/model-edit";
+        return MODEL_EDIT;
     }
 
     @PostMapping("/edit/{id}")
@@ -89,26 +97,26 @@ public class CarModelController {
                     .rejectValue("name", "error.carModelDto",
                             "There is already a model with the model name provided");
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-edit";
+            return MODEL_EDIT;
         }
         if (carModelDto.getBrand().getId() == null) {
             model.addAttribute("brandError", "Please, provide not empty brand");
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-edit";
+            return MODEL_EDIT;
         }
         if (bindingResult.hasErrors()) {
             model.addAttribute("brands", brandService.getAll());
-            return "model/model-edit";
+            return MODEL_EDIT;
         }
         carModelService.saveModel(carModelDto);
-        return "redirect:/models";
+        return REDIRECT_MODELS;
     }
 
     @PostMapping("{id}/delete")
     public String deleteModel(@RequestParam Integer id, Model model) {
         CarModelDto carModelDto = carModelService.findModelById(id);
         carModelService.deleteModel(carModelDto);
-        return "redirect:/models";
+        return REDIRECT_MODELS;
     }
 
 }
