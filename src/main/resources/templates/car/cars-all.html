@@ -16,23 +16,67 @@
 
 <div class="album py-5 bg-light">
     <div class="container pt-5 mt-5">
+        <div class="row justify-content-center align-items-center">
+            <form class="form-inline" th:action="@{/cars/all}">
+                <div class="form-group">
+                    <label for="keyword" th:text="#{label.filter} +':'">Filter:</label>
+                    <!--            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="20"-->
+                    <!--                   th:value="${keyword}" ></input>-->
+                </div>
+
+                <div class="form-group ml-2">
+                    <label for="typeId" th:text="#{label.model1}">Model:</label>
+                    <select id="modelId" name="modelId" class="form-control mr-2 ml-2">
+                        <option value="" hidden th:text="#{label.model}">Select model</option>
+                        <option th:each="model : ${models}"
+                                th:value="${model.id}"
+                                th:utext="${model.brand.name} + ' ' + ${model.name}"
+                                th:selected="${model.id==modelId}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="typeId" th:text="#{label.type1}">Type:</label>
+                    <select id="typeId" name="typeId" class="form-control mr-2 ml-2">
+                        <option value="" hidden th:text="#{label.type}">Select type</option>
+                        <option th:each="type : ${types}"
+                                th:value="${type.id}"
+                                th:utext="${type.name}" th:selected="${type.id==typeId}"></option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="engineId" th:text="#{label.engine1}">Engine:</label>
+                    <select id="engineId" name="engineId" class="form-control mr-2 ml-2">
+                        <option value="" hidden th:text="#{label.engine}">Select engine</option>
+                        <option th:each="engine : ${engines}"
+                                th:value="${engine.id}"
+                                th:utext="${engine.name}" th:selected="${engine.id==engineId}"></option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
+                <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
+                       onclick="clearSearch()"></input>
+
+                <!--        <div class="form-group">-->
+                <!--            <label for="rBegin" >Rent begin:</label>-->
+                <!--            <input type="datetime-local" class="form-control mr-2 ml-2" name="rBegin" id="rBegin" size="20"-->
+                <!--                   th:value="${rBegin}"></input>-->
+                <!--        </div>-->
+
+            </form>
+        </div>
+        </p>
         <div class="row">
             <th:block th:each="car : ${cars}">
                 <div class="col-md-4">
                     <div class="card mb-4 shadow-sm">
-                        <!--                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"-->
-                        <!--                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"-->
-                        <!--                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>-->
-                        <!--                            <rect width="100%" height="100%" fill="#55595c"></rect>-->
-                        <!--                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>-->
-                        <!--                        </svg>-->
-                        <!--                        <img th:src="@{/images/car.jpg}" class="img-responsive center-block" width="100%" height="300"-->
                         <img th:src="@{${car.photosImagePath}}" class="img-responsive center-block" width="100%"
                              height="225"
                              alt="Logo"/>
                         <div class="card-body">
                             <p class="card-text" th:text="${car.model.brand.name} + ' '
-                            + ${car.model.name} + ' ' + ${car.year}"></p>
+                            + ${car.model.name} + ' ' + ${car.year} + ' ' + ${car.engine.name}"></p>
                             <div class=" d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-outline-primary mr-2"
@@ -43,7 +87,8 @@
                                     <form th:action="@{/orders/add}" th:method="get">
                                         <input type="hidden" name="carId" th:value="${car.id}"/>
                                         <button type="submit" class="btn btn-outline-primary mr-2"
-                                                th:text="#{label.order}">Order</button>
+                                                th:text="#{label.order}">Order
+                                        </button>
                                     </form>
                                 </div>
                             </div>
@@ -63,5 +108,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/cars/all}]]";
+    }
+</script>
 </body>
 </html>

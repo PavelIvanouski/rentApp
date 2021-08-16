@@ -1,13 +1,13 @@
 package by.academy.rentApp.controller;
 
 
-import by.academy.rentApp.dto.OrderDto;
-import by.academy.rentApp.dto.TypeDto;
+import by.academy.rentApp.dto.RoleDto;
 import by.academy.rentApp.dto.UserFormDto;
+import by.academy.rentApp.model.entity.Role;
+import by.academy.rentApp.service.RoleService;
 import by.academy.rentApp.service.UserService;
 import by.academy.rentApp.service.impl.UserServiceImpl;
 import org.springframework.data.repository.query.Param;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -16,16 +16,18 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
-    public UserController(UserServiceImpl userService) {
+    public UserController(UserServiceImpl userService, RoleService roleService) {
         this.userService = userService;
+        this.roleService = roleService;
     }
 
     @GetMapping("/admin/users")
@@ -52,6 +54,7 @@ public class UserController {
         UserFormDto userBeforeUpd = userService.findUserById(userFormDto.getId());
         userFormDto.setCreatingDate(userBeforeUpd.getCreatingDate());
         userFormDto.setUpdatingDate(userBeforeUpd.getUpdatingDate());
+        userFormDto.setRoles(userBeforeUpd.getRoles());
 
         if (bindingResult.hasErrors()) {
             return "user/user-admin";
@@ -62,6 +65,46 @@ public class UserController {
         model.addAttribute("successMessage", "user saved");
         return "user/user-admin";
     }
+
+    @GetMapping(value = "/admin/add")
+    public String getAddAdminForm(Model model) {
+//        model.addAttribute("user", new User());
+        UserFormDto userFormDto = new UserFormDto();
+        model.addAttribute("user", userFormDto);
+        return "user/user-add";
+    }
+
+    @PostMapping(value = "/admin/add")
+    public String AddAdmin(@Validated @ModelAttribute("user") UserFormDto userFormDto
+            , BindingResult bindingResult
+            , Model model) {
+        UserFormDto userExists = userService.findUserByUserName(userFormDto.getUserName());
+        if (userExists != null) {
+            bindingResult
+                    .rejectValue("userName", "error.UserFormDto",
+                            "There is already a user registered with the user name provided");
+            return "user/user-add";
+        }
+        if (!userFormDto.getPassword().equals(userFormDto.getPasswordConfirm())) {
+            bindingResult
+                    .rejectValue("passwordConfirm", "error.UserFormDto",
+                            "Password mismatch");
+            return "user/user-add";
+        }
+        if (bindingResult.hasErrors()) {
+            return "user/user-add";
+        } else {
+            RoleDto roleDto = roleService.findRoleByName("ADMIN");
+            userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
+            userService.saveUser(userFormDto, true);
+            model.addAttribute("successMessage", "Admin added");
+            model.addAttribute("user", new UserFormDto());
+            return "user/user-add";
+        }
+
+
+    }
+
 
     @GetMapping("/user/info")
     public String getUserInfoForm(@AuthenticationPrincipal User userSec, Model model) {
@@ -79,6 +122,7 @@ public class UserController {
         UserFormDto userBeforeUpd = userService.findUserById(userFormDto.getId());
         userFormDto.setCreatingDate(userBeforeUpd.getCreatingDate());
         userFormDto.setUpdatingDate(userBeforeUpd.getUpdatingDate());
+        userFormDto.setRoles(userBeforeUpd.getRoles());
         if (bindingResult.hasErrors()) {
             return "user/user-info";
         }

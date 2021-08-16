@@ -114,10 +114,8 @@
                             <label for="passport" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.role}">Role</label>
                             <div class="col-md-6">
-                                <input type="text" id="passport" th:field="*{roles}"
+                                <input type="text" id="userRoles" th:value="${user.getRoles()}"
                                        placeholder="Last name" class="form-control" readonly/>
-                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('roles')}"
-                                      th:errors="*{roles}"></span>
                             </div>
                         </div>
 

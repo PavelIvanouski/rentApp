@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(BrandController.class)
@@ -61,6 +62,26 @@ public class BrandControllerTest {
                 )));
 
         verify(brandService, times(1)).getAll();
+        verifyNoMoreInteractions(brandService);
+
+    }
+
+    @Test
+    @WithMockUser("spring")
+    public void testGetBrandEditForm() throws Exception {
+
+        BrandDto brandDto = new BrandDto(1, "VW");
+        when(brandService.findBrandById(1)).thenReturn(brandDto);
+        when(brandService.existsById(1)).thenReturn(true);
+
+        this.mockMvc
+                .perform(MockMvcRequestBuilders.get("/brands/edit/{id}", 1))
+                .andExpect(status().isOk())
+                .andExpect(view().name("brand/brand-edit"))
+                .andExpect(model().attributeExists("brand"))
+                .andExpect(model().attribute("brand", hasProperty("id", is(1))));
+        verify(brandService, times(1)).findBrandById(1);
+        verify(brandService, times(1)).existsById(1);
         verifyNoMoreInteractions(brandService);
 
     }

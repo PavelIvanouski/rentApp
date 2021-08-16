@@ -44,7 +44,18 @@ public class CarController {
             , @Param("engineId") Integer engineId) {
 //        List<CarDto> cars = carService.getAll(keyword, typeId);
         List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
+        List<CarModelDto> modelDtos = carModelService.getAll();
+        model.addAttribute("models", modelDtos);
+
+        List<TypeDto> types = typeService.getAll();
+        model.addAttribute("types", types);
+
+        List<EngineDto> engineDtos = engineService.getAll();
+        model.addAttribute("engines", engineDtos);
         model.addAttribute("cars", cars);
+        model.addAttribute("modelId", modelId);
+        model.addAttribute("typeId", typeId);
+        model.addAttribute("engineId", engineId);
         return "car/cars-all";
     }
 

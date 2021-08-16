@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
@@ -38,24 +40,25 @@ public class LoginController {
     }
 
     @PostMapping(value = "/registration")
-    public String createNewUser(@Valid UserFormDto user, BindingResult bindingResult, Model model) {
+    public String createNewUser(@Validated @ModelAttribute("user") UserFormDto user
+            , BindingResult bindingResult, Model model) {
         UserFormDto userExists = userService.findUserByUserName(user.getUserName());
         if (userExists != null) {
             bindingResult
-                    .rejectValue("userName", "error.user",
+                    .rejectValue("userName", "error.UserFormDto",
                             "There is already a user registered with the user name provided");
             return "registration";
         }
         if (!user.getPassword().equals(user.getPasswordConfirm())) {
             bindingResult
-                    .rejectValue("passwordConfirm", "error.user",
+                    .rejectValue("passwordConfirm", "error.UserFormDto",
                             "Password mismatch");
             return "registration";
         }
         if (bindingResult.hasErrors()) {
             return "registration";
         } else {
-            userService.saveUser(user,true);
+            userService.saveUser(user, true);
             model.addAttribute("successMessage", "User has been registered successfully");
             model.addAttribute("user", new UserFormDto());
             return "registration";

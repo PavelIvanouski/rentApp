@@ -11,6 +11,8 @@ public interface RoleService {
 
     RoleDto findRoleById(Integer id);
 
+    RoleDto findRoleByName(String name);
+
     void deleteRole(RoleDto roleDto);
 
     boolean existsById(Integer id);

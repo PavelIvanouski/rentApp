@@ -20,9 +20,10 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 //            + " AND (?2 is null or c.type.id = ?2)")
 //    List<Car> search(String keyword, Integer typeId);
 
-    @Query("SELECT c FROM Car c WHERE (?1 is null or c.model.id = ?1)"
+    @Query("SELECT c FROM Car c WHERE  "
+            + "(?1 is null or c.model.id = ?1)"
             + " AND (?2 is null or c.type.id = ?2)"
-            + " AND (?3 is null or c.type.id = ?3)")
+            + " AND (?3 is null or c.engine.id = ?3)")
     List<Car> search(Integer modelId, Integer typeId, Integer engineId);
 
     boolean existsById(Integer id);

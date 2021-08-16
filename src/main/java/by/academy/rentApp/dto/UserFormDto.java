@@ -47,7 +47,7 @@ public class UserFormDto {
 
     private OffsetDateTime updatingDate;
 
-    private Set<Role> roles;
+    private Set<RoleDto> roles;
 
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 //    @ToString.Exclude

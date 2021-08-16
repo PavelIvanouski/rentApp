@@ -77,127 +77,135 @@
     </div>
     <div class="container">
 
-        <div class="row justify-content-center align-items-center">
-            <form>
+        <!--        <div class="row justify-content-center align-items-center">-->
+        <form th:action="@{/cars/all}">
 
-                <p></p>
-                <p></p>
-                <div class="form-row align-items-center">
-                    <!--                    <div class="form-group col">-->
-                    <!--                        <label for="SeatsNum">Seats num.</label>-->
-                    <!--                        <select id="SeatsNum" class="form-control">-->
-                    <!--                            <option>2</option>-->
-                    <!--                            <option>3</option>-->
-                    <!--                            <option>4</option>-->
-                    <!--                            <option>5</option>-->
-                    <!--                        </select>-->
-                    <!--                    </div>-->
-
-                    <div class="form-group col">
-                        <label for="RentBegin">Rent begin</label>
-                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">
-                    </div>
-
-                    <div class="form-group col">
-                        <label for="RentEnd">Rent end</label>
-                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">
-                    </div>
-                </div>
-                <!--                <div class="form-row align-items-center">-->
-                <!--                    <div class="form-group col my-auto">-->
-                <!--                        <div class="form-check">-->
-                <!--                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
-                <!--                            <label class="form-check-label" for="Autotransmission">-->
-                <!--                                Auto transmission-->
-                <!--                            </label>-->
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <div class="text-center">
-                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>
+            <p></p>
+            <p></p>
+            <div class="form-group row   justify-content-center align-items-center">
+                <div class="form-group  col-sm-2">
+                    <label for="typeId" th:text="#{label.model1}">Model:</label>
+                    <select id="modelId" name="modelId" class="form-control ">
+                        <option value="" hidden th:text="#{label.model}">Select model</option>
+                        <option th:each="model : ${models}"
+                                th:value="${model.id}"
+                                th:utext="${model.brand.name} + ' ' + ${model.name}"
+                                th:selected="${model.id==modelId}"></option>
+                    </select>
                 </div>
 
-            </form>
-        </div>
+                <div class="form-group  col-sm-2">
+                    <label for="typeId" th:text="#{label.type1}">Type:</label>
+                    <select id="typeId" name="typeId" class="form-control ">
+                        <option value="" hidden th:text="#{label.type}">Select type</option>
+                        <option th:each="type : ${types}"
+                                th:value="${type.id}"
+                                th:utext="${type.name}" th:selected="${type.id==typeId}"></option>
+                    </select>
+                </div>
 
-        <!--        <div class="container">-->
-        <!--&lt;!&ndash;            <div class="row">&ndash;&gt;-->
-        <!--                <div class="col-lg-10 col-xl-9 mx-auto">-->
-        <!--                    <div class="card card-signin flex-row my-5">-->
-        <!--&lt;!&ndash;                        <div class="card-img-left d-none d-md-flex">&ndash;&gt;-->
-        <!--&lt;!&ndash;                            &lt;!&ndash; Background image for card set in CSS! &ndash;&gt;&ndash;&gt;-->
-        <!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-        <!--                        <div class="card-body">-->
-        <!--                            <h5 class="card-title text-center">Find your car</h5>-->
-        <!--                            <form>-->
-        <!--                                <div class="form-row align-items-center">-->
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="Model">Model</label>-->
-        <!--                                        <select id="Model" class="form-control">-->
-        <!--                                            <option value=""> &#45;&#45;</option>-->
-        <!--                                            <option th:each="model : ${models}"-->
-        <!--                                                    th:value="${model.id}"-->
-        <!--                                                    th:utext="${model.brand.name} + ' ' + ${model.name}"></option>-->
-        <!--                                        </select>-->
-        <!--                                    </div>-->
+                <div class="form-group col-sm-2">
+                    <label for="engineId" th:text="#{label.engine1}">Engine:</label>
+                    <select id="engineId" name="engineId" class="form-control ">
+                        <option value="" hidden th:text="#{label.engine}">Select engine</option>
+                        <option th:each="engine : ${engines}"
+                                th:value="${engine.id}"
+                                th:utext="${engine.name}" th:selected="${engine.id==engineId}"></option>
+                    </select>
+                </div>
 
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="Type">Type</label>-->
-        <!--                                        <select id="Type" class="form-control">-->
-        <!--                                            <option value=""> &#45;&#45;</option>-->
-        <!--                                            <option th:each="type : ${types}"-->
-        <!--                                                    th:value="${type.id}"-->
-        <!--                                                    th:utext="${type.name}"></option>-->
-        <!--                                        </select>-->
-        <!--                                    </div>-->
+            </div>
+            <!--                <div class="form-row align-items-center">-->
+            <!--                    <div class="form-group col my-auto">-->
+            <!--                        <div class="form-check">-->
+            <!--                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
+            <!--                            <label class="form-check-label" for="Autotransmission">-->
+            <!--                                Auto transmission-->
+            <!--                            </label>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
 
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="Engine">Engine</label>-->
-        <!--                                        <select id="Engine" class="form-control">-->
-        <!--                                            <option value=""> &#45;&#45;</option>-->
-        <!--                                            <option th:each="engine : ${engines}"-->
-        <!--                                                    th:value="${engine.id}"-->
-        <!--                                                    th:utext="${engine.name}"></option>-->
-        <!--                                        </select>-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
 
-        <!--                                <div class="form-row align-items-center">-->
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="SeatsNum">Seats num.</label>-->
-        <!--                                        <select id="SeatsNum" class="form-control">-->
-        <!--                                            <option>2</option>-->
-        <!--                                            <option>3</option>-->
-        <!--                                            <option>4</option>-->
-        <!--                                            <option>5</option>-->
-        <!--                                        </select>-->
-        <!--                                    </div>-->
+            <div class="text-center">
+                <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
+            </div>
 
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="RentBegin">Rent begin</label>-->
-        <!--                                        <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">-->
-        <!--                                    </div>-->
 
-        <!--                                    <div class="form-group col">-->
-        <!--                                        <label for="RentEnd">Rent end</label>-->
-        <!--                                        <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
-        <!--                                <div class="form-row align-items-center">-->
-        <!--                                    <div class="form-group col my-auto">-->
-        <!--                                        <div class="form-check">-->
-        <!--                                            <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
-        <!--                                            <label class="form-check-label" for="Autotransmission">-->
-        <!--                                                Auto transmission-->
-        <!--                                            </label>-->
+        </form>
+        <!--        </div>-->
+
+
+        <!--                                    <h5 class="card-title text-center">Find your car</h5>-->
+        <!--                                    <form>-->
+        <!--                                        <div class="form-row align-items-center">-->
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="Model">Model</label>-->
+        <!--                                                <select id="Model" class="form-control">-->
+        <!--                                                    <option value=""> &#45;&#45;</option>-->
+        <!--                                                    <option th:each="model : ${models}"-->
+        <!--                                                            th:value="${model.id}"-->
+        <!--                                                            th:utext="${model.brand.name} + ' ' + ${model.name}"></option>-->
+        <!--                                                </select>-->
+        <!--                                            </div>-->
+
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="Type">Type</label>-->
+        <!--                                                <select id="Type" class="form-control">-->
+        <!--                                                    <option value=""> &#45;&#45;</option>-->
+        <!--                                                    <option th:each="type : ${types}"-->
+        <!--                                                            th:value="${type.id}"-->
+        <!--                                                            th:utext="${type.name}"></option>-->
+        <!--                                                </select>-->
+        <!--                                            </div>-->
+
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="Engine">Engine</label>-->
+        <!--                                                <select id="Engine" class="form-control">-->
+        <!--                                                    <option value=""> &#45;&#45;</option>-->
+        <!--                                                    <option th:each="engine : ${engines}"-->
+        <!--                                                            th:value="${engine.id}"-->
+        <!--                                                            th:utext="${engine.name}"></option>-->
+        <!--                                                </select>-->
+        <!--                                            </div>-->
         <!--                                        </div>-->
-        <!--                                    </div>-->
-        <!--                                </div>-->
-        <!--                                <div class="text-center">-->
-        <!--                                    <button type="submit" class="btn btn-outline-primary pull-right">Search</button>-->
-        <!--                                </div>-->
 
-        <!--                            </form>-->
+        <!--                                        <div class="form-row align-items-center">-->
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="SeatsNum">Seats num.</label>-->
+        <!--                                                <select id="SeatsNum" class="form-control">-->
+        <!--                                                    <option>2</option>-->
+        <!--                                                    <option>3</option>-->
+        <!--                                                    <option>4</option>-->
+        <!--                                                    <option>5</option>-->
+        <!--                                                </select>-->
+        <!--                                            </div>-->
+
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="RentBegin">Rent begin</label>-->
+        <!--                                                <input class="form-control" id="RentBegin" placeholder="Any" type="date" name="Any">-->
+        <!--                                            </div>-->
+
+        <!--                                            <div class="form-group col">-->
+        <!--                                                <label for="RentEnd">Rent end</label>-->
+        <!--                                                <input class="form-control" id="RentEnd" placeholder="Any" type="date" name="Any">-->
+        <!--                                            </div>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="form-row align-items-center">-->
+        <!--                                            <div class="form-group col my-auto">-->
+        <!--                                                <div class="form-check">-->
+        <!--                                                    <input class="form-check-input" type="checkbox" value="" id="Autotransmission">-->
+        <!--                                                    <label class="form-check-label" for="Autotransmission">-->
+        <!--                                                        Auto transmission-->
+        <!--                                                    </label>-->
+        <!--                                                </div>-->
+        <!--                                            </div>-->
+        <!--                                        </div>-->
+        <!--                                        <div class="text-center">-->
+        <!--                                            <button type="submit" class="btn btn-outline-primary pull-right">Search</button>-->
+        <!--                                        </div>-->
+
+        <!--                                    </form>-->
         <!--                        </div>-->
         <!--                    </div>-->
         <!--                </div>-->
@@ -219,7 +227,7 @@
     let anchorlinks = document.querySelectorAll('a[href^="#"]')
 
     for (let item of anchorlinks) { // relitere
-        item.addEventListener('click', (e)=> {
+        item.addEventListener('click', (e) => {
             let hashval = item.getAttribute('href')
             let target = document.querySelector(hashval)
             target.scrollIntoView({

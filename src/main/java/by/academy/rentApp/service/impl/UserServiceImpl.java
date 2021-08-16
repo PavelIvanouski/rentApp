@@ -5,18 +5,15 @@ import by.academy.rentApp.dto.UserDto;
 import by.academy.rentApp.dto.UserFormDto;
 import by.academy.rentApp.mapper.RoleMapper;
 import by.academy.rentApp.mapper.UserMapper;
-import by.academy.rentApp.model.entity.Brand;
 import by.academy.rentApp.model.entity.Role;
 import by.academy.rentApp.model.entity.User;
 import by.academy.rentApp.model.repository.RoleRepository;
 import by.academy.rentApp.model.repository.UserRepository;
 import by.academy.rentApp.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,15 +27,17 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
 
     public UserServiceImpl(UserRepository userRepository,
                            RoleRepository roleRepository,
-                           BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper) {
+                           BCryptPasswordEncoder bCryptPasswordEncoder, UserMapper userMapper, RoleMapper roleMapper) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.userMapper = userMapper;
+        this.roleMapper = roleMapper;
     }
 
 //    public User findUserByEmail(String email) {
@@ -80,8 +79,10 @@ public class UserServiceImpl implements UserService {
         if (userFormDto.getId() == null) {
             userFormDto.setActive(true);
             userFormDto.setCreatingDate(OffsetDateTime.now());
-            Role userRole = roleRepository.findByRole("USER");
-            userFormDto.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+            if (userFormDto.getRoles() == null) {
+                RoleDto roleDto = roleMapper.roleToRoleDto(roleRepository.findByRole("USER"));
+                userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
+            }
         } else {
             userFormDto.setUpdatingDate(OffsetDateTime.now());
             userFormDto.setActive(userFormDto.getActive());
