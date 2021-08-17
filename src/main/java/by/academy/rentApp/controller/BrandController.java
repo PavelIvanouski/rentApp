@@ -1,6 +1,7 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.BrandDto;
+import by.academy.rentApp.exception.AppException;
 import by.academy.rentApp.service.BrandService;
 
 import org.slf4j.Logger;
@@ -35,8 +36,15 @@ public class BrandController {
     }
 
     @GetMapping("")
-    public String getBrands(Model model) {
+    public String getBrands(Model model) throws AppException {
         List<BrandDto> brands = brandService.getAll();
+
+        String s = "throw";
+        //voluntarily throw exception
+        if(s.equals("throw")){
+            throw new AppException("Exception example");
+        }
+
         model.addAttribute("brands", brands);
         model.addAttribute("title", "Brands");
         return "brand/brands";
