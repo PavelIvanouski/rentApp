@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <html lang="en">
 <head>
     <!--    <title th:text="${title} + ' engine'"/>-->
@@ -27,7 +27,8 @@
             <td th:text="'Id: ' + ${order.id} + ' ' +  #{label.creatingDate} + ' ' +
              ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}
               + ' ' +#{label.car1} +': ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
-         + ' ' + ${order.car.year}"></td></br>
+         + ' ' + ${order.car.year}"></td>
+            </br>
             <td th:text="#{label.user1} + ': '  +  ${order.user.firstName} + ' ' + ${order.user.lastName}
          + ' ' + #{label.passport} + ': '">
             <td th:if="${order.user.passport !=null}"
@@ -158,16 +159,16 @@
                 <!--                <input type="number" step="0.01" class="form-control"-->
                 <!--                       name="extraTotal" id="extraPrice">-->
                 <input type="number" name="extraTotal" id="extraPrice" placeholder="0.00" min="0" value="0" step="0.01"
-                       pattern="^\d+(?:\.\d{1,2})?$" onblur="
-this.parentNode.parentNode.style.backgroundColor
-=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
+                       pattern="^\d+(?:\.\d{1,2})?$" onblur=
+                               "this.parentNode.parentNode
+                               .style.backgroundColor=/^\d+(?:\.\d{1,2})?$/.test(this.value)?'inherit':'red'">
             </div>
         </div>
         <div th:if="${extraError}">
             <p style="font-size: 20; color: #FF1C19;" th:text="${extraError}"></p>
         </div>
 
-        <div th:if="${allowEdit}">
+        <div th:if="${allowEdit} or ${orderDenied}">
             <div hidden class="form-group row" id="messageRow">
                 <div class="form-group col-sm-8">
                     <label for="message">Message</label>
@@ -228,16 +229,16 @@ this.parentNode.parentNode.style.backgroundColor
         setMessageView();
     });
 
-    function openInvoiceModal(id) {
-        $.ajax({
-            url: "/invoices/" + id,
-            success: function (response) {
-                $('#viewUserHolder').html(response);
-                $('#viewUser').modal();
-                $('#viewUser').modal('open');
-            }
-        });
-    }
+    // function openInvoiceModal(id) {
+    //     $.ajax({
+    //         url: "/invoices/" + id,
+    //         success: function (response) {
+    //             $('#viewUserHolder').html(response);
+    //             $('#viewUser').modal();
+    //             $('#viewUser').modal('open');
+    //         }
+    //     });
+    // }
 
 </script>
 </body>

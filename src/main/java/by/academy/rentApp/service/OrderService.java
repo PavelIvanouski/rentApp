@@ -18,7 +18,7 @@ public interface OrderService {
 
     OrderDto findOrderById(Integer id);
 
-    List<OrderDto> findCurrentOrders(Integer id, List<Integer> statuses, OffsetDateTime rentBegin, OffsetDateTime renEnd);
+    List<OrderDto> findCurrentOrders(Integer id, List<String> statuses, OffsetDateTime rentBegin, OffsetDateTime renEnd);
 
     void  deleteOrder(OrderDto orderDto);
 

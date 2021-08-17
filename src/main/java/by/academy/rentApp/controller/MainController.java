@@ -42,13 +42,6 @@ public class MainController {
 //        return "home";
 //    }
 
-    @GetMapping("/test")
-    public String getTestPage(Model model) {
-
-        return "testImage";
-    }
-
-
 
     @GetMapping("/about")
     public String getAboutPage(Model model) {

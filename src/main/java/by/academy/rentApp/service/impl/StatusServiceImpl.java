@@ -1,9 +1,7 @@
 package by.academy.rentApp.service.impl;
 
-import by.academy.rentApp.dto.BrandDto;
 import by.academy.rentApp.dto.StatusDto;
 import by.academy.rentApp.mapper.StatusMapper;
-import by.academy.rentApp.model.entity.Brand;
 import by.academy.rentApp.model.entity.Status;
 import by.academy.rentApp.model.repository.StatusRepository;
 import by.academy.rentApp.service.StatusService;
@@ -36,8 +34,8 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public List<StatusDto> getAllByIdList(List<Integer> idList) {
-        List<Status> statuses = statusRepository.findAllByIdList(idList);
+    public List<StatusDto> getAllByNameList(List<String> statusList) {
+        List<Status> statuses = statusRepository.findAllByNameList(statusList);
         List<StatusDto> statusDtos = new ArrayList<>();
         statuses.forEach(status -> {
             statusDtos.add(statusMapper.statusToStatusDto(status));

@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findCurrentOrders(Integer id, List<Integer> statuses,OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
+    public List<OrderDto> findCurrentOrders(Integer id, List<String> statuses,OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
         List<Order> orders = orderRepository.findOrderByCarAndStatusAndDates(id, statuses, rentBegin, rentEnd);
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {

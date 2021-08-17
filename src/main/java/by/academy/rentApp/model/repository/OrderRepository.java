@@ -19,13 +19,13 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     List<Order> findAllByUser(User user);
 
-    @Query("SELECT o FROM Order o WHERE o.car.id = :carId and o.status.id IN :statuses and " +
+    @Query("SELECT o FROM Order o WHERE o.car.id = :carId and o.status.name IN :statuses and " +
             "((o.rentBegin >= :rentBegin and o.rentBegin <= :rentEnd) " +
             "or (o.rentEnd >= :rentBegin and o.rentEnd <= :rentEnd)" +
             "or (o.rentBegin <= :rentBegin and o.rentEnd >= :rentEnd))")
     List<Order> findOrderByCarAndStatusAndDates(
             @Param("carId") Integer id,
-            @Param("statuses") List<Integer> statuses,
+            @Param("statuses") List<String> statuses,
             @Param("rentBegin") OffsetDateTime rentBegin,
             @Param("rentEnd") OffsetDateTime rentEnd);
 

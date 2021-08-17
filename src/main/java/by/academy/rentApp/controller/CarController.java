@@ -144,11 +144,13 @@ public class CarController {
 
         if (multipartFile != null) {
             String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-            carDto.setPhotos(fileName);
+            if (!"".equals(fileName)) {
+                carDto.setPhotos(fileName);
 
-            String uploadDir = "./car-photos/" + carDto.getId();
+                String uploadDir = "./car-photos/" + carDto.getId();
 
-            FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+                FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            }
         }
         CarDto carBeforeUpdating = carService.findCarById(carDto.getId());
         carDto.setCreatingDate(carBeforeUpdating.getCreatingDate());
