@@ -30,7 +30,7 @@
                     <form th:object=" ${user}" method="post" class="form-horizontal"
                           role="form">
                         <br/>
-
+                        <h2><span class="text-success text-md-right" th:utext="${successMessage}"></span></h2>
                         <div class="form-group row">
                             <label for="userName" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.userName}">User Name</label>
@@ -136,8 +136,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
 
                     </form>
                 </div>

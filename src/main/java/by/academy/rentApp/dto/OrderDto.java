@@ -38,6 +38,7 @@ public class OrderDto {
 
     private Integer price;
 
+
     private double total;
 
     @Max(value = 70, message = "Max value = 70")

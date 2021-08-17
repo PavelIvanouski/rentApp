@@ -38,7 +38,7 @@
                                        class="form-control"/>
                             </div>
                         </div>
-
+                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
                         <div class="form-group row">
                             <label for="userName" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.userName}">User Name</label>
@@ -54,7 +54,10 @@
                             <label for="email" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.eMail}">E-mail</label>
                             <div class="col-md-6">
-                                <input type="text" id="email" th:field="*{email}" placeholder="Email"
+                                <!--                                <input type="text" id="email" th:field="*{email}" placeholder="Email"-->
+                                <!--                                       class="form-control"/>-->
+                                <input type="text" id="email" th:name="email" th:value="${user.email}"
+                                       placeholder="Email"
                                        class="form-control"/>
                                 <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('email')}"
                                       th:errors="*{email}"></span>
@@ -83,29 +86,6 @@
                             </div>
                         </div>
 
-                        <div hidden class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right"
-                                   th:text="#{label.password}">Password</label>
-                            <div class="col-md-6">
-                                <input type="password" id="password" name="password" th:value="${user.password}"
-                                       placeholder="Password" class="form-control"/>
-                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('password')}"
-                                      th:errors="*{password}"></span>
-                            </div>
-                        </div>
-
-                        <div hidden class="form-group row">
-                            <label for="passwordConfirm" class="col-md-4 col-form-label text-md-right"
-                                   th:text="#{label.confirmPassword}">Confirm
-                                Password</label>
-                            <div class="col-md-6">
-                                <input type="password" id="passwordConfirm" name="passwordConfirm"
-                                       placeholder="Confirm Password" class="form-control" th:value="${user.password}"/>
-                                <span style="font-size: 20; color: #FF1C19;"
-                                      th:if="${#fields.hasErrors('passwordConfirm')}"
-                                      th:errors="*{passwordConfirm}"></span>
-                            </div>
-                        </div>
 
                         <div class="form-group row">
                             <label for="passport" class="col-md-4 col-form-label text-md-right"
@@ -152,24 +132,47 @@
                             </div>
                         </div>
 
-                        <div hidden class="form-group row" id="newPasswordRow">
-                            <label for="newPassword" class="col-md-4 col-form-label text-md-right"
+                        <div hidden class="form-group row" id="PasswordRow">
+                            <label for="password" class="col-md-4 col-form-label text-md-right"
                                    th:text="#{label.password}">Password</label>
                             <div class="col-md-6">
-                                <input type="password" id="newPassword" name="newPassword"
-                                       placeholder="password" class="form-control" onkeyup='check();'/>
+                                <input type="password" id="password" name="password" th:value="${user.password}"
+                                       placeholder="Password" class="form-control"/>
+                                <span style="font-size: 20; color: #FF1C19;" th:if="${#fields.hasErrors('password')}"
+                                      th:errors="*{password}"></span>
                             </div>
                         </div>
 
-                        <div hidden class="form-group row" id="newPasswordConfirmRow">
-                            <label for="newPasswordConfirm" class="col-md-4 col-form-label text-md-right"
-                                   th:text="#{label.confirmPassword}">Password</label>
+                        <div hidden class="form-group row" id="PasswordConfirmRow">
+                            <label for="passwordConfirm" class="col-md-4 col-form-label text-md-right"
+                                   th:text="#{label.confirmPassword}">Confirm
+                                Password</label>
                             <div class="col-md-6">
-                                <input type="password" id="newPasswordConfirm"
-                                       placeholder="password" class="form-control" onkeyup='check();'/>
-                                <span id='message'></span>
+                                <input type="password" id="passwordConfirm" name="passwordConfirm"
+                                       placeholder="Confirm Password" class="form-control" th:value="${user.password}"/>
+                                <span style="font-size: 20; color: #FF1C19;"
+                                      th:if="${#fields.hasErrors('passwordConfirm')}"
+                                      th:errors="*{passwordConfirm}"></span>
                             </div>
                         </div>
+                        <!--                        <div hidden class="form-group row" id="newPasswordRow">-->
+                        <!--                            <label for="newPassword" class="col-md-4 col-form-label text-md-right"-->
+                        <!--                                   th:text="#{label.password}">Password</label>-->
+                        <!--                            <div class="col-md-6">-->
+                        <!--                                <input type="password" id="newPassword" name="newPassword"-->
+                        <!--                                       placeholder="password" class="form-control" onkeyup='check();'/>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+
+                        <!--                        <div hidden class="form-group row" id="newPasswordConfirmRow">-->
+                        <!--                            <label for="newPasswordConfirm" class="col-md-4 col-form-label text-md-right"-->
+                        <!--                                   th:text="#{label.confirmPassword}">Password</label>-->
+                        <!--                            <div class="col-md-6">-->
+                        <!--                                <input type="password" id="newPasswordConfirm"-->
+                        <!--                                       placeholder="password" class="form-control" onkeyup='check();'/>-->
+                        <!--                                <span id='message'></span>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
 
 
                         <br/>
@@ -180,8 +183,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        <h2><span class="text-success" th:utext="${successMessage}"></span></h2>
 
                     </form>
                 </div>
@@ -211,23 +212,11 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
 <script>
-
-    $('#changePassword').on('click', function () {
-        if ($(this).is(':checked')) {
-            document.getElementById('newPasswordRow').hidden = false;
-            document.getElementById('newPasswordConfirmRow').hidden = false;
-        } else {
-            document.getElementById('newPasswordRow').hidden = true;
-            document.getElementById('newPasswordConfirmRow').hidden = true;
-        }
-    })
-</script>
-<script>
     function verifyPassword() {
         const cb = document.getElementById('changePassword');
         if (cb.checked) {
-            var pw = document.getElementById("newPassword").value;
-            var pwc = document.getElementById("newPasswordConfirm").value;
+            var pw = document.getElementById("password").value;
+            var pwc = document.getElementById("passwordConfirm").value;
             if (pw == "" || pwc == "") {
                 document.getElementById('message').style.color = 'red';
                 document.getElementById("message").innerHTML = "**Fill the password please!";
@@ -244,8 +233,15 @@
                 return false;
             }
         }
+        // var email = document.getElementById("email").value;
+        // if (email == "") {
+        //     document.getElementById("email").value = null;
+        // }
+        // alert(email);
+
         return true;
     }
+
 
     var check = function () {
         if (document.getElementById('newPassword').value ==
@@ -258,5 +254,24 @@
         }
     }
 </script>
+<script>
+
+    $('#changePassword').on('click', function () {
+        if ($(this).is(':checked')) {
+            // document.getElementById('newPasswordRow').hidden = false;
+            // document.getElementById('newPasswordConfirmRow').hidden = false;
+            document.getElementById('PasswordRow').hidden = false;
+            document.getElementById('PasswordConfirmRow').hidden = false;
+            document.getElementById('password').value = "";
+            document.getElementById('passwordConfirm').value = "";
+        } else {
+            // document.getElementById('newPasswordRow').hidden = true;
+            // document.getElementById('newPasswordConfirmRow').hidden = true;
+            document.getElementById('PasswordRow').hidden = true;
+            document.getElementById('PasswordConfirmRow').hidden = true;
+        }
+    })
+</script>
+
 </body>
 </html>

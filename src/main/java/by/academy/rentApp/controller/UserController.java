@@ -116,13 +116,16 @@ public class UserController {
         return "user/user-info";
     }
 
-    @PostMapping("/user/info")
-    public String updateUserInfo(@Validated @ModelAttribute("user") UserFormDto userFormDto
-            , @RequestParam(value = "changePassword", required = false) Boolean changePassword
-            , @RequestParam(value = "newPassword", required = false) String newPassword
-            , BindingResult bindingResult
-            , Model model) {
-
+//    @PostMapping("/user/info")
+//    public String updateUserInfo(@Validated @ModelAttribute("user") UserFormDto userFormDto
+//            , @RequestParam(value = "changePassword", required = false) Boolean changePassword
+//            , @RequestParam(value = "newPassword", required = false) String newPassword
+//            , BindingResult bindingResult
+//            , Model model) {
+        @PostMapping("/user/info")
+        public String updateUserInfo(@Validated @ModelAttribute("user") UserFormDto userFormDto
+                , BindingResult bindingResult
+                , Model model) {
         UserFormDto userBeforeUpd = userService.findUserById(userFormDto.getId());
         userFormDto.setCreatingDate(userBeforeUpd.getCreatingDate());
         userFormDto.setUpdatingDate(userBeforeUpd.getUpdatingDate());
@@ -132,12 +135,15 @@ public class UserController {
         }
 
         Boolean setNewPassword = false;
-        if (changePassword != null) {
-            if (changePassword && !"".equals(newPassword)) {
-                userFormDto.setPassword(newPassword);
+            if (!userFormDto.getPassword().equals(userBeforeUpd.getPassword())) {
                 setNewPassword = true;
             }
-        }
+//        if (changePassword != null) {
+//            if (changePassword && !"".equals(newPassword)) {
+//                userFormDto.setPassword(newPassword);
+//                setNewPassword = true;
+//            }
+//        }
         userService.saveUser(userFormDto, setNewPassword);
         model.addAttribute("successMessage", "user saved");
         return "user/user-info";
