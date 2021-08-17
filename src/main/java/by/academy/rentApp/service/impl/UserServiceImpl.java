@@ -80,8 +80,15 @@ public class UserServiceImpl implements UserService {
             userFormDto.setActive(true);
             userFormDto.setCreatingDate(OffsetDateTime.now());
             if (userFormDto.getRoles() == null) {
-                RoleDto roleDto = roleMapper.roleToRoleDto(roleRepository.findByRole("USER"));
-                userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
+                if ("Admin".equals(userFormDto.getUserName())) {
+                    RoleDto adminRoleDto = roleMapper.roleToRoleDto(roleRepository.findByRole("ADMIN"));
+                    userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(adminRoleDto)));
+                } else {
+                    RoleDto roleDto = roleMapper.roleToRoleDto(roleRepository.findByRole("USER"));
+                    userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
+                }
+//                RoleDto roleDto = roleMapper.roleToRoleDto(roleRepository.findByRole("USER"));
+//                userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
             }
         } else {
             userFormDto.setUpdatingDate(OffsetDateTime.now());

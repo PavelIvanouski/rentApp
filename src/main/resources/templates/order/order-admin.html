@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
 <html lang="en">
 <head>
     <!--    <title th:text="${title} + ' engine'"/>-->
@@ -27,8 +27,18 @@
             <td th:text="'Id: ' + ${order.id} + ' ' +  #{label.creatingDate} + ' ' +
              ${#temporals.format(order.creatingDate, 'dd-MM-yyyy HH:mm')}
               + ' ' +#{label.car1} +': ' + ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
-         + ' ' + ${order.car.year}"></td>
+         + ' ' + ${order.car.year}"></td></br>
+            <td th:text="#{label.user1} + ': '  +  ${order.user.firstName} + ' ' + ${order.user.lastName}
+         + ' ' + #{label.passport} + ': '">
+            <td th:if="${order.user.passport !=null}"
+                th:text="${order.user.passport}">
         </div>
+        <input type="text" hidden class="form-control-plaintext" th:name="user.firstName"
+               th:value="${order.user.firstName}">
+        <input type="text" hidden class="form-control-plaintext" th:name="user.lastName"
+               th:value="${order.user.lastName}">
+        <input type="text" hidden class="form-control-plaintext" id="userPassport" th:name="user.passport"
+               th:value="${order.user.passport}">
 
         <div class="form-group">
             <input type="text" hidden class="form-control-plaintext" th:name="car.model.brand.name"

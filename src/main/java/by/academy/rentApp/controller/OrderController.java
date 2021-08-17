@@ -62,6 +62,11 @@ public class OrderController {
             , Model model) {
 
         if (!DatesUtil.chekDates(rBegin, rEnd) || currentOffSet == null) {
+            model.addAttribute("datesMessage", "Invalid data");
+            return "order/order-add";
+        }
+        if (orderDto.getUser().getPassport() == null || "".equals(orderDto.getUser().getPassport())) {
+            model.addAttribute("datesMessage", "Invalid data");
             return "order/order-add";
         }
         orderDto.setRentBegin(OffsetDateTime.of(rBegin, ZoneOffset.of(currentOffSet)));
@@ -83,7 +88,18 @@ public class OrderController {
             return "order/order-add";
         }
 
-        return "redirect:/user/orders/" + orderService.saveOrder(orderDto).getId();
+        StringBuilder stringBuilderBefore = new StringBuilder();
+        stringBuilderBefore.append("Save order from ")
+                .append(orderDto.getRentBegin()).append(" to ").append(orderDto.getRentEnd());
+        LOGGER.debug(stringBuilderBefore.toString());
+
+        OrderDto savedOrder = orderService.saveOrder(orderDto);
+
+        StringBuilder stringBuilderAfter = new StringBuilder();
+        stringBuilderAfter.append("Result order id=").append(savedOrder.getId())
+                .append(" with total ").append(savedOrder.getTotal());
+        LOGGER.debug(stringBuilderAfter.toString());
+        return "redirect:/user/orders/" + savedOrder.getId();
     }
 
     @GetMapping("user/orders")

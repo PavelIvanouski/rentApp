@@ -7,6 +7,8 @@ import by.academy.rentApp.model.entity.Role;
 import by.academy.rentApp.service.RoleService;
 import by.academy.rentApp.service.UserService;
 import by.academy.rentApp.service.impl.UserServiceImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -21,7 +23,7 @@ import java.util.HashSet;
 
 @Controller
 public class UserController {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     private final UserService userService;
     private final RoleService roleService;
 
@@ -68,7 +70,6 @@ public class UserController {
 
     @GetMapping(value = "/admin/add")
     public String getAddAdminForm(Model model) {
-//        model.addAttribute("user", new User());
         UserFormDto userFormDto = new UserFormDto();
         model.addAttribute("user", userFormDto);
         return "user/user-add";
@@ -96,7 +97,10 @@ public class UserController {
         } else {
             RoleDto roleDto = roleService.findRoleByName("ADMIN");
             userFormDto.setRoles(new HashSet<RoleDto>(Arrays.asList(roleDto)));
+
             userService.saveUser(userFormDto, true);
+
+
             model.addAttribute("successMessage", "Admin added");
             model.addAttribute("user", new UserFormDto());
             return "user/user-add";
