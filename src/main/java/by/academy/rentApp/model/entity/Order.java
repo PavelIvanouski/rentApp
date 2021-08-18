@@ -36,7 +36,7 @@ public class Order {
     @Column
     private double total;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
 

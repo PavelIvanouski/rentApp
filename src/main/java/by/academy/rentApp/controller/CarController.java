@@ -1,6 +1,7 @@
 package by.academy.rentApp.controller;
 
 import by.academy.rentApp.dto.*;
+import by.academy.rentApp.exception.AppException;
 import by.academy.rentApp.service.*;
 import by.academy.rentApp.util.FileUploadUtil;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 @Controller
@@ -45,8 +48,16 @@ public class CarController {
     public String getAllCarsForm(Model model
             , @Param("modelId") Integer modelId
             , @Param("typeId") Integer typeId
-            , @Param("engineId") Integer engineId) {
-        List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
+            , @Param("engineId") Integer engineId
+            , @Param("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin
+            , @Param("rEnd") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rEnd
+            , @Param("currentOffSet") String currentOffSet) throws AppException {
+
+
+//        OffsetDateTime.of(rBegin, ZoneOffset.of(currentOffSet));
+//        OffsetDateTime.of(rEnd, ZoneOffset.of(currentOffSet));
+
+        List<CarDto> cars = carService.getAll(modelId, typeId, engineId,rBegin,rEnd,currentOffSet);
         List<CarModelDto> modelDtos = carModelService.getAll();
         model.addAttribute("models", modelDtos);
 
@@ -59,6 +70,8 @@ public class CarController {
         model.addAttribute("modelId", modelId);
         model.addAttribute("typeId", typeId);
         model.addAttribute("engineId", engineId);
+        model.addAttribute("rBegin", rBegin);
+        model.addAttribute("rEnd", rEnd);
         return "car/cars-all";
     }
 
@@ -67,8 +80,8 @@ public class CarController {
             , @Param("modelId") Integer modelId
             , @Param("typeId") Integer typeId
             , @Param("engineId") Integer engineId
-            , @Param("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin) {
-        List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
+            , @Param("rBegin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rBegin) throws AppException {
+        List<CarDto> cars = carService.getAll(modelId, typeId, engineId,null,null,null);
 
         List<CarModelDto> modelDtos = carModelService.getAll();
         model.addAttribute("models", modelDtos);
@@ -136,7 +149,7 @@ public class CarController {
 
     @PostMapping("/admin/cars/edit/{id}")
     public String updateCar(@Validated @ModelAttribute("car") CarDto carDto
-            , @RequestParam(value = "image", required = false)  MultipartFile multipartFile, BindingResult bindingResult
+            , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());

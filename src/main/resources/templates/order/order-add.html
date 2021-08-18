@@ -17,7 +17,7 @@
 
 <div class="container pt-5 mt-5">
     <h2 th:text="#{label.add} + ' ' + #{label.order1}">Add order</h2>
-    <form th:action="@{/orders/add}" th:object="${order}" th:method="post"  onsubmit="return verifyData()">
+    <form th:action="@{/orders/add}" th:object="${order}" th:method="post" onsubmit="return verifyData()">
 
         <div class="form-group">
             <div class="col">
@@ -41,14 +41,14 @@
             <input type="text" hidden class="form-control-plaintext" th:name="car.year"
                    th:value="${order.car.year}">
             <td th:text="#{label.car1} + ': '  +  ${order.car.model.brand.name} + ' ' + ${order.car.model.name}
-         + ' ' + ${order.car.year}"></td></br>
+         + ' ' + ${order.car.year}"></td>
+            </br>
             <td th:text="#{label.user1} + ': '  +  ${order.user.firstName} + ' ' + ${order.user.lastName}
          + ' ' + #{label.passport} + ': '">
             <td th:if="${order.user.passport !=null}"
                 th:text="${order.user.passport}"></td>
             <span id='message'></span>
-<!--            <span style="font-size: 20; color: #FF1C19;" th:if="${order.user.passport == null || order.user.passport == ''}"-->
-<!--                  th:text="#{label.enterPassport}"></span>-->
+
         </div>
         <input type="text" hidden class="form-control-plaintext" th:name="user.firstName"
                th:value="${order.user.firstName}">
@@ -77,12 +77,14 @@
         <div class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="rentBegin" th:text="#{label.rentBegin}">Rent begin</label>
-                <input class="form-control" id="rentBegin" type="datetime-local" name="rBegin" onchange="getTotal()">
+                <input class="form-control" id="rentBegin"
+                        type="datetime-local" name="rBegin"  onchange="getTotal()" th:value="${rentBeginPar}">
             </div>
 
             <div class="form-group col-sm-4">
                 <label for="rentEnd" th:text="#{label.rentEnd}">Rent end</label>
-                <input class="form-control" id="rentEnd" type="datetime-local" name="rEnd" onchange="getTotal()">
+                <input class="form-control" id="rentEnd"
+                        type="datetime-local" name="rEnd"  onchange="getTotal()" th:value="${rentEndPar}">
             </div>
         </div>
         <h2><span class="text" style="font-size: 20; color: #FF1C19;" th:utext="${datesMessage}"></span></h2>
@@ -174,6 +176,11 @@
         }
         return true;
     }
+</script>
+<script>
+    window.onload = function() {
+        getTotal();
+    };
 </script>
 </body>
 </html>

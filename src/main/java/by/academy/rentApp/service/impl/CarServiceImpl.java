@@ -1,6 +1,7 @@
 package by.academy.rentApp.service.impl;
 
 import by.academy.rentApp.dto.CarDto;
+import by.academy.rentApp.exception.AppException;
 import by.academy.rentApp.mapper.CarMapper;
 import by.academy.rentApp.model.entity.Car;
 import by.academy.rentApp.model.repository.CarRepository;
@@ -9,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +30,24 @@ public class CarServiceImpl implements CarService {
 
 
     @Override
-    public List<CarDto> getAll(Integer modelId, Integer typeId, Integer engineId) {
+    public List<CarDto> getAll(Integer modelId, Integer typeId
+            , Integer engineId, LocalDateTime rentBegin, LocalDateTime rentEnd, String currentOffSet) throws AppException {
+        if ((rentBegin != null && rentEnd == null) || (rentBegin == null && rentEnd != null)) {
+            throw new AppException("Invalid dates");
+        }
+        if (rentBegin != null && rentEnd != null) {
+            if (currentOffSet == null) {
+                throw new AppException("Invalid dates");
+            }
+            List<Car> cars = carRepository
+                    .searchAviable(OffsetDateTime.of(rentBegin, ZoneOffset.of(currentOffSet))
+                            , OffsetDateTime.of(rentEnd, ZoneOffset.of(currentOffSet)), modelId, typeId, engineId);
+            List<CarDto> carDtos = new ArrayList<>();
+            cars.forEach(car -> {
+                carDtos.add(carMapper.carToCarDto(car));
+            });
+            return carDtos;
+        }
         if (modelId != null || typeId != null || engineId != null) {
 //            List<Car> cars = carRepository.search(keyword,typeId);
             List<Car> cars = carRepository.search(modelId, typeId, engineId);

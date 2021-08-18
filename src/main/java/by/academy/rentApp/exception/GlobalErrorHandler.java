@@ -23,10 +23,11 @@ public class GlobalErrorHandler {
         return "testException";
     }
 
-//    @ExceptionHandler(BindException.class)
-//    public String bindError(Exception  e, Model model) {
-//        model.addAttribute("error",e);
-//        return "testException";
-//    }
+    @ExceptionHandler(BindException.class)
+    public String bindError(Exception  e, Model model) {
+//        model.addAttribute("error","Invalid data");
+        model.addAttribute("error",e);
+        return "testException";
+    }
 
 }

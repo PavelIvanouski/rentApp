@@ -36,7 +36,7 @@ public class BrandController {
     }
 
     @GetMapping("")
-    public String getBrands(Model model) throws AppException {
+    public String getBrands(Model model)  {
         List<BrandDto> brands = brandService.getAll();
 
         model.addAttribute("brands", brands);

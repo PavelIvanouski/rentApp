@@ -19,9 +19,7 @@
         <div class="row justify-content-center align-items-center">
             <form class="form-inline" th:action="@{/cars/all}">
                 <div class="form-group">
-                    <label for="keyword" th:text="#{label.filter} +':'">Filter:</label>
-                    <!--            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="20"-->
-                    <!--                   th:value="${keyword}" ></input>-->
+                    <label th:text="#{label.filter} +':'">Filter:</label>
                 </div>
 
                 <div class="form-group ml-2">
@@ -54,16 +52,25 @@
                                 th:utext="${engine.name}" th:selected="${engine.id==engineId}"></option>
                     </select>
                 </div>
+
                 <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
                 <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
                        onclick="clearSearch()"></input>
+                <div class="form group row">
 
-                        <div class="form-group">
-                            <label for="rBegin" >Rent begin:</label>
-                            <input type="datetime-local" class="form-control mr-2 ml-2" name="rBegin" id="rBegin" size="20"
-                                   th:value="${rBegin}"></input>
-                        </div>
+                    <div class="form-group m-3">
+                        <label for="rBegin" th:text="#{label.rentBegin}">Rent begin:</label>
+                        <input type="datetime-local" class="form-control mr-2 ml-2" name="rBegin" id="rBegin" size="20"
+                               th:value="${rBegin}"></input>
+                    </div>
+                    <div class="form-group m-3">
+                        <label for="rEnd" th:text="#{label.rentEnd}">Rent end:</label>
+                        <input type="datetime-local" class="form-control mr-2 ml-2" name="rEnd" id="rEnd" size="20"
+                               th:value="${rEnd}"></input>
+                    </div>
+                </div>
 
+                <input type="text" hidden class="form-control" id="currentOffSet" name="currentOffSet">
             </form>
         </div>
         </p>
@@ -82,10 +89,10 @@
                                     <a class="btn btn-outline-primary mr-2"
                                        th:href="@{/cars/details/{id}(id=${car.id})}"
                                        th:text="#{label.details}">Details</a>
-                                    <!--                                    <a class="btn btn-outline-primary mr-2" th:href="@{/orders/add}">Order</a>-->
-                                    <!--                                    <form th:action="@{/orders/send}" th:method="post">-->
-                                    <form th:action="@{/orders/add}" th:method="get">
-                                        <input type="hidden" name="carId" th:value="${car.id}"/>
+                                    <form th:action="@{/orders/add}" >
+                                        <input type="hidden" id="carId" name="carId" th:value="${car.id}"/>
+                                        <input type="hidden" id="rentBeginPar" name="rentBeginPar" th:value="${rBegin}" />
+                                        <input type="hidden" id="rentEndPar" name="rentEndPar" th:value="${rEnd}" />
                                         <button type="submit" class="btn btn-outline-primary mr-2"
                                                 th:text="#{label.order}">Order
                                         </button>
@@ -112,6 +119,18 @@
     function clearSearch() {
         window.location = "[[@{/cars/all}]]";
     }
+</script>
+<script>
+    function getTimeZone() {
+        var offset = new Date().getTimezoneOffset(), o = Math.abs(offset);
+        document.getElementById("currentOffSet")
+            .value = (offset < 0 ? "+" : "-") + ("00" + Math.floor(o / 60)).slice(-2)
+            + ":" + ("00" + (o % 60)).slice(-2);
+    }
+
+    $(function () {
+        getTimeZone();
+    });
 </script>
 </body>
 </html>

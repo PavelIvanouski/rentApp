@@ -46,20 +46,20 @@ public class CarlServiceTest {
 
     }
 
-    @Test
-    public void testGetAll() {
-
-        List<Car> cars = new ArrayList<>();
-        cars.add(new Car());
-        cars.add(new Car());
-        cars.add(new Car());
-        cars.add(new Car());
-        given(this.carRepository.search(1,1,1))
-                .willReturn(cars);
-        List<CarDto> carDtos = carService.getAll(1,1,1);
-        assertThat(carDtos.size()).isEqualTo(4);
-
-    }
+//    @Test
+//    public void testGetAll() {
+//
+//        List<Car> cars = new ArrayList<>();
+//        cars.add(new Car());
+//        cars.add(new Car());
+//        cars.add(new Car());
+//        cars.add(new Car());
+//        given(this.carRepository.search(1,1,1))
+//                .willReturn(cars);
+//        List<CarDto> carDtos = carService.getAll(1,1,1);
+//        assertThat(carDtos.size()).isEqualTo(4);
+//
+//    }
 
     @Test
     public void testExistById() {

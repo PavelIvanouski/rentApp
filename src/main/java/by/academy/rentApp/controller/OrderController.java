@@ -62,7 +62,11 @@ public class OrderController {
     }
 
     @GetMapping("/orders/add")
-    public String getAddOrderForm(@RequestParam("carId") Integer id, @AuthenticationPrincipal User userSec, Model model) throws AppException {
+    public String getAddOrderForm(Model model
+            , @RequestParam("carId") Integer id
+            , @RequestParam(value = "rentBeginPar", required = false ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentBeginPar
+            , @RequestParam(value = "rentEndPar", required = false ) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime rentEndPar
+            , @AuthenticationPrincipal User userSec) throws AppException {
         if (!carService.existsById(id)) {
             throw new AppException("No car found");
 //            return "redirect:/cars/all";
@@ -71,6 +75,8 @@ public class OrderController {
         order.setCar(carService.findCarById(id));
         order.setUser(userService.findUserByUserName(userSec.getUsername()));
         model.addAttribute(ORDER, order);
+        model.addAttribute("rentBeginPar",rentBeginPar);
+        model.addAttribute("rentEndPar",rentEndPar);
         return ORDER_ADD;
     }
 
