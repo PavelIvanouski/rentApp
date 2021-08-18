@@ -8,7 +8,7 @@ import java.util.List;
 public interface StatusService {
     List<StatusDto> getAll();
 
-    List<StatusDto> getAllByNameList(List<String> statusList);
+    List<StatusDto> getAllByIdList(List<Integer> statusIdList);
 
     StatusDto saveStatus(StatusDto statusDto);
 

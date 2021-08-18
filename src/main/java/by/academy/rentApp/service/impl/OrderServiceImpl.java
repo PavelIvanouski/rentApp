@@ -39,7 +39,15 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public List<OrderDto> getAll() {
+    public List<OrderDto> getAll(String keyword, Integer statusId) {
+        if ((keyword != null && !keyword.trim().isEmpty()) || statusId != null) {
+            List<Order> orders = orderRepository.search(keyword, statusId);
+            List<OrderDto> orderDtos = new ArrayList<>();
+            orders.forEach(order -> {
+                orderDtos.add(orderMapper.orderToOrderDto(order));
+            });
+            return orderDtos;
+        }
         List<Order> orders = orderRepository.findAll();
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {
@@ -49,7 +57,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> getAllByUser(UserFormDto userFormDto) {
+    public List<OrderDto> getAllByUser(UserFormDto userFormDto, String keyword,Integer statusId) {
+        if ((keyword != null && !keyword.trim().isEmpty()) || statusId != null) {
+            User user = userMapper.userFormDtoToUser(userFormDto);
+            List<Order> orders = orderRepository.searchAllByUser(user,keyword,statusId);
+            List<OrderDto> orderDtos = new ArrayList<>();
+            orders.forEach(order -> {
+                orderDtos.add(orderMapper.orderToOrderDto(order));
+            });
+            return orderDtos;
+        }
         User user = userMapper.userFormDtoToUser(userFormDto);
         List<Order> orders = orderRepository.findAllByUser(user);
         List<OrderDto> orderDtos = new ArrayList<>();
@@ -67,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
             orderDto.setStatus(statusService.findStatusById(2));
             double hours = DatesUtil.returnDifferenceInHours(orderDto.getRentBegin(), orderDto.getRentEnd());
 //            double pricePerHour = Math.round((Double.valueOf(orderDto.getPrice()) / 24) * 100) / 100.00;
-            double pricePerHour = (Double.valueOf(orderDto.getPrice()) / 24) ;
+            double pricePerHour = (Double.valueOf(orderDto.getPrice()) / 24);
             orderDto.setTotal(Math.round((hours * pricePerHour) * 100) / 100.00);
         } else {
             orderDto.setUpdatingDate(OffsetDateTime.now());
@@ -83,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<OrderDto> findCurrentOrders(Integer id, List<String> statuses,OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
+    public List<OrderDto> findCurrentOrders(Integer id, List<Integer> statuses, OffsetDateTime rentBegin, OffsetDateTime rentEnd) {
         List<Order> orders = orderRepository.findOrderByCarAndStatusAndDates(id, statuses, rentBegin, rentEnd);
         List<OrderDto> orderDtos = new ArrayList<>();
         orders.forEach(order -> {

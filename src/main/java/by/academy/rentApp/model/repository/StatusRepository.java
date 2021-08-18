@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface StatusRepository extends JpaRepository<Status, Integer> {
 
-    @Query("SELECT s FROM Status s WHERE s.name  IN :nameList")
-    List<Status> findAllByNameList(@Param("nameList") List<String> nameList);
+    @Query("SELECT s FROM Status s WHERE s.id  IN :idList")
+    List<Status> findAllByIdList(@Param("idList") List<Integer> idList);
 
     Status findStatusById(Integer id);
 

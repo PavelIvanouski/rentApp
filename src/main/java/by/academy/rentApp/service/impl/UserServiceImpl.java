@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserDto> getAll(String keyword) {
-        if (keyword != null) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
             List<User> users = userRepository.search(keyword);
             List<UserDto> userDtos = new ArrayList<>();
             users.forEach(user -> {

@@ -114,8 +114,10 @@
         <div th:unless="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="Status">Status</label>
-                <input type="text" hidden class="form-control-plaintext" id="selectStatus" th:name="status.id"
+                <input type="text" hidden class="form-control-plaintext" id="selectStatusId" th:name="status.id"
                        th:value="${order.status.id}">
+                <input type="text" hidden class="form-control-plaintext" id="selectStatusName" th:name="status.name"
+                       th:value="${order.status.name}">
                 <input type="text" class="form-control" th:name="status" th:value="${order.status.name}" id="Status"
                        readonly>
             </div>
@@ -123,29 +125,15 @@
 
         <div th:if="${invoiced}" class="form-group row">
             <div th:if="${mainInvoice}" class="form-group col-sm-2">
-                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
-                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
-                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
-                <!--                </form>-->
                 <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${mainInvoice})}"
                    role="button" th:text="#{label.invoice}">Main invoice</a>
                 <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
             </div>
 
             <div th:if="${extraInvoice}" class="form-group col-sm-2">
-                <!--                <form th:action="@{/invoices/{id}(id=${mainInvoice})}" >-->
-                <!--                    &lt;!&ndash;                    <input type="hidden" name="carId" th:value="${car.id}"/>&ndash;&gt;-->
-                <!--                    <button type="submit" class="btn btn-outline-primary mr-2">Main invoice</button>-->
-                <!--                </form>-->
                 <a class="btn btn-outline-info" th:href="@{/invoices/{id}(id=${extraInvoice})}"
                    role="button" th:text="#{label.extraInvoice}">Extra invoice</a>
                 <!--                <a th:onclick="'javascript:openInvoiceModal(\'' + ${mainInvoice} +'\');'" class="btn-floating waves-effect waves-light yellow" role="button"><i class="material-icons">visibility</i></a>-->
-            </div>
-            <div th:unless="${extraInvoice}" class="form-group col-sm-2">
-                <!--                <a class="btn btn-outline-info" th:href="@{/admin/invoices/add/{orderId}(orderId =${order.id})}"-->
-                <!--                   role="button" >Add extra invoice</a>-->
-
-                <!--                <input type="text" name="extraMessage" />-->
             </div>
         </div>
 

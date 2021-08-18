@@ -7,6 +7,7 @@ import by.academy.rentApp.util.DatesUtil;
 import com.itextpdf.html2pdf.ConverterProperties;
 import com.itextpdf.html2pdf.HtmlConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -45,15 +46,19 @@ public class InvoiceController {
 
 
     @GetMapping("user/invoices")
-    String getUserInvoices(@AuthenticationPrincipal User userSec, Model model) {
+    String getUserInvoices(@AuthenticationPrincipal User userSec, Model model
+            , @Param("keyword") String keyword) {
+        model.addAttribute("keyword", keyword);
         model.addAttribute("invoices", invoiceService.getAllByUser(userService
-                .findUserByUserName(userSec.getUsername())));
+                .findUserByUserName(userSec.getUsername()),keyword));
         return "invoice/invoices-user";
     }
 
     @GetMapping("admin/invoices")
-    String getAllInvoices(Model model) {
-        model.addAttribute("invoices", invoiceService.getAll());
+    String getAllInvoices(Model model
+            , @Param("keyword") String keyword) {
+        model.addAttribute("keyword", keyword);
+        model.addAttribute("invoices", invoiceService.getAll(keyword));
         return "invoice/invoices-admin";
     }
 

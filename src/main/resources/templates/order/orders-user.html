@@ -16,6 +16,28 @@
 
 <div class="container pt-5 mt-5">
     <h2 th:text="#{label.yourOrders}">Your orders</h2>
+    </p>
+    <form class="form-inline" th:action="@{/user/orders}">
+        <div class="form-group">
+            <label for="keyword" th:text="#{label.filter} +':'">Filter:</label>
+            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="20"
+                   th:value="${keyword}"></input>
+        </div>
+        <div class="form-group ml-2">
+            <label for="statusId" th:text="#{label.status}">Status:</label>
+            <select id="statusId" name="statusId" class="form-control mr-2 ml-2">
+                <option value="" hidden th:text="#{label.status}">Select status</option>
+                <option th:each="status : ${statuses}"
+                        th:value="${status.id}"
+                        th:utext="${status.name} "
+                        th:selected="${status.id==statusId}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
+        <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
+               onclick="clearSearch()"></input>
+    </form>
+    <p></p>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -87,6 +109,11 @@
             $(this).parents('.dropdown').find('button').text($(this).text());
         });
     });
+</script>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/user/orders}]]";
+    }
 </script>
 </body>
 </html>

@@ -37,7 +37,15 @@ public class InvoiceServiceImpl implements InvoiceService {
 
 
     @Override
-    public List<InvoiсeDto> getAll() {
+    public List<InvoiсeDto> getAll(String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            List<Invoiсe> invoiсes = invoiceRepository.searchAll(keyword);
+            List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
+            invoiсes.forEach(invoiсe -> {
+                invoiсeDtos.add(invoiceMapper.invoiceToInvoiceDto(invoiсe));
+            });
+            return invoiсeDtos;
+        }
         List<Invoiсe> invoiсes = invoiceRepository.findAll();
         List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
         invoiсes.forEach(invoiсe -> {
@@ -57,7 +65,16 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<InvoiсeDto> getAllByUser(UserFormDto userFormDto) {
+    public List<InvoiсeDto> getAllByUser(UserFormDto userFormDto, String keyword) {
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            User user = userMapper.userFormDtoToUser(userFormDto);
+            List<Invoiсe> invoiсes = invoiceRepository.searchAllByUser(user,keyword);
+            List<InvoiсeDto> invoiсeDtos = new ArrayList<>();
+            invoiсes.forEach(invoiсe -> {
+                invoiсeDtos.add(invoiceMapper.invoiceToInvoiceDto(invoiсe));
+            });
+            return invoiсeDtos;
+        }
         User user = userMapper.userFormDtoToUser(userFormDto);
         List<Invoiсe> invoiсes = invoiceRepository.findAllByUser(user);
         List<InvoiсeDto> invoiсeDtos = new ArrayList<>();

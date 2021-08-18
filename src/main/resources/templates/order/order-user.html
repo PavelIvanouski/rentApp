@@ -113,8 +113,10 @@
         <div th:unless="${statuses}" class="form-group row">
             <div class="form-group col-sm-4">
                 <label for="Status" th:text="#{label.status}">Status</label>
-                <input type="text" hidden class="form-control-plaintext" id="selectStatus" th:name="status.id"
+                <input type="text" hidden class="form-control-plaintext" id="selectStatusId" th:name="status.id"
                        th:value="${order.status.id}">
+                <input type="text" hidden class="form-control-plaintext" id="selectStatusName" th:name="status.name"
+                       th:value="${order.status.name}">
                 <input type="text" class="form-control" th:name="status" th:value="${order.status.name}" id="Status"
                        readonly>
             </div>

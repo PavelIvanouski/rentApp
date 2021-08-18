@@ -10,15 +10,15 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface OrderService {
-    List<OrderDto> getAll();
+    List<OrderDto> getAll(String keyword,Integer statusId);
 
-    List<OrderDto> getAllByUser(UserFormDto userFormDto);
+    List<OrderDto> getAllByUser(UserFormDto userFormDto, String keyword,Integer statusId);
 
     OrderDto saveOrder(OrderDto orderDto);
 
     OrderDto findOrderById(Integer id);
 
-    List<OrderDto> findCurrentOrders(Integer id, List<String> statuses, OffsetDateTime rentBegin, OffsetDateTime renEnd);
+    List<OrderDto> findCurrentOrders(Integer id, List<Integer> statuses, OffsetDateTime rentBegin, OffsetDateTime renEnd);
 
     void  deleteOrder(OrderDto orderDto);
 

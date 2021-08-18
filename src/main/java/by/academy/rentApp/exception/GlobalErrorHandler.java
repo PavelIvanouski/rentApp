@@ -2,6 +2,7 @@ package by.academy.rentApp.exception;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -21,5 +22,11 @@ public class GlobalErrorHandler {
         model.addAttribute("error",e);
         return "testException";
     }
+
+//    @ExceptionHandler(BindException.class)
+//    public String bindError(Exception  e, Model model) {
+//        model.addAttribute("error",e);
+//        return "testException";
+//    }
 
 }

@@ -13,9 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -42,7 +46,6 @@ public class CarController {
             , @Param("modelId") Integer modelId
             , @Param("typeId") Integer typeId
             , @Param("engineId") Integer engineId) {
-//        List<CarDto> cars = carService.getAll(keyword, typeId);
         List<CarDto> cars = carService.getAll(modelId, typeId, engineId);
         List<CarModelDto> modelDtos = carModelService.getAll();
         model.addAttribute("models", modelDtos);
@@ -133,7 +136,7 @@ public class CarController {
 
     @PostMapping("/admin/cars/edit/{id}")
     public String updateCar(@Validated @ModelAttribute("car") CarDto carDto
-            , @RequestParam(value = "image", required = false) MultipartFile multipartFile, BindingResult bindingResult
+            , @RequestParam(value = "image", required = false)  MultipartFile multipartFile, BindingResult bindingResult
             , Model model) throws IOException {
         if (bindingResult.hasErrors()) {
             model.addAttribute("models", carModelService.getAll());
@@ -178,5 +181,16 @@ public class CarController {
         carService.deleteCar(carDto);
         return "redirect:/admin/cars";
     }
+
+//    @InitBinder
+//    public void initBinder(WebDataBinder binder, WebRequest request) {
+//
+//        binder.registerCustomEditor(Title.class, "title", new PropertyEditorSupport() {
+//            @Override
+//            public void setAsText(String text) {
+//                setValue((text.equals(""))?null:titleService.getTitle(Integer.parseInt((String)text)));
+//            }
+//        });
+//    }
 
 }

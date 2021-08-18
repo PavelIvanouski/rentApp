@@ -47,19 +47,19 @@ public class OrderServiceTest {
 
     }
 
-    @Test
-    public void testGetAll() {
-
-        List<Order> orders = new ArrayList<>();
-        orders.add(new Order());
-        orders.add(new Order());
-        orders.add(new Order());
-        given(this.orderRepository.findAll())
-                .willReturn(orders);
-        List<OrderDto> orderDtos = orderService.getAll();
-        assertThat(orderDtos.size()).isEqualTo(3);
-
-    }
+//    @Test
+//    public void testGetAll() {
+//
+//        List<Order> orders = new ArrayList<>();
+//        orders.add(new Order());
+//        orders.add(new Order());
+//        orders.add(new Order());
+//        given(this.orderRepository.findAll())
+//                .willReturn(orders);
+//        List<OrderDto> orderDtos = orderService.getAll();
+//        assertThat(orderDtos.size()).isEqualTo(3);
+//
+//    }
 
     @Test
     public void testExistById() {

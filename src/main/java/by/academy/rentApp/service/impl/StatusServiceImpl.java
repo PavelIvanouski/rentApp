@@ -34,8 +34,8 @@ public class StatusServiceImpl implements StatusService {
     }
 
     @Override
-    public List<StatusDto> getAllByNameList(List<String> statusList) {
-        List<Status> statuses = statusRepository.findAllByNameList(statusList);
+    public List<StatusDto> getAllByIdList(List<Integer> statusIdList) {
+        List<Status> statuses = statusRepository.findAllByIdList(statusIdList);
         List<StatusDto> statusDtos = new ArrayList<>();
         statuses.forEach(status -> {
             statusDtos.add(statusMapper.statusToStatusDto(status));

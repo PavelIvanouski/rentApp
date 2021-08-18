@@ -18,6 +18,28 @@
     <h2 th:text="#{label.orderList}">Orders list</h2>
 <!--    <input class="form-control mb-4" id="tableSearch" type="text"-->
 <!--           placeholder="Type something to search list items">-->
+    </p>
+    <form class="form-inline" th:action="@{/admin/orders}">
+        <div class="form-group">
+            <label for="keyword" th:text="#{label.filter} +':'">Filter:</label>
+            <input type="text" class="form-control mr-2 ml-2" name="keyword" id="keyword" size="20"
+                   th:value="${keyword}"></input>
+        </div>
+        <div class="form-group ml-2">
+            <label for="statusId" th:text="#{label.status}">Status:</label>
+            <select id="statusId" name="statusId" class="form-control mr-2 ml-2">
+                <option value="" hidden th:text="#{label.status}">Select status</option>
+                <option th:each="status : ${statuses}"
+                        th:value="${status.id}"
+                        th:utext="${status.name} "
+                        th:selected="${status.id==statusId}"></option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-success mr-2" th:text="#{label.search}">Search</button>
+        <input type="button" class="btn btn-outline-secondary mr-2" th:value="#{label.clear}" id="btnClear"
+               onclick="clearSearch()"></input>
+    </form>
+    <p></p>
     <table class="table">
         <thead class="thead-light">
         <tr>
@@ -72,6 +94,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
+<script type="text/javascript">
+    function clearSearch() {
+        window.location = "[[@{/admin/orders}]]";
+    }
+</script>
 
 </body>
 </html>
